@@ -1,0 +1,14 @@
+.cgss_images label:after {
+    content: '';
+    display: block;
+    margin-bottom: 1em;
+}
+
+.cgss_images img {
+    vertical-align: middle;
+}
+
+.cgss_sizes label {
+    margin-right: 1.5em;
+}
+
