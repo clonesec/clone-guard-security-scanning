@@ -10,7 +10,7 @@ class Clone_Guard_API {
 
     // Base URL for API.
     // TODO: This needs to be changed for production.
-    public $base_url = 'https://pcidev.clone-systems.com/API/v1';
+    public $base_url = 'https://pciscan.clone-systems.com/API/v1';
 
     // The class constructor.
     public function __construct() {
