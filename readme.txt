@@ -14,7 +14,7 @@ A plugin that connects to Clone Systems security scanning system.
 
 == Description ==
 
-The Clone Guard Security Scanning plugin is a plugin that allows admin users to connect to their Clone Systems account. The plugin creates an admin section where you can add, modify, and control the scans associated with you Clone Systems account.
+The Clone Guard Security Scanning plugin is a plugin that allows wordpress users to connect to their Clone Systems PCI ASV scanning account. The plugin creates an admin section where you can add, modify, and control the PCI ASV scans associated with you Clone Systems account.
 
 This plugin also adds a widget so that a Clone Systems security seal can be easily added to your site anywhere your theme allows widgets to be displayed.
 
