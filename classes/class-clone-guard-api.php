@@ -9,7 +9,6 @@ class Clone_Guard_API {
     public $user_token = '';
 
     // Base URL for API.
-    // TODO: This needs to be changed for production.
     public $base_url = 'https://pciscan.clone-systems.com/API/v1';
 
     // The class constructor.
@@ -21,28 +20,29 @@ class Clone_Guard_API {
     // Base method to make API calls.
     public function api($method, $url, $data = []) {
         $headers = [];
-        $headers[] = 'Authorization: Basic ' . $this->user_token;
-        $headers[] = 'x-api-key: ' . $this->api_key;
+        //$headers[] = 'Authorization: Basic ' . $this->user_token;
+        //$headers[] = 'x-api-key: ' . $this->api_key;
+        $headers['Authorization'] = 'Basic ' . $this->user_token;
+        $headers['x-api-key'] = $this->api_key;
 
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
+        $args = [];
+        $args['timeout'] = 10;
+        $args['headers'] = $headers;
         if($method == 'DELETE') {
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            $args['method'] = 'DELETE';
         } elseif($method == 'POST') {
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            $args['method'] = 'POST';
+            $args['body'] = $data;
         } elseif($method == 'PUT') {
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            $args['method'] = 'PUT';
+            $args['body'] = $data;
+        } else {
+            $args['method'] = 'GET';
         }
+        $res = wp_remote_request($url, $args);
 
-        $response = curl_exec($ch);
-        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $status_code = wp_remote_retrieve_response_code($res);
+        $response = wp_remote_retrieve_body($res);
 
         if($status_code == 401) {
             return false;

@@ -3,7 +3,7 @@
  * Plugin Name: Clone Guard Security Scanning
  * Description: Connects a site to the Clone Guard Security Scanning system.
  * Author: Clone Systems
- * Version: 0.9.1
+ * Version: 1.0.0
  */
 
 defined('ABSPATH') || exit;
@@ -14,9 +14,9 @@ require_once(__DIR__ . '/classes/class-clone-guard-widget.php');
 class Clone_Guard_Security_Scanning {
     public $key = 'cgss';
     public $key_ = 'cgss_';
-    public $version = '0.9.1';
+    public $version = '1.0.0';
 
-    public $feedback_url = 'https://pcidev.clone-systems.com/downloads/ASV-Feedback-Form.pdf';
+    public $feedback_url = 'https://pciscan.clone-systems.com/downloads/ASV-Feedback-Form.pdf';
 
     // The hook for the setting basic page.
     public $hook_settings;

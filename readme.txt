@@ -4,7 +4,7 @@ Author URI: https://www.clone-systems.com/
 Plugin URI: https://github.com/
 Requires PHP:  5.6
 Requires at least: 4.0
-Tested up to: 5.2.1
+Tested up to: 5.6
 Tags: pci, compliance
 Stable tag: trunk
 License: GPLv2 or later
