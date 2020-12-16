@@ -3,7 +3,7 @@
  * Plugin Name: Clone Guard Security Scanning
  * Description: Connects a site to the Clone Guard Security Scanning system.
  * Author: Clone Systems
- * Version: 1.0.0
+ * Version: 1.0.1
  */
 
 defined('ABSPATH') || exit;
@@ -14,7 +14,7 @@ require_once(__DIR__ . '/classes/class-clone-guard-widget.php');
 class Clone_Guard_Security_Scanning {
     public $key = 'cgss';
     public $key_ = 'cgss_';
-    public $version = '1.0.0';
+    public $version = '1.0.1';
 
     public $feedback_url = 'https://pciscan.clone-systems.com/downloads/ASV-Feedback-Form.pdf';
 
@@ -1090,7 +1090,15 @@ class Clone_Guard_Security_Scanning {
                     && isset($_GET['scans']) 
                     && is_array($_GET['scans'])
                 ) {
+                    // $_GET['scans'] must be an array to reach this point.
+                    // Sanitized below.
                     $scans = $_GET['scans'];
+
+                    // Sanitize each element in array.
+                    foreach($scans as $key => $scan) {
+                        $scans[$key] = sanitize_text_field($scan);
+                    }
+
                     foreach($scans as $scan) {
                         $success = $cloneGuardSecurityAPI->deleteScan($scan);
                     }
@@ -1136,7 +1144,15 @@ class Clone_Guard_Security_Scanning {
                     && isset($_GET['reports']) 
                     && is_array($_GET['reports'])
                 ) {
+                    // $_GET['reports'] must be an array to reach this point.
+                    // Sanitized below.
                     $reports = $_GET['reports'];
+
+                    // Sanitize each element in array.
+                    foreach($reports as $key => $report) {
+                        $reports[$key] = sanitize_text_field($report);
+                    }
+
                     foreach($reports as $report) {
                         $success = $cloneGuardSecurityAPI->deleteReport($report);
                     }
