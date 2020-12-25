@@ -1,4 +1,4 @@
-=== Clone Guard Security Scanning ===
+=== CloneGuard Security Scanning ===
 
 Author URI: https://www.clone-systems.com/
 Plugin URI: https://github.com/
@@ -10,11 +10,11 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A plugin that connects to Clone Systems security scanning account.
+A plugin that connects to Clone Systems' CloneGuard security scanning account.
 
 == Description ==
 
-The Clone Guard Security Scanning plugin is a plugin that allows wordpress users to connect to their Clone Systems PCI ASV scanning account. The plugin creates an admin section where you can add, modify, and control the PCI ASV scans associated with you Clone Systems account.
+The CloneGuard Security Scanning plugin is a plugin that allows wordpress users to connect to their Clone Systems PCI ASV scanning account. The plugin creates an admin section where you can add, modify, and control the PCI ASV scans associated with you Clone Systems account.
 
 This plugin also adds a widget so that a Clone Systems security seal can be easily added to your site anywhere your theme allows widgets to be displayed.
 
