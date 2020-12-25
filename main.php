@@ -1,8 +1,8 @@
 <?php
 /*
- * Plugin Name: Clone Guard Security Scanning
+ * Plugin Name: CloneGuard Security Scanning
  * Description: Connects a site to the Clone Guard Security Scanning system.
- * Author: Clone Systems
+ * Author: Clone Systems, Inc.
  * Version: 1.0.1
  */
 
