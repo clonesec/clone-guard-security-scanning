@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: CloneGuard Security Scanning
- * Description: Connects a site to the Clone Guard Security Scanning system.
+ * Description: Connects a site to the CloneGuard Security Scanning system.
  * Author: Clone Systems, Inc.
  * Version: 1.0.1
  */
@@ -81,7 +81,7 @@ class Clone_Guard_Security_Scanning {
 
     // Create the pages for the admin menu.
     public function adminMenu() {
-        add_menu_page('Clone Guard Security', 'Clone Guard Security', 'manage_options', $this->key_ . 'scans', false, 'dashicons-shield-alt');
+        add_menu_page('CloneGuard Security', 'CloneGuard Security', 'manage_options', $this->key_ . 'scans', false, 'dashicons-shield-alt');
         $this->hook_scans = add_submenu_page($this->key_ . 'scans', 'Scans', 'Scans', 'manage_options', $this->key_ . 'scans', [$this, 'adminScans']);
         $this->hook_reports = add_submenu_page($this->key_ . 'scans', 'Reports', 'Reports', 'manage_options', $this->key_ . 'reports', [$this, 'adminReports']);
         $this->hook_settings = add_submenu_page($this->key_ . 'scans', 'Settings', 'Settings', 'manage_options', $this->key_ . 'settings', [$this, 'adminSettings']);
@@ -199,7 +199,7 @@ class Clone_Guard_Security_Scanning {
     // Output the admin settings page.
     public function adminSettings() {
         $action = $this->key_ . 'settings';
-        $title = 'Clone Guard Settings';
+        $title = 'CloneGuard Security Scanning';
 
         $user_token = get_option($this->key_ . 'user_token');
         $api_key = get_option($this->key_ . 'api_key');

@@ -1,3 +1,84 @@
+.cloneguard-security_page_cgss_reports #wpcontent,
+.toplevel_page_cgss_scans #wpcontent {
+	padding-left: 0;
+}
+
+/**
+ *  Scans Head
+ */
+
+ .cgss-head {
+    background-color: #fff;
+    box-shadow: 0 1px 0 rgba(200,215,225,0.5), 0 1px 2px #e9eff3;
+}
+
+     .cgss-head-inside {
+        display: flex;
+        padding: 10px 10px 10px 20px;
+    }
+
+        .cgss-head-logo {
+            width: 58px;
+            height: 58px;
+        }
+
+        .cgss-head-text {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+        }
+            
+            .cgss-head-title {
+                padding: 0;
+                margin: 0;
+                font-weight: 500;
+            }
+
+            .cgss-head-subtitle {
+                margin: 0;
+                margin-top: 5px;
+                padding: 0;
+                font-size: 1.1em;
+            }
+
+
+
+/**
+ *  Settings Main
+ */
+
+.cgss_main {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 10px 0 0 20px;
+}
+
+@media(max-width: 960px) {
+    .cgss_main {
+        flex-direction: column-reverse;
+    }
+}
+
+/**
+ *  Scans Page Table Top Section
+ */
+
+.scans-table-top-section {
+    display: flex;
+}
+
+#scans-add-scan-btn {
+    width: 75px; /* TODO */
+    align-self: center;
+    margin-left: 10px;
+}
+
+
+/**
+ *  Table Form
+ */
+
 td.first {
     width: 10px;
     white-space: nowrap;
@@ -5,12 +86,21 @@ td.first {
 }
 
 textarea {
-    width: 90%;
+    width: 575px;
     height: 100px;
 }
 
 .stuffbox input[type=text] {
-    width: 300px;
+    width: 440px;
+}
+
+.stuffbox {
+    border-radius: 6px;
+    border: none;
+}
+
+.stuffbox .inside {
+    padding: 20px;
 }
 
 select {
@@ -169,3 +259,19 @@ label:nth-child(1) input[type=radio] {
 .scheduled_processing .action_stop_disabled {
     display: none;
 }
+
+.wp-core-ui select {
+    max-width: none;
+    width: 440px !important;
+}
+
+.table-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 575px;
+}
+    .table-buttons-save,
+    .table-buttons-cancel {
+        font-size: 1.2em !important;
+        padding: 0px 30px !important;
+    }

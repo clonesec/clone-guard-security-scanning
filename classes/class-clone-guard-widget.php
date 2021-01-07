@@ -7,7 +7,7 @@ class Clone_Guard_Widget extends WP_Widget {
 
     // The class constructor.
     public function __construct() {
-        parent::__construct('clone_guard_widget', $name = 'Clone Guard Seal', array('description' => ''));
+        parent::__construct('clone_guard_widget', $name = 'CloneGuard Seal', array('description' => ''));
 
         add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
     }

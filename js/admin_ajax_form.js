@@ -111,9 +111,24 @@ jQuery(document).ready(function($) {
 		}
 	}
 
+	// Listener for Settings Page password type inputs.
+	function toggleInputPassword() {
+		var settingsInput = $('.settings-form-input');
+
+		settingsInput.focus(function(){
+			$(this).prop('type', 'text')
+		  });
+		  
+		settingsInput.blur(function(){
+			$(this).prop('type', 'password')
+		});
+	}
+
     // Initialize listeners. 
 	function init() {
 		$(document).on('submit', '.ajax_form', submit);
+
+		toggleInputPassword();
 	}
 
     // Get everything started.
