@@ -65,41 +65,50 @@
                                                             <option value="<?php echo esc_attr($target['id']); ?>"><?php echo esc_html($target['name']); ?></option>
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
-                                                </select>           
+                                                </select>
                                                 <a class="button return" href="<?php echo $this->adminLink('scans', 'target-create', $scan['id']); ?>" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Target', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
 
-                                        <tr>
+                                        <!-- <tr>
                                             <td class="first"><label><?php _e('Notifications', 'cgss'); ?></label></td>
                                             <td>
                                                 <?php foreach($notifications as $notification): ?>
                                                     <?php if(in_array($notification['id'], $scan['notification_list'])): ?>
-                                                    <label><input type="checkbox" name="notifications[]" value="<?php echo esc_attr($notification['id']); ?>" checked> <?php echo esc_html($notification['name']); ?></label><br>
+                                                    <label>
+                                                        <input type="checkbox" name="notifications[]" value="<?php echo esc_attr($notification['id']); ?>" checked>
+                                                        <?php echo esc_html($notification['name']); ?>
+                                                    </label><br>
                                                     <br>
                                                     <?php else: ?>
-                                                    <label><input type="checkbox" name="notifications[]" value="<?php echo esc_attr($notification['id']); ?>"> <?php echo esc_html($notification['name']); ?></label><br>
+                                                    <label>
+                                                        <input type="checkbox" name="notifications[]" value="<?php echo esc_attr($notification['id']); ?>">
+                                                        <?php echo esc_html($notification['name']); ?>
+                                                    </label><br>
                                                     <br>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
                                                 <a class="button return" href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Notification', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
                                             </td>
-                                        </tr>
-                                        
-                                        <!-- Test -->
-                                        <!-- <tr>
-                                            <td class="first"><label><?php _e('Notifications Test', 'cgss'); ?></label></td>
+                                        </tr> -->
+
+                                        <tr>
+                                            <td class="first"><label><?php _e('Notifications', 'cgss'); ?></label></td>
                                             <td>
-                                                <select class="select2-multiple" multiple="multiple">
-                                                    <option value="O1">Status: Dan F. - Completed</option>
-                                                    <option value="O2">Status: Dan F. - Started</option>
-                                                    <option value="O3">Status: John K. - Completed</option>
-                                                    <option value="O3">Status: John K. - Started</option>
+                                                <select class="select2-multiple" name="notifications" multiple="multiple">
+                                                    <option value=""><?php echo esc_html_e('Select notification...', 'cgss'); ?></option>
+                                                    <?php foreach($notifications as $notification): ?>
+                                                        <?php if(in_array($notification['id'], $scan['notification_list'])): ?>
+                                                            <option value="<?php echo esc_attr($notification['id']); ?>>" selected><?php echo esc_html($notification['name']); ?></option>
+                                                        <?php else: ?>
+                                                            <option value="<?php echo esc_attr($notification['id']); ?>"><?php echo esc_html($notification['name']); ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </td>
-                                        </tr> -->
+                                        </tr>
 
                                         <tr>
                                             <td class="first"><label><?php _e('Comment', 'cgss'); ?></label></td>

@@ -69,7 +69,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr>
+                                        <!-- <tr>
                                             <td class="first"><label><?php _e('Notifications', 'cgss'); ?></label></td>
                                             <td>
                                                 <?php foreach($notifications as $notification): ?>
@@ -83,6 +83,22 @@
                                                 <?php endforeach; ?>
                                                 <a class="button return" href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Notification', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
+                                            </td>
+                                        </tr> -->
+
+                                        <tr>
+                                            <td class="first"><label><?php _e('Notifications', 'cgss'); ?></label></td>
+                                            <td>
+                                                <select class="select2-multiple" name="notifications" multiple="multiple">
+                                                    <option value=""><?php echo esc_html_e('Select notification...', 'cgss'); ?></option>
+                                                    <?php foreach($notifications as $notification): ?>
+                                                        <?php if(in_array($notification['id'], $scan['notification_list'])): ?>
+                                                            <option value="<?php echo esc_attr($notification['id']); ?>>" selected><?php echo esc_html($notification['name']); ?></option>
+                                                        <?php else: ?>
+                                                            <option value="<?php echo esc_attr($notification['id']); ?>"><?php echo esc_html($notification['name']); ?></option>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </select>
                                             </td>
                                         </tr>
 

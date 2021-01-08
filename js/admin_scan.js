@@ -464,7 +464,7 @@ jQuery(document).ready(function($) {
 
         $('.select2-multiple').select2({
 			closeOnSelect : false,
-			placeholder : "Choose notifications",
+			placeholder : "Select notifications",
 			allowHtml: true,
 			allowClear: true,
 			tags: true
