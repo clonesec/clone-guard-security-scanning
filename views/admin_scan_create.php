@@ -46,7 +46,7 @@
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <a class="return" href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('Create New Schedule', 'cgss'); ?></a>
+                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Schedule', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
@@ -64,7 +64,7 @@
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <a class="return" href="<?php echo $this->adminLink('scans', 'target-create', $scan['id']); ?>" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('Create New Target', 'cgss'); ?></a>
+                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'target-create', $scan['id']); ?>" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Target', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
@@ -81,7 +81,7 @@
                                                     <br>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
-                                                <a class="return" href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('Create New Notification', 'cgss'); ?></a>
+                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Notification', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>

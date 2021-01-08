@@ -462,6 +462,14 @@ jQuery(document).ready(function($) {
 
         $('.select2').select2();
 
+        $('.select2-multiple').select2({
+			closeOnSelect : false,
+			placeholder : "Choose notifications",
+			allowHtml: true,
+			allowClear: true,
+			tags: true
+		});
+
         $(document).on('click', '.delete', clickDelete);
         $(document).on('click', '.return', clickReturn);
 

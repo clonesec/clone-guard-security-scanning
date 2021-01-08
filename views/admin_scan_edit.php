@@ -48,7 +48,7 @@
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <a class="return" href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('Create New Schedule', 'cgss'); ?></a>
+                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Schedule', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
@@ -65,8 +65,8 @@
                                                             <option value="<?php echo esc_attr($target['id']); ?>"><?php echo esc_html($target['name']); ?></option>
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
-                                                </select>
-                                                <a class="return" href="<?php echo $this->adminLink('scans', 'target-create', $scan['id']); ?>" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('Create New Target', 'cgss'); ?></a>
+                                                </select>           
+                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'target-create', $scan['id']); ?>" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Target', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
@@ -83,10 +83,23 @@
                                                     <br>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
-                                                <a class="return" href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('Create New Notification', 'cgss'); ?></a>
+                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Notification', 'cgss'); ?></a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
+                                        
+                                        <!-- Test -->
+                                        <!-- <tr>
+                                            <td class="first"><label><?php _e('Notifications Test', 'cgss'); ?></label></td>
+                                            <td>
+                                                <select class="select2-multiple" multiple="multiple">
+                                                    <option value="O1">Status: Dan F. - Completed</option>
+                                                    <option value="O2">Status: Dan F. - Started</option>
+                                                    <option value="O3">Status: John K. - Completed</option>
+                                                    <option value="O3">Status: John K. - Started</option>
+                                                </select>
+                                            </td>
+                                        </tr> -->
 
                                         <tr>
                                             <td class="first"><label><?php _e('Comment', 'cgss'); ?></label></td>

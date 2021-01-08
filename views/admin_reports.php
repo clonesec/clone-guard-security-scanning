@@ -96,8 +96,14 @@
                         <td><?php echo esc_html($report['display_vulnerabilities']); ?></td>
                         <td><?php echo $report['display_compliance']; ?></td>
                         <td>
-                            <a class="button" href="<?php echo $this->adminLink('reports', 'report-view', $key, $reports['current_page']); ?>">View</a>
-                            <a class="button delete" href="#" data-id="<?php echo esc_attr($report['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'report_delete'); ?>" data-nonce="<?php echo esc_attr($nonce_report_delete); ?>">Delete</a>
+                            <a class="button" href="<?php echo $this->adminLink('reports', 'report-view', $key, $reports['current_page']); ?>">
+                                <span class="dashicons dashicons-welcome-view-site" style="margin-top:4px;"></span>
+                                View
+                            </a>
+                            <a class="button delete" href="#" data-id="<?php echo esc_attr($report['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'report_delete'); ?>" data-nonce="<?php echo esc_attr($nonce_report_delete); ?>">
+                                <span class="dashicons dashicons-trash" style="margin-top:4px;"></span>
+                                Delete
+                            </a>
                             <span class="spinner inline"></span>
                         </td>
                         <?php endif; ?>

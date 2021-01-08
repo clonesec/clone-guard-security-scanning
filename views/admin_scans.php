@@ -141,8 +141,14 @@
                             <?php endif; ?>
                         </td>
                         <td>
-                            <a class="button" href="<?php echo $this->adminLink('scans', $key); ?>">Edit</a>
-                            <a class="button delete" href="#" data-id="<?php echo esc_attr($scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_delete'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_delete); ?>">Delete</a>
+                            <a class="button" href="<?php echo $this->adminLink('scans', $key); ?>">
+                                <span class="dashicons dashicons-edit" style="margin-top:4px;"></span>
+                                Edit
+                            </a>
+                            <a class="button delete" href="#" data-id="<?php echo esc_attr($scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_delete'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_delete); ?>">
+                                <span class="dashicons dashicons-trash" style="margin-top:4px;"></span>
+                                Delete
+                            </a>
                             <span class="spinner inline"></span>
                         </td>
                         <?php endif; ?>
