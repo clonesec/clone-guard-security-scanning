@@ -2,7 +2,7 @@
 /*
  * Plugin Name: CloneGuard Security Scanning
  * Description: Connects a site to the CloneGuard Security Scanning system.
- * Author: Clone Systems, Inc.
+ * Author: Clone Systems
  * Version: 1.0.1
  */
 
@@ -20,6 +20,7 @@ class Clone_Guard_Security_Scanning {
 
     // The hook for the setting basic page.
     public $hook_settings;
+    public $hook_options;
     public $hook_scans;
     public $hook_reports;
 
@@ -43,6 +44,11 @@ class Clone_Guard_Security_Scanning {
 
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
             wp_enqueue_style($this->key_ . 'admin_scan', plugins_url('css/admin_scan.css', __FILE__), [], $this->version);
+        }
+
+        if($this->hook_options == $hook) {
+            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_style($this->key_ . 'admin_ajax_form', plugins_url('css/admin_ajax_form.css', __FILE__), [], $this->version);
         }
 
         if($this->hook_settings == $hook) {
@@ -83,6 +89,8 @@ class Clone_Guard_Security_Scanning {
     public function adminMenu() {
         add_menu_page('CloneGuard Security', 'CloneGuard Security', 'manage_options', $this->key_ . 'scans', false, 'dashicons-shield-alt');
         $this->hook_scans = add_submenu_page($this->key_ . 'scans', 'Scans', 'Scans', 'manage_options', $this->key_ . 'scans', [$this, 'adminScans']);
+        // TODO: We hide the Options in menu for versioning reasons.
+        // $this->hook_options = add_submenu_page($this->key_ . 'scans', 'Options', 'Options', 'manage_options', $this->key_ . 'options', [$this, 'adminOptions']);
         $this->hook_reports = add_submenu_page($this->key_ . 'scans', 'Reports', 'Reports', 'manage_options', $this->key_ . 'reports', [$this, 'adminReports']);
         $this->hook_settings = add_submenu_page($this->key_ . 'scans', 'Settings', 'Settings', 'manage_options', $this->key_ . 'settings', [$this, 'adminSettings']);
     }
@@ -354,6 +362,14 @@ class Clone_Guard_Security_Scanning {
             $scans = $cloneGuardSecurityAPI->getScans($page);
             include 'views/admin_scans.php';
         }
+    }
+
+    // Output the admin options page.
+    public function adminOptions() {
+        $action = $this->key_ . 'options';
+        $title = 'CloneGuard Security Scanning';
+
+        include 'views/admin_options.php';
     }
 
     // AJAX to create a notification. 
