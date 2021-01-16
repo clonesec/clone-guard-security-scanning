@@ -294,9 +294,14 @@ class Clone_Guard_API {
         $output['scans'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
-        $url = $this->base_url . '/notifications?page=' . $page;
+        $url = $this->base_url . '/notifications';
+
+        // TODO; Implement a params builder function for every get request
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -338,14 +343,17 @@ class Clone_Guard_API {
     }
 
     // Get a page of reports.
-    public function getReports($page) {
+    public function getReports($page = 1) {
         $output = [];
         $output['reports'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
         $url = $this->base_url . '/reports';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -387,14 +395,17 @@ class Clone_Guard_API {
     }
 
     // Get a page of scans.
-    public function getScans($page) {
+    public function getScans($page = 1) {
         $output = [];
         $output['scans'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
         $url = $this->base_url . '/scans';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -442,9 +453,12 @@ class Clone_Guard_API {
         $output['scans'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
-        $url = $this->base_url . '/schedules?page=' . $page;
+        $url = $this->base_url . '/schedules';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -470,9 +484,12 @@ class Clone_Guard_API {
         $output['scans'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
-        $url = $this->base_url . '/targets?page=' . $page;
+        $url = $this->base_url . '/targets';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
