@@ -12,7 +12,7 @@
 
     </div>
 
-    <h1 class="cgss-settings-title">Settings</h1>
+    <h1 class="cgss-title">Settings</h1>
 
     <!-- TODO -->
     <?php if(isset($_GET['msg']) && $_GET['msg'] == 'success'): ?>

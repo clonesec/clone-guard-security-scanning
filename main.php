@@ -2,8 +2,9 @@
 /*
  * Plugin Name: CloneGuard Security Scanning
  * Description: Connects a site to the CloneGuard Security Scanning system.
- * Author: Clone Systems
- * Version: 1.0.1
+ * Author: Clone Systems, Inc.
+ * Author URI: https://www.clone-systems.com
+ * Version: 1.8.0
  */
 
 defined('ABSPATH') || exit;
@@ -14,7 +15,7 @@ require_once(__DIR__ . '/classes/class-clone-guard-widget.php');
 class Clone_Guard_Security_Scanning {
     public $key = 'cgss';
     public $key_ = 'cgss_';
-    public $version = '1.0.1';
+    public $version = '1.8.0';
 
     public $feedback_url = 'https://pciscan.clone-systems.com/downloads/ASV-Feedback-Form.pdf';
 
@@ -35,27 +36,6 @@ class Clone_Guard_Security_Scanning {
 
     // Load the asset files for specific admin pages.
     public function adminEnqueueScripts($hook) {
-        if($this->hook_reports == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
-            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
-
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
-            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
-
-            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
-            wp_enqueue_style($this->key_ . 'admin_scan', plugins_url('css/admin_scan.css', __FILE__), [], $this->version);
-        }
-
-        if($this->hook_options == $hook) {
-            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
-            wp_enqueue_style($this->key_ . 'admin_ajax_form', plugins_url('css/admin_ajax_form.css', __FILE__), [], $this->version);
-        }
-
-        if($this->hook_settings == $hook) {
-            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
-            wp_enqueue_style($this->key_ . 'admin_ajax_form', plugins_url('css/admin_ajax_form.css', __FILE__), [], $this->version);
-        }
-
         if($this->hook_scans == $hook) {
             wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
             wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
@@ -66,7 +46,41 @@ class Clone_Guard_Security_Scanning {
             wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
 
-            wp_enqueue_style($this->key_ . 'admin_scan', plugins_url('css/admin_scan.css', __FILE__), [], $this->version);
+            wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
+        }
+        if($this->hook_reports == $hook) {
+            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
+
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
+
+            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
+
+            wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
+        }
+
+        if($this->hook_options == $hook) {
+            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
+
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
+
+            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
+
+
+            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
+
+            wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
+            wp_enqueue_style($this->key_ . 'admin_options', plugins_url('css/admin_options.css', __FILE__), [], $this->version);
+        }
+
+        if($this->hook_settings == $hook) {
+            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
+
+            wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
+            wp_enqueue_style($this->key_ . 'admin_settings', plugins_url('css/admin_settings.css', __FILE__), [], $this->version);
         }
     }
 
@@ -89,9 +103,8 @@ class Clone_Guard_Security_Scanning {
     public function adminMenu() {
         add_menu_page('CloneGuard Security', 'CloneGuard Security', 'manage_options', $this->key_ . 'scans', false, 'dashicons-shield-alt');
         $this->hook_scans = add_submenu_page($this->key_ . 'scans', 'Scans', 'Scans', 'manage_options', $this->key_ . 'scans', [$this, 'adminScans']);
-        // TODO: We hide the Options in menu for versioning reasons.
-        // $this->hook_options = add_submenu_page($this->key_ . 'scans', 'Options', 'Options', 'manage_options', $this->key_ . 'options', [$this, 'adminOptions']);
         $this->hook_reports = add_submenu_page($this->key_ . 'scans', 'Reports', 'Reports', 'manage_options', $this->key_ . 'reports', [$this, 'adminReports']);
+        $this->hook_options = add_submenu_page($this->key_ . 'scans', 'Options', 'Options', 'manage_options', $this->key_ . 'options', [$this, 'adminOptions']);
         $this->hook_settings = add_submenu_page($this->key_ . 'scans', 'Settings', 'Settings', 'manage_options', $this->key_ . 'settings', [$this, 'adminSettings']);
     }
 
@@ -233,14 +246,7 @@ class Clone_Guard_Security_Scanning {
             $subkey = '';
         }
 
-        if($key == 'notification-create' && isset($_GET['subkey'])) {
-            $action = $this->key_ . 'notification_create';
-            $last_key = sanitize_text_field($_GET['subkey']);
-            $url_back = $this->adminLink('scans', $last_key);
-            $url_back .= '&return=yes';
-
-            include 'views/admin_notification_create.php';
-        } elseif($key == 'scan-create') {
+        if($key == 'scan-create') {
             $action = $this->key_ . 'scan_create';
             $url_back = $this->adminLink('scans');
 
@@ -296,21 +302,13 @@ class Clone_Guard_Security_Scanning {
             $url_back .= '&return=yes';
 
             include 'views/admin_target_create.php';
-        } elseif($key == 'schedule-update' && isset($_GET['subkey'])) {
-            $action = $this->key_ . 'schedule_update';
-            $url_back = $this->adminLink('scans');
+        } elseif($key == 'notification-create' && isset($_GET['subkey'])) {
+            $action = $this->key_ . 'notification_create';
+            $last_key = sanitize_text_field($_GET['subkey']);
+            $url_back = $this->adminLink('scans', $last_key);
+            $url_back .= '&return=yes';
 
-            $schedule = $cloneGuardSecurityAPI->getSchedule($subkey);
-            $frequency = 'one_time';
-            if($schedule['period'] == '1' && $schedule['period_unit'] == 'day') {
-                $frequency = 'daily';
-            } elseif($schedule['period'] == '1' && $schedule['period_unit'] == 'week') {
-                $frequency = 'weekly';
-            } elseif($schedule['period'] == '1' && $schedule['period_unit'] == 'month') {
-                $frequency = 'monthly';
-            }
-
-            include 'views/admin_schedule_edit.php';
+            include 'views/admin_notification_create.php';
         } elseif($key) {
             $action = $this->key_ . 'scan_update';
             $url_back = $this->adminLink('scans');
@@ -366,10 +364,104 @@ class Clone_Guard_Security_Scanning {
 
     // Output the admin options page.
     public function adminOptions() {
-        $action = $this->key_ . 'options';
-        $title = 'CloneGuard Security Scanning';
+        global $cloneGuardSecurityAPI;
+        $action = $this ->key_ . 'options';
+        $title = 'Options';
 
-        include 'views/admin_options.php';
+        if(isset($_GET['key'])) {
+            $key = sanitize_text_field($_GET['key']);
+        } else {
+            $key = '';
+        }
+
+        if(isset($_GET['subkey'])) {
+            $subkey = sanitize_text_field($_GET['subkey']);
+        } else {
+            $subkey = '';
+        }
+
+        if(isset($_GET['paged'])) {
+            $paged = sanitize_text_field($_GET['paged']);
+        } else {
+            $paged = 1;
+        }
+
+        if($key == 'schedule-create') {
+            $action = $this->key_ . 'schedule_create';
+            $last_key = sanitize_text_field($_GET['subkey']);
+            $url_back = $this->adminLink('options', $last_key);
+            $url_back .= '&return=yes';
+
+            include 'views/admin_schedule_create.php';
+        } elseif($key == 'schedule-update' && isset($_GET['subkey'])) {
+            $action = $this->key_ . 'schedule_update';
+            $last_key = sanitize_text_field($_GET['subkey']);
+            $url_back = $this->adminLink('options', $last_key);
+            $url_back .= '&return=yes';
+
+            $schedule = $cloneGuardSecurityAPI->getSchedule($subkey);
+
+            $frequency = 'one_time';
+            if($schedule['period_unit'] == 'day') {
+                $frequency = 'daily';
+            } elseif($schedule['period_unit'] == 'week') {
+                $frequency = 'weekly';
+            } elseif($schedule['period_unit'] == 'month') {
+                $frequency = 'monthly';
+            }
+
+            include 'views/admin_schedule_edit.php';
+        } elseif($key == 'target-create') {
+            $action = $this->key_ . 'target_create';
+            $last_key = sanitize_text_field($_GET['subkey']);
+            $url_back = $this->adminLink('options', $last_key);
+            $url_back .= '&return=yes';
+
+            include 'views/admin_target_create.php';
+        } elseif($key == 'target-update' && isset($_GET['subkey'])) {
+            $action = $this->key_ . 'target_update';
+            $last_key = sanitize_text_field($_GET['subkey']);
+            $url_back = $this->adminLink('options', $last_key);
+            $url_back .= '&return=yes';
+
+            $target = $cloneGuardSecurityAPI->getTarget($subkey);
+            
+            include 'views/admin_target_edit.php';
+        } elseif($key == 'notification-create') {
+            $action = $this->key_ . 'notification_create';
+            $last_key = sanitize_text_field($_GET['subkey']);
+            $url_back = $this->adminLink('options', $last_key);
+            $url_back .= '&return=yes';
+
+            include 'views/admin_notification_create.php';
+        } elseif($key == 'notification-update' && isset($_GET['subkey'])) {
+            $action = $this->key_ . 'notification_update';
+            $last_key = sanitize_text_field($_GET['subkey']);
+            $url_back = $this->adminLink('options', $last_key);
+            $url_back .= '&return=yes';
+
+            $notification = $cloneGuardSecurityAPI->getNotification($subkey);
+            
+            include 'views/admin_notification_edit.php';
+        } else {
+            $url_current = $this->adminLink('options');
+            $nonce_schedule_delete = wp_create_nonce($this->key_ . 'schedule_delete');
+            $nonce_target_delete = wp_create_nonce($this->key_ . 'target_delete');
+            $nonce_notification_delete = wp_create_nonce($this->key_ . 'notification_delete');
+
+            if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
+                $page = $_GET['paged'];
+            } else {
+                $page = 1;
+            }
+
+            $schedules = $cloneGuardSecurityAPI->getSchedules($page);
+            $targets = $cloneGuardSecurityAPI->getAllTargets();
+            $notifications = $cloneGuardSecurityAPI->getAllNotifications();
+                 
+            include 'views/admin_options.php';
+        }
+
     }
 
     // AJAX to create a notification. 
@@ -408,6 +500,90 @@ class Clone_Guard_Security_Scanning {
                 } elseif($success) {
                     // Error message returned.
                     $output['messages'] = [$success];
+                }
+            }  
+        } else {
+            $output['status'] = 'error';    
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+        }
+        echo json_encode($output);
+        exit;
+    }
+
+    // AJAX to update a notification.
+    public function ajaxNotificationUpdate() {
+        global $cloneGuardSecurityAPI;
+        $output = [];
+        $output['status'] = 'error';
+        $output['messages'] = [];
+        $pass = true;
+        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'notification_update')) {
+            if(!isset($_POST['subkey']) || $_POST['subkey'] == '') {
+                $pass = false;
+                $output['messages'][] = 'There was a problem with the ID.';
+            }
+            if(!isset($_POST['name']) || $_POST['name'] == '') {
+                $pass = false;
+                $output['messages'][] = 'Please enter a Name.';
+            }
+            if(!isset($_POST['status_changed']) || $_POST['status_changed'] == '') {
+                $pass = false;
+                $output['messages'][] = 'Please select a Scan Status.';
+            }
+            if(!isset($_POST['email_address']) || $_POST['email_address'] == '') {
+                $pass = false;
+                $output['messages'][] = 'Please enter an email address.';
+            }
+
+            if($pass) {
+                $id = sanitize_text_field($_POST['subkey']);
+
+                $item = [];
+                $item['notifications[name]'] = sanitize_text_field($_POST['name']);
+                $item['notifications[status_changed]'] = sanitize_text_field($_POST['status_changed']);
+                $item['notifications[to_address]'] = sanitize_text_field($_POST['email_address']);
+
+                $success = $cloneGuardSecurityAPI->updateNotification($id, $item);
+
+                if($success === true) {
+                    $output['status'] = 'success';  
+                    $output['messages'] = ['The items have been successfully updated.'];
+                    $output['redirect'] = true;
+                } elseif($success) {
+                    // Error message returned.
+                    $output['messages'] = [$success];
+                }
+            }  
+        } else {
+            $output['status'] = 'error';    
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+        }
+        echo json_encode($output);
+        exit;
+    }
+
+    // AJAX to delete a notification.
+    public function ajaxNotificationDelete() {
+        global $cloneGuardSecurityAPI;
+        $output = [];
+        $output['status'] = 'error';
+        $output['messages'] = [];
+        $pass = true;
+        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'notification_delete')) {
+            if(!isset($_POST['id']) || $_POST['id'] == '') {
+                $pass = false;
+                $output['messages'][] = 'There was a problem getting the ID.';
+            }
+
+            if($pass) {
+                $id = sanitize_text_field($_POST['id']);
+
+                $success = $cloneGuardSecurityAPI->deleteNotification($id);
+
+                if($success) {
+                    $output['status'] = 'success';  
+                    $output['messages'] = ['The items have been successfully deleted.'];
+                    $output['reload'] = true;
                 }
             }  
         } else {
@@ -885,16 +1061,16 @@ class Clone_Guard_Security_Scanning {
                 $item['schedules[first_time]'] = sanitize_text_field($_POST['first_time']);
                 $item['schedules[timezone]'] = sanitize_text_field($_POST['timezone']);
                 if($frequency == 'one_time') {
-                    $item['schedules[period]'] = '1';
+                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
                     $item['schedules[period_unit]'] = 'once';
                 } elseif($frequency == 'daily') {
-                    $item['schedules[period]'] = '1';
+                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
                     $item['schedules[period_unit]'] = 'day';
                 } elseif($frequency == 'weekly') {
-                    $item['schedules[period]'] = '1';
+                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
                     $item['schedules[period_unit]'] = 'week';
                 } elseif($frequency == 'monthly') {
-                    $item['schedules[period]'] = '1';
+                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
                     $item['schedules[period_unit]'] = 'month';
                 }
                 $item['schedules[comment]'] = sanitize_textarea_field($_POST['comment']);
@@ -957,16 +1133,16 @@ class Clone_Guard_Security_Scanning {
                 $item['schedules[first_time]'] = sanitize_text_field($_POST['first_time']);
                 $item['schedules[timezone]'] = sanitize_text_field($_POST['timezone']);
                 if($frequency == 'one_time') {
-                    $item['schedules[period]'] = '1';
+                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
                     $item['schedules[period_unit]'] = 'once';
                 } elseif($frequency == 'daily') {
-                    $item['schedules[period]'] = '1';
+                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
                     $item['schedules[period_unit]'] = 'day';
                 } elseif($frequency == 'weekly') {
-                    $item['schedules[period]'] = '1';
+                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
                     $item['schedules[period_unit]'] = 'week';
                 } elseif($frequency == 'monthly') {
-                    $item['schedules[period]'] = '1';
+                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
                     $item['schedules[period_unit]'] = 'month';
                 }
                 $item['schedules[comment]'] = sanitize_textarea_field($_POST['comment']);
@@ -980,6 +1156,38 @@ class Clone_Guard_Security_Scanning {
                 } elseif($success) {
                     // Error message returned.
                     $output['messages'] = [$success];
+                }
+            }  
+        } else {
+            $output['status'] = 'error';    
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+        }
+        echo json_encode($output);
+        exit;
+    }
+
+    // AJAX to delete a schedule.
+    public function ajaxScheduleDelete() {
+        global $cloneGuardSecurityAPI;
+        $output = [];
+        $output['status'] = 'error';
+        $output['messages'] = [];
+        $pass = true;
+        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'schedule_delete')) {
+            if(!isset($_POST['id']) || $_POST['id'] == '') {
+                $pass = false;
+                $output['messages'][] = 'There was a problem getting the ID.';
+            }
+
+            if($pass) {
+                $id = sanitize_text_field($_POST['id']);
+
+                $success = $cloneGuardSecurityAPI->deleteSchedule($id);
+
+                if($success) {
+                    $output['status'] = 'success';  
+                    $output['messages'] = ['The items have been successfully deleted.'];
+                    $output['reload'] = true;
                 }
             }  
         } else {
@@ -1059,6 +1267,86 @@ class Clone_Guard_Security_Scanning {
                 } elseif($success) {
                     // Error message returned.
                     $output['messages'] = [$success];
+                }
+            }  
+        } else {
+            $output['status'] = 'error';    
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+        }
+        echo json_encode($output);
+        exit;
+    }
+
+    // AJAX to update a target.
+    public function ajaxTargetUpdate() {
+        global $cloneGuardSecurityAPI;
+        $output = [];
+        $output['status'] = 'error';
+        $output['messages'] = [];
+        $pass = true;
+        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'target_update')) {
+            if(!isset($_POST['subkey']) || $_POST['subkey'] == '') {
+                $pass = false;
+                $output['messages'][] = 'There was a problem with the ID.';
+            }
+            if(!isset($_POST['name']) || $_POST['name'] == '') {
+                $pass = false;
+                $output['messages'][] = 'Please enter a Name.';
+            }
+            if(!isset($_POST['hosts']) || $_POST['hosts'] == '') {
+                $pass = false;
+                $output['messages'][] = 'Please enter the hosts.';
+            }
+
+            if($pass) {
+                $id = sanitize_text_field($_POST['subkey']);
+
+                $item = [];
+                $item['targets[name]'] = sanitize_text_field($_POST['name']);
+                $item['targets[hosts]'] = sanitize_textarea_field($_POST['hosts']);
+                $item['targets[comment]'] = sanitize_textarea_field($_POST['comment']);
+
+                $success = $cloneGuardSecurityAPI->updateTarget($id, $item);
+
+                if($success === true) {
+                    $output['status'] = 'success';  
+                    $output['messages'] = ['The items have been successfully updated.'];
+                    $output['redirect'] = true;
+                } elseif($success) {
+                    // Error message returned.
+                    $output['messages'] = [$success];
+                }
+            }  
+        } else {
+            $output['status'] = 'error';    
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+        }
+        echo json_encode($output);
+        exit;
+    }
+
+    // AJAX to delete a target.
+    public function ajaxTargetDelete() {
+        global $cloneGuardSecurityAPI;
+        $output = [];
+        $output['status'] = 'error';
+        $output['messages'] = [];
+        $pass = true;
+        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'target_delete')) {
+            if(!isset($_POST['id']) || $_POST['id'] == '') {
+                $pass = false;
+                $output['messages'][] = 'There was a problem getting the ID.';
+            }
+
+            if($pass) {
+                $id = sanitize_text_field($_POST['id']);
+
+                $success = $cloneGuardSecurityAPI->deleteTarget($id);
+
+                if($success) {
+                    $output['status'] = 'success';  
+                    $output['messages'] = ['The items have been successfully deleted.'];
+                    $output['reload'] = true;
                 }
             }  
         } else {
@@ -1207,9 +1495,17 @@ class Clone_Guard_Security_Scanning {
 
         add_action('wp_ajax_' . $this->key_ . 'schedule_create', [$this, 'ajaxScheduleCreate']);
         add_action('wp_ajax_' . $this->key_ . 'schedule_update', [$this, 'ajaxScheduleUpdate']);
+        add_action('wp_ajax_' . $this->key_ . 'schedule_delete', [$this, 'ajaxScheduleDelete']);
+
+
+        add_action('wp_ajax_' . $this->key_ . 'target_create', [$this, 'ajaxTargetCreate']);
+        add_action('wp_ajax_' . $this->key_ . 'target_update', [$this, 'ajaxTargetUpdate']);
+        add_action('wp_ajax_' . $this->key_ . 'target_delete', [$this, 'ajaxTargetDelete']);
+
 
         add_action('wp_ajax_' . $this->key_ . 'notification_create', [$this, 'ajaxNotificationCreate']);
-        add_action('wp_ajax_' . $this->key_ . 'target_create', [$this, 'ajaxTargetCreate']);
+        add_action('wp_ajax_' . $this->key_ . 'notification_update', [$this, 'ajaxNotificationUpdate']);
+        add_action('wp_ajax_' . $this->key_ . 'notification_delete', [$this, 'ajaxNotificationDelete']);
 
         add_action('admin_init', [$this, 'adminTemplateRedirect']);
     }

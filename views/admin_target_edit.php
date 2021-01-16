@@ -12,7 +12,7 @@
 
     <div class="cgss_main">
         
-        <h1>Create Target</h1>
+        <h1>Edit Target</h1>
 
         <div id="ajax_message"></div>
 
@@ -21,6 +21,7 @@
                 <?php wp_nonce_field($action); ?>
                 <input name="action" type="hidden" value="<?php echo esc_attr($action); ?>" />
                 <input name="key" type="hidden" value="<?php echo esc_attr($key); ?>" />
+                <input name="subkey" type="hidden" value="<?php echo esc_attr($subkey); ?>" />
 
                 <div id="post-body-content">
                     <div class="stuffbox">
@@ -30,28 +31,25 @@
                                     <tbody>
                                         <tr>
                                             <td class="first"><label for="name"><?php esc_html_e('* Name', 'cgss'); ?></label></td>
-                                            <td><input type="text" name="name" size="30" value=""></td>
+                                            <td><input type="text" name="name" size="30" value="<?php echo esc_attr($target['name']); ?>"></td>
                                         </tr>
 
                                         <tr>
                                             <td class="first"><label><?php _e('* Hostnames or IP addresses', 'cgss'); ?></label></td>
-                                            <td><textarea name="hosts" size="30"></textarea></td>
+                                            <td><textarea name="hosts" size="30"><?php echo esc_html($target['hosts']); ?></textarea></td>
                                         </tr>
-
-        <?php /*
-                                        <tr>
-                                            <td class="first"><label><?php _e('Exclude hosts', 'cgss'); ?></label></td>
-                                            <td><textarea name="exclude_hosts" size="30"></textarea></td>
-                                        </tr>
-        */ ?>
 
                                         <tr>
                                             <td class="first"><label><?php _e('Comment', 'cgss'); ?></label></td>
-                                            <td><textarea name="comment" size="30"></textarea></td>
+                                            <td><textarea name="comment" size="30"><?php echo esc_html($target['comment']); ?></textarea></td>
                                         </tr>
 
                                         <tr>
-                                            <td colspan="2"><label><input type="checkbox" name="attest" value="yes" checked/> <?php _e('By selecting this checkbox you attest that this target includes all components which should be in scope for PCI DSS and any component considered out-of-scope for this target is properly segmented from your cardholder data environment. You also acknowledge that the proper scoping of this external target is your responsibility.', 'cgss'); ?></label></td>
+                                            <td colspan="2">
+                                            <label>
+                                                <input type="checkbox" name="attest" value="yes" checked />
+                                                <?php _e('By selecting this checkbox you attest that this target includes all components which should be in scope for PCI DSS and any component considered out-of-scope for this target is properly segmented from your cardholder data environment. You also acknowledge that the proper scoping of this external target is your responsibility.', 'cgss'); ?>
+                                            </label></td>
                                         </tr>
                                         <tr>
                                             <td class="first"></td>

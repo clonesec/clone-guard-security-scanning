@@ -124,11 +124,29 @@ jQuery(document).ready(function($) {
 		});
 	}
 
+	function toggleScheduleRepeatInput() {
+		var scheduleFrequencyValue = $('.schedule-frequency input[name="frequency"]:checked').val();
+
+		if (scheduleFrequencyValue === 'one_time') {
+			$('.schedule-repeat-input').hide()
+		} else {
+			$('.schedule-repeat-input').show()
+		}
+		
+	}
+
     // Initialize listeners. 
 	function init() {
 		$(document).on('submit', '.ajax_form', submit);
 
 		toggleInputPassword();
+
+		toggleScheduleRepeatInput()	
+		
+		$('.schedule-frequency input[name="frequency"]').change(function() {
+			toggleScheduleRepeatInput()	
+		})
+
 	}
 
     // Get everything started.

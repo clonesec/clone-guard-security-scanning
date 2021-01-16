@@ -13,10 +13,10 @@
     </div>
 
     <div class="cgss_main">
-        <span class="scans-table-top-section">
+        <span class="table-top-section">
             <h1>Scans</h1>
 
-            <a href="<?php echo $this->adminLink('scans', 'scan-create'); ?>" id="scans-add-scan-btn" class="button action page-title-action">Add Scan</a>
+            <a href="<?php echo $this->adminLink('scans', 'scan-create'); ?>" class="table-top-add-btn button action page-title-action">Add Scan</a>
         </span>
         
         <div id="ajax_message"></div>
@@ -142,11 +142,9 @@
                         </td>
                         <td>
                             <a class="button" href="<?php echo $this->adminLink('scans', $key); ?>">
-                                <span class="dashicons dashicons-edit" style="margin-top:4px;"></span>
                                 Edit
                             </a>
                             <a class="button delete" href="#" data-id="<?php echo esc_attr($scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_delete'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_delete); ?>">
-                                <span class="dashicons dashicons-trash" style="margin-top:4px;"></span>
                                 Delete
                             </a>
                             <span class="spinner inline"></span>

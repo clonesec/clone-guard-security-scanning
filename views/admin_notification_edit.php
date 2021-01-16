@@ -1,4 +1,4 @@
-<div class="cgss-target-create-page">
+<div class="cgss-notification-create-page">
 
     <div class="cgss-head">
         <div class="cgss-head-inside">
@@ -11,16 +11,16 @@
     </div>
 
     <div class="cgss_main">
-        
-        <h1>Create Target</h1>
+        <h1>Edit Notification</h1>
 
         <div id="ajax_message"></div>
 
         <div id="poststuff">
-            <form id="post-body" class="metabox-holder columns-2 ajax_form" action="admin-ajax.php" method="POST" style="margin:0">
+            <form id="post-body" class="metabox-holder columns-2 ajax_form" action="admin-ajax.php" method="POST" style="margin:0;">
                 <?php wp_nonce_field($action); ?>
                 <input name="action" type="hidden" value="<?php echo esc_attr($action); ?>" />
                 <input name="key" type="hidden" value="<?php echo esc_attr($key); ?>" />
+                <input name="subkey" type="hidden" value="<?php echo esc_attr($subkey); ?>" />
 
                 <div id="post-body-content">
                     <div class="stuffbox">
@@ -30,28 +30,30 @@
                                     <tbody>
                                         <tr>
                                             <td class="first"><label for="name"><?php esc_html_e('* Name', 'cgss'); ?></label></td>
-                                            <td><input type="text" name="name" size="30" value=""></td>
+                                            <td><input type="text" name="name" size="30" value="<?php echo esc_attr($notification['name']); ?>"></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('* Hostnames or IP addresses', 'cgss'); ?></label></td>
-                                            <td><textarea name="hosts" size="30"></textarea></td>
+                                            <td class="first"><label for="status_changed"><?php esc_html_e('* Scan Status', 'cgss'); ?></label></td>
+                                            <td>
+                                                <select name="status_changed">
+						<?php
+							$statuses = array("Done" => "Scan Completed", "Running" => "Scan Started");
+							foreach( $statuses as $key => $value ){
+								if($key == $notification['status_changed'])
+								        echo "<option value='".$key."' selected>".$value."</option>";
+								else
+								        echo "<option value='".$key."'>".$value."</option>";
+							}
+						?>
+                                                </select>
+                                            </td>
                                         </tr>
 
-        <?php /*
                                         <tr>
-                                            <td class="first"><label><?php _e('Exclude hosts', 'cgss'); ?></label></td>
-                                            <td><textarea name="exclude_hosts" size="30"></textarea></td>
-                                        </tr>
-        */ ?>
+                                            <td class="first"><label for="email_address"><?php esc_html_e('* Email Address', 'cgss'); ?></label></td>
+                                            <td><input type="text" name="email_address" size="30" value="<?php echo esc_attr($notification['email_options']['to_address']); ?>"></td>
 
-                                        <tr>
-                                            <td class="first"><label><?php _e('Comment', 'cgss'); ?></label></td>
-                                            <td><textarea name="comment" size="30"></textarea></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2"><label><input type="checkbox" name="attest" value="yes" checked/> <?php _e('By selecting this checkbox you attest that this target includes all components which should be in scope for PCI DSS and any component considered out-of-scope for this target is properly segmented from your cardholder data environment. You also acknowledge that the proper scoping of this external target is your responsibility.', 'cgss'); ?></label></td>
                                         </tr>
                                         <tr>
                                             <td class="first"></td>
@@ -70,9 +72,9 @@
                     </div>
 
                 </div><!-- /post-body-content -->
-            </form><!-- /post-body -->
-        </div>  
 
+            </form><!-- /post-body -->
+        </div>    
     </div>
 
 </div>

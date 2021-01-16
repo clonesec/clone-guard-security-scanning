@@ -239,20 +239,20 @@ class Clone_Guard_API {
     }
 
     // Get all the schedules.
-    public function getAllSchedules() {
+    public function getAllSchedules($page = 1) {
         $output = [];
 
         $page = 1;
         $temp = $this->getSchedules($page);
 
-        while(isset($temp['schedules']) && isset($temp['current_page']) && isset($temp['total_pages']) && $page <= $temp['total_pages']) {
-            foreach($temp['schedules'] as $schedule) {
-                array_push($output, $schedule);
-            }
+        // while(isset($temp['schedules']) && isset($temp['current_page']) && isset($temp['total_pages']) && $page <= $temp['total_pages']) {
+        //     foreach($temp['schedules'] as $schedule) {
+        //         array_push($output, $schedule);
+        //     }
 
-            $page++;
-            $temp = $this->getSchedules($page);
-        }
+        //     $page++;
+        //     $temp = $this->getSchedules($page);
+        // }
 
         $names = [];
         foreach($output as $schedule) {
@@ -294,9 +294,14 @@ class Clone_Guard_API {
         $output['scans'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
-        $url = $this->base_url . '/notifications?page=' . $page;
+        $url = $this->base_url . '/notifications';
+
+        // TODO; Implement a params builder function for every get request
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -310,6 +315,27 @@ class Clone_Guard_API {
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
             $output['current_page'] = $data['pagination']['current_page'];
+            return $output;
+        } else {
+            return $output;
+        }
+    }
+
+    // Get a notification.
+    public function getNotification($id) {
+        $output = [];
+
+        $url = $this->base_url . '/notifications/' . $id;
+        $response = $this->api('GET', $url);
+
+        $data = json_decode($response, true);
+        if(count($data['notifications'])) {
+            $notifications = $data['notifications'][0];
+            foreach($notifications as $key => $notification) {
+                $output = $notification;
+                return $output;
+                break;
+            }
             return $output;
         } else {
             return $output;
@@ -338,14 +364,17 @@ class Clone_Guard_API {
     }
 
     // Get a page of reports.
-    public function getReports($page) {
+    public function getReports($page = 1) {
         $output = [];
         $output['reports'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
         $url = $this->base_url . '/reports';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -387,14 +416,17 @@ class Clone_Guard_API {
     }
 
     // Get a page of scans.
-    public function getScans($page) {
+    public function getScans($page = 1) {
         $output = [];
         $output['scans'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
         $url = $this->base_url . '/scans';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -436,15 +468,39 @@ class Clone_Guard_API {
         }
     }
 
+    // Get a target.
+    public function getTarget($id) {
+        $output = [];
+
+        $url = $this->base_url . '/targets/' . $id;
+        $response = $this->api('GET', $url);
+
+        $data = json_decode($response, true);
+        if(count($data['targets'])) {
+            $targets = $data['targets'][0];
+            foreach($targets as $key => $target) {
+                $output = $target;
+                return $output;
+                break;
+            }
+            return $output;
+        } else {
+            return $output;
+        }
+    }
+
     // Get a page of schedules.
     public function getSchedules($page = 1) {
         $output = [];
-        $output['scans'] = [];
+        $output['schedules'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
-        $url = $this->base_url . '/schedules?page=' . $page;
+        $url = $this->base_url . '/schedules';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -454,6 +510,7 @@ class Clone_Guard_API {
 
         $data = json_decode($response, true);
         if(count($data['schedules'])) {
+            //echo '<pre>'; print_r($data['scans'][0]);die;
             $output['schedules'] = $data['schedules'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
@@ -470,9 +527,12 @@ class Clone_Guard_API {
         $output['scans'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
-        $output['current_page'] = 1;
+        $output['current_page'] = $page;
 
-        $url = $this->base_url . '/targets?page=' . $page;
+        $url = $this->base_url . '/targets';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
+        }
 
         $response = $this->api('GET', $url);
 
@@ -556,6 +616,75 @@ class Clone_Guard_API {
             return false;
         } elseif(isset($response['status_text'])) {
             return $response['status_text'];
+        } else {
+            return true;
+        }
+    }
+
+    // Update a target.
+    public function updateTarget($id, $item) {
+        $url = $this->base_url . '/targets/' . $id;
+
+        $response = $this->api('PUT', $url, $item);
+
+        if($response === false) {
+            return false;
+        } elseif(isset($response['status_text'])) {
+            return $response['status_text'];
+        } else {
+            return true;
+        }
+    }
+
+    // Update a notification.
+    public function updateNotification($id, $item) {
+        $url = $this->base_url . '/notifications/' . $id;
+
+        $response = $this->api('PUT', $url, $item);
+
+        if($response === false) {
+            return false;
+        } elseif(isset($response['status_text'])) {
+            return $response['status_text'];
+        } else {
+            return true;
+        }
+    }
+
+    // Deletes a schedule.
+    public function deleteSchedule($id) {
+        $url = $this->base_url . '/schedules/' . $id;
+
+        $response = $this->api('DELETE', $url);
+
+        if($response === false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // Deletes a target.
+    public function deleteTarget($id) {
+        $url = $this->base_url . '/targets/' . $id;
+
+        $response = $this->api('DELETE', $url);
+
+        if($response === false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // Deletes a notification.
+    public function deleteNotification($id) {
+        $url = $this->base_url . '/notifications/' . $id;
+
+        $response = $this->api('DELETE', $url);
+
+        if($response === false) {
+            return false;
         } else {
             return true;
         }

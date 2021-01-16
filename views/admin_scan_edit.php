@@ -31,7 +31,7 @@
                                 <table class="form-table editcomment" role="presentation">
                                     <tbody>
                                         <tr>
-                                            <td class="first"><label for="name"><?php esc_html_e('Name', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="name"><?php esc_html_e('Name*', 'cgss'); ?></label></td>
                                             <td><input type="text" name="name" size="30" value="<?php echo esc_attr($scan['name']); ?>"></td>
                                         </tr>
 
@@ -42,19 +42,27 @@
                                                     <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
                                                     <?php foreach($schedules as $schedule): ?>
                                                         <?php if($scan['schedule']['id'] == $schedule['id']): ?>
-                                                            <option value="<?php echo esc_attr($schedule['id']); ?>" selected><?php echo esc_html($schedule['name']); ?></option>
+                                                            <option value="<?php echo esc_attr($schedule['id']); ?>" selected>
+                                                                <?php echo esc_html($schedule['name']); ?>
+                                                            </option>
                                                         <?php else: ?>
                                                             <option value="<?php echo esc_attr($schedule['id']); ?>"><?php echo esc_html($schedule['name']); ?></option>
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Schedule', 'cgss'); ?></a>
+                                                <a 
+                                                    class="button return" 
+                                                    href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" 
+                                                    data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>"
+                                                    data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>">
+                                                    <?php _e('New Schedule', 'cgss'); ?>
+                                                </a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('Target', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php _e('Target*', 'cgss'); ?></label></td>
                                             <td>
                                                 <select name="target">
                                                     <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
@@ -89,8 +97,6 @@
                                                     <br>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
-                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Notification', 'cgss'); ?></a>
-                                                <span class="spinner inline"></span>
                                             </td>
                                         </tr> -->
 
@@ -107,6 +113,15 @@
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </select>
+                                                <a class="button return"
+                                                   style="margin-left:8px;"
+                                                   href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" 
+                                                   data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" 
+                                                   data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"
+                                                   >
+                                                    <?php _e('New Notification', 'cgss'); ?>
+                                                </a>
+                                                <span class="spinner inline"></span>
                                             </td>
                                         </tr>
 

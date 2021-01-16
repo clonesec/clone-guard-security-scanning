@@ -1,0 +1,21 @@
+.cgss-title {
+    padding: 0;
+    margin: 0;
+    padding-left: 20px;
+    margin-top: 24px;
+}
+
+.cgss-sub-title {
+    font-size: 20px;
+    align-self: center;
+}
+
+td.table-min-col, th.table-min-col {
+    width: 120px !important;
+    white-space: nowrap !important;
+}
+
+form#targets-filter,
+form#notifications-filter {
+    margin-top: 50px;
+}

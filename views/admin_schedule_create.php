@@ -36,13 +36,19 @@
 
                                         <tr>
                                             <td class="first"><label><?php esc_html_e('Frequency', 'cgss'); ?></label></td>
-                                            <td>
+                                            <td class="schedule-frequency">
                                                 <label><input type="radio" name="frequency" size="30" value="one_time" checked> One Time</label>
                                                 <label><input type="radio" name="frequency" size="30" value="daily"> Daily</label>
                                                 <label><input type="radio" name="frequency" size="30" value="weekly"> Weekly</label>
                                                 <label><input type="radio" name="frequency" size="30" value="monthly"> Monthly</label>
                                             </td>
                                         </tr>
+
+                                        <tr class="schedule-repeat-input">
+                                            <td class="first"><label for="period"><?php esc_html_e('* Repeat every', 'cgss'); ?></label></td>
+                                            <td><input type="text" name="period" size="30" value=""></td>
+                                        </tr>
+
 
                                         <tr>
                                             <td class="first"><label for="first_time"><?php esc_html_e('* First Time', 'cgss'); ?></label></td>

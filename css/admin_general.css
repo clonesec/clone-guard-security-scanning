@@ -1,10 +1,13 @@
+/* Removing the left padding from the header. */
+.toplevel_page_cgss_scans #wpcontent,
 .cloneguard-security_page_cgss_reports #wpcontent,
-.toplevel_page_cgss_scans #wpcontent {
+.cloneguard-security_page_cgss_options #wpcontent,
+.cloneguard-security_page_cgss_settings #wpcontent {
 	padding-left: 0;
 }
 
 /**
- *  Scans Head
+ *  Header section
  */
 
  .cgss-head {
@@ -44,7 +47,7 @@
 
 
 /**
- *  Settings Main
+ *  Main section
  */
 
 .cgss_main {
@@ -60,19 +63,55 @@
     }
 }
 
+.main-inside {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 40px;
+}
+
+
+
+#poststuff #post-body.columns-2 {
+    margin-right: 0;
+}
+
+
 /**
- *  Scans Page Table Top Section
+ *  Page Table Top Section
  */
 
-.scans-table-top-section {
+ .table-top-section {
     display: flex;
 }
 
-#scans-add-scan-btn {
-    width: 75px; /* TODO */
+.table-top-add-btn {
     align-self: center;
-    margin-left: 10px;
+    margin-left: 10px !important;
+    padding-top: 1px !important;
+    font-size: 12px !important;
 }
+
+
+
+/**
+ *  Tabs UI
+ */
+ .tabs {
+    list-style: none;
+    margin: 0;
+    border-bottom: 2px solid #eee;
+}
+
+    .tablink {
+        border-top: 2px solid #eee;
+        border-left: 2px solid #eee;
+        border-right: 2px solid #eee;
+        border-bottom: 0;
+        padding-bottom: 2px;
+        background: #fff;
+    }
+
+
 
 
 /**
