@@ -213,92 +213,77 @@ class Clone_Guard_API {
         return false;
     }
 
-    // Get all the notifications.
-    public function getAllNotifications() {
-        $output = [];
-
-        $page = 1;
-        $temp = $this->getNotifications($page);
-
-        while(isset($temp['notifications']) && isset($temp['current_page']) && isset($temp['total_pages']) && $page <= $temp['total_pages']) {
-            foreach($temp['notifications'] as $notification) {
-                array_push($output, $notification);
-            }
-
-            $page++;
-            $temp = $this->getNotifications($page);
-        }
-
-        $names = [];
-        foreach($output as $notification) {
-            $names[] = $notification['name'];
-        }
-        array_multisort($names, $output);
-
-        return $output;
-    }
-
     // Get all the schedules.
     public function getAllSchedules($page = 1) {
         $output = [];
+        $output['schedules'] = [];
+        $output['total'] = 0;
+        $output['total_pages'] = 0;
+        $output['current_page'] = $page;
 
-        $page = 1;
-        $temp = $this->getSchedules($page);
-
-        // while(isset($temp['schedules']) && isset($temp['current_page']) && isset($temp['total_pages']) && $page <= $temp['total_pages']) {
-        //     foreach($temp['schedules'] as $schedule) {
-        //         array_push($output, $schedule);
-        //     }
-
-        //     $page++;
-        //     $temp = $this->getSchedules($page);
-        // }
-
-        $names = [];
-        foreach($output as $schedule) {
-            $names[] = $schedule['name'];
+        $url = $this->base_url . '/schedules';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
         }
-        array_multisort($names, $output);
 
-        return $output;
+        $response = $this->api('GET', $url);
+
+        if($response === false) {
+            return false;
+        }
+
+        $data = json_decode($response, true);
+        if(count($data['schedules'])) {
+            $output['schedules'] = $data['schedules'][0];
+            $output['total'] = $data['pagination']['total_count'];
+            $output['total_pages'] = $data['pagination']['total_pages'];
+            $output['current_page'] = $data['pagination']['current_page'];
+            return $output;
+        } else {
+            return $output;
+        }
     }
 
     // Get all the targets.
-    public function getAllTargets() {
+    public function getAllTargets($page = 1) {
         $output = [];
+        $output['targets'] = [];
+        $output['total'] = 0;
+        $output['total_pages'] = 0;
+        $output['current_page'] = $page;
 
-        $page = 1;
-        $temp = $this->getTargets($page);
-
-        while(isset($temp['targets']) && isset($temp['current_page']) && isset($temp['total_pages']) && $page <= $temp['total_pages']) {
-            foreach($temp['targets'] as $target) {
-                array_push($output, $target);
-            }
-
-            $page++;
-            $temp = $this->getTargets($page);
+        $url = $this->base_url . '/targets';
+        if (isset($page)) {
+            $url = $url."?page=".$page;
         }
 
-        $names = [];
-        foreach($output as $target) {
-            $names[] = $target['name'];
-        }
-        array_multisort($names, $output);
+        $response = $this->api('GET', $url);
 
-        return $output;
+        if($response === false) {
+            return false;
+        }
+
+        $data = json_decode($response, true);
+        if(count($data['targets'])) {
+            $output['targets'] = $data['targets'][0];
+            $output['total'] = $data['pagination']['total_count'];
+            $output['total_pages'] = $data['pagination']['total_pages'];
+            $output['current_page'] = $data['pagination']['current_page'];
+            return $output;
+        } else {
+            return $output;
+        }
     }
 
-    // Get a page of notifications.
-    public function getNotifications($page = 1) {
+    // Get all the notifications.
+    public function getAllNotifications($page = 1) {
         $output = [];
-        $output['scans'] = [];
+        $output['notifications'] = [];
         $output['total'] = 0;
         $output['total_pages'] = 0;
         $output['current_page'] = $page;
 
         $url = $this->base_url . '/notifications';
-
-        // TODO; Implement a params builder function for every get request
         if (isset($page)) {
             $url = $url."?page=".$page;
         }
@@ -320,6 +305,7 @@ class Clone_Guard_API {
             return $output;
         }
     }
+
 
     // Get a notification.
     public function getNotification($id) {
@@ -387,7 +373,7 @@ class Clone_Guard_API {
             $output['reports'] = $data['reports'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
-            $output['current_page'] = $data['pagination']['current_page'];
+            $output['current_page'] = $data['pagination']['current_page'];          
             return $output;
         } else {
             return $output;
@@ -436,13 +422,14 @@ class Clone_Guard_API {
 
         $data = json_decode($response, true);
         if(count($data['scans'])) {
-            //echo '<pre>'; print_r($data['scans'][0]);die;
             $output['scans'] = $data['scans'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
             $output['current_page'] = $data['pagination']['current_page'];
+            // echo '<pre>'; print_r($output); echo '</pre>';
             return $output;
         } else {
+            // echo '<pre>'; print_r($output); echo '</pre>';
             return $output;
         }
     }
@@ -483,69 +470,6 @@ class Clone_Guard_API {
                 return $output;
                 break;
             }
-            return $output;
-        } else {
-            return $output;
-        }
-    }
-
-    // Get a page of schedules.
-    public function getSchedules($page = 1) {
-        $output = [];
-        $output['schedules'] = [];
-        $output['total'] = 0;
-        $output['total_pages'] = 0;
-        $output['current_page'] = $page;
-
-        $url = $this->base_url . '/schedules';
-        if (isset($page)) {
-            $url = $url."?page=".$page;
-        }
-
-        $response = $this->api('GET', $url);
-
-        if($response === false) {
-            return false;
-        }
-
-        $data = json_decode($response, true);
-        if(count($data['schedules'])) {
-            //echo '<pre>'; print_r($data['scans'][0]);die;
-            $output['schedules'] = $data['schedules'][0];
-            $output['total'] = $data['pagination']['total_count'];
-            $output['total_pages'] = $data['pagination']['total_pages'];
-            $output['current_page'] = $data['pagination']['current_page'];
-            return $output;
-        } else {
-            return $output;
-        }
-    }
-
-    // Get a page of targets.
-    public function getTargets($page = 1) {
-        $output = [];
-        $output['scans'] = [];
-        $output['total'] = 0;
-        $output['total_pages'] = 0;
-        $output['current_page'] = $page;
-
-        $url = $this->base_url . '/targets';
-        if (isset($page)) {
-            $url = $url."?page=".$page;
-        }
-
-        $response = $this->api('GET', $url);
-
-        if($response === false) {
-            return false;
-        }
-
-        $data = json_decode($response, true);
-        if(count($data['targets'])) {
-            $output['targets'] = $data['targets'][0];
-            $output['total'] = $data['pagination']['total_count'];
-            $output['total_pages'] = $data['pagination']['total_pages'];
-            $output['current_page'] = $data['pagination']['current_page'];
             return $output;
         } else {
             return $output;

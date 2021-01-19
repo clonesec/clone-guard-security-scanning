@@ -99,6 +99,50 @@ class Clone_Guard_Security_Scanning {
         return $url;
     }
 
+    // 
+    /**
+     * Creates the multipagination url params in the options page.
+     *
+     * @since 1.8
+     * 
+     * https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/
+     *
+     * @param string $type Schedules, Targets or Notificatoins.
+     * @param integer $page The page number of the current type.
+     * @return string The url with the params.
+     */
+    public function optionsPaginationLink($type, $page) {
+        if ($type == 'schedules') { 
+            $url = admin_url('admin.php?page=cgss_options&' . $type . 'Paged=' . $page); // Value of string: '&schedulesPaged=X'
+            if (isset($_GET['targetsPaged'])) {
+                $url = $url . '&targetsPaged=' . $_GET['targetsPaged'];
+            }
+            if (isset($_GET['notificationsPaged'])) {
+                $url = $url . '&notificationsPaged=' . $_GET['notificationsPaged'];
+            }
+        } elseif ($type == 'targets') {
+            $url = admin_url('admin.php?page=cgss_options&' . $type . 'Paged=' . $page); // Value of string: '&targetsPaged=X'
+            if (isset($_GET['schedulesPaged'])) {
+                $url = $url . '&schedulesPaged=' . $_GET['schedulesPaged'];
+            }
+            if (isset($_GET['notificationsPaged'])) {
+                $url = $url . '&notificationsPaged=' . $_GET['notificationsPaged'];
+            }
+        } elseif ($type == 'notifications') {
+            $url = admin_url('admin.php?page=cgss_options&' . $type . 'Paged=' . $page); // Value of string: '&notificationsPaged=X'
+            if (isset($_GET['schedulesPaged'])) {
+                $url = $url . '&schedulesPaged=' . $_GET['schedulesPaged'];
+            }
+            if (isset($_GET['targetsPaged'])) {
+                $url = $url . '&targetsPaged=' . $_GET['targetsPaged'];
+            }
+        } else {
+            $url = admin_url('admin.php?page=cgss_options');
+        }
+        $url = esc_url($url);
+        return $url;
+    }
+
     // Create the pages for the admin menu.
     public function adminMenu() {
         add_menu_page('CloneGuard Security', 'CloneGuard Security', 'manage_options', $this->key_ . 'scans', false, 'dashicons-shield-alt');
@@ -380,24 +424,14 @@ class Clone_Guard_Security_Scanning {
             $subkey = '';
         }
 
-        if(isset($_GET['paged'])) {
-            $paged = sanitize_text_field($_GET['paged']);
-        } else {
-            $paged = 1;
-        }
-
         if($key == 'schedule-create') {
             $action = $this->key_ . 'schedule_create';
-            $last_key = sanitize_text_field($_GET['subkey']);
-            $url_back = $this->adminLink('options', $last_key);
-            $url_back .= '&return=yes';
+            $url_back = $this->adminLink('options');
 
             include 'views/admin_schedule_create.php';
         } elseif($key == 'schedule-update' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'schedule_update';
-            $last_key = sanitize_text_field($_GET['subkey']);
-            $url_back = $this->adminLink('options', $last_key);
-            $url_back .= '&return=yes';
+            $url_back = $this->adminLink('options');
 
             $schedule = $cloneGuardSecurityAPI->getSchedule($subkey);
 
@@ -413,32 +447,24 @@ class Clone_Guard_Security_Scanning {
             include 'views/admin_schedule_edit.php';
         } elseif($key == 'target-create') {
             $action = $this->key_ . 'target_create';
-            $last_key = sanitize_text_field($_GET['subkey']);
-            $url_back = $this->adminLink('options', $last_key);
-            $url_back .= '&return=yes';
+            $url_back = $this->adminLink('options');
 
             include 'views/admin_target_create.php';
         } elseif($key == 'target-update' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'target_update';
-            $last_key = sanitize_text_field($_GET['subkey']);
-            $url_back = $this->adminLink('options', $last_key);
-            $url_back .= '&return=yes';
+            $url_back = $this->adminLink('options');
 
             $target = $cloneGuardSecurityAPI->getTarget($subkey);
             
             include 'views/admin_target_edit.php';
         } elseif($key == 'notification-create') {
             $action = $this->key_ . 'notification_create';
-            $last_key = sanitize_text_field($_GET['subkey']);
-            $url_back = $this->adminLink('options', $last_key);
-            $url_back .= '&return=yes';
+            $url_back = $this->adminLink('options');
 
             include 'views/admin_notification_create.php';
         } elseif($key == 'notification-update' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'notification_update';
-            $last_key = sanitize_text_field($_GET['subkey']);
-            $url_back = $this->adminLink('options', $last_key);
-            $url_back .= '&return=yes';
+            $url_back = $this->adminLink('options');
 
             $notification = $cloneGuardSecurityAPI->getNotification($subkey);
             
@@ -449,19 +475,29 @@ class Clone_Guard_Security_Scanning {
             $nonce_target_delete = wp_create_nonce($this->key_ . 'target_delete');
             $nonce_notification_delete = wp_create_nonce($this->key_ . 'notification_delete');
 
-            if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
-                $page = $_GET['paged'];
-            } else {
-                $page = 1;
+            if(isset($_GET['schedulesPaged'])) {
+                $schedulesPaged = sanitize_text_field($_GET['schedulesPaged']);
+                $schedules = $cloneGuardSecurityAPI->getAllSchedules($schedulesPaged);
+            } elseif(isset($_GET['schedulesPaged']) == NULL) {
+                $schedules = $cloneGuardSecurityAPI->getAllSchedules(1);
             }
 
-            $schedules = $cloneGuardSecurityAPI->getSchedules($page);
-            $targets = $cloneGuardSecurityAPI->getAllTargets();
-            $notifications = $cloneGuardSecurityAPI->getAllNotifications();
+            if(isset($_GET['targetsPaged'])) { 
+                $targetsPaged = sanitize_text_field($_GET['targetsPaged']);
+                $targets = $cloneGuardSecurityAPI->getAllTargets($targetsPaged);
+            } elseif(isset($_GET['targetsPaged']) == NULL) {
+                $targets = $cloneGuardSecurityAPI->getAllTargets(1);
+            }
+            
+            if(isset($_GET['notificationsPaged'])) { 
+                $notificationsPaged = sanitize_text_field($_GET['notificationsPaged']);
+                $notifications = $cloneGuardSecurityAPI->getAllNotifications($notificationsPaged);
+            } elseif(isset($_GET['notificationsPaged']) == NULL) {
+                $notifications = $cloneGuardSecurityAPI->getAllNotifications(1);
+            }
                  
             include 'views/admin_options.php';
         }
-
     }
 
     // AJAX to create a notification. 
