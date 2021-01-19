@@ -18,7 +18,13 @@
 
             <a href="<?php echo $this->adminLink('scans', 'scan-create'); ?>" class="table-top-add-btn button action page-title-action">Add Scan</a>
         </span>
-        
+
+        <div class="nav-tab-wrapper">
+            <a class="nav-tab nav-tab-active" href="#pci">PCI Scanning</a>
+            <a class="nav-tab" href="#vrms">Vulnerability Scanning</a>
+            <a class="nav-tab" href="#pentest">Penetration Scanning</a>
+        </div>
+
         <div id="ajax_message"></div>
 
         <hr class="wp-header-end">
