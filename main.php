@@ -1505,6 +1505,76 @@ class Clone_Guard_Security_Scanning {
                 }
             }
         }
+
+        if($pagenow == 'admin.php' && isset($_GET['page']) && $_GET['page'] == $this->key_ . 'options') {
+            $this->user_token = get_option($this->key_ . 'user_token');
+            $this->api_key = get_option($this->key_ . 'api_key');
+
+            // Make sure the API keys are valid.
+            if(!isset($this->user_token) || empty($this->user_token) || !isset($this->api_key) || empty($this->api_key)) {
+                wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                exit;
+            } else {
+                $schedules = $cloneGuardSecurityAPI->getAllSchedules(1);
+                $targets = $cloneGuardSecurityAPI->getAllTargets(1);
+                $notifications = $cloneGuardSecurityAPI->getAllNotifications(1);
+
+                if($schedules === false || $targets === false || $notifications === false) {
+                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                    exit;
+                }
+            }
+
+            // Handle Schedules deletes.
+            if(  (isset($_GET['action']) && $_GET['action'] == 'delete') ||
+                 (isset($_GET['action2']) && $_GET['action2'] == 'delete') || 
+                 (isset($_GET['action3']) && $_GET['action3'] == 'delete') ||
+                 (isset($_GET['action4']) && $_GET['action4'] == 'delete')) {
+                if(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'options') &&
+                   isset($_GET['schedules']) && is_array($_GET['schedules']))
+                {
+                    $schedules = $_GET['schedules'];
+
+                    foreach($schedules as $key => $schedule) {
+                        $schedules[$key] = sanitize_text_field($schedule);
+                    }
+
+                    foreach($schedules as $schedule) {
+                        $success = $cloneGuardSecurityAPI->deleteSchedule($schedule);
+                    }
+                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
+                    exit;
+                } elseif(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'options') &&
+                         isset($_GET['targets']) && is_array($_GET['targets'])) 
+                {
+                   $targets = $_GET['targets'];
+
+                   foreach($targets as $key => $target) {
+                       $targets[$key] = sanitize_text_field($target);
+                   }
+
+                   foreach($targets as $target) {
+                       $success = $cloneGuardSecurityAPI->deleteTarget($target);
+                   }
+                   wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
+                   exit;
+                } elseif(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'options') &&
+                        isset($_GET['notifications']) && is_array($_GET['notifications'])) 
+                {
+                  $notifications = $_GET['notifications'];
+
+                  foreach($notifications as $key => $notification) {
+                      $notifications[$key] = sanitize_text_field($notification);
+                  }
+
+                  foreach($notifications as $notification) {
+                      $success = $cloneGuardSecurityAPI->deleteNotification($notification);
+                  }
+                  wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
+                  exit;
+                }
+            }
+        }
     }  
 
     // Initialize all the hooks and filters.

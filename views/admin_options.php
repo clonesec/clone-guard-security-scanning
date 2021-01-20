@@ -95,6 +95,14 @@
             </table>
 
             <div class="tablenav bottom">
+                <div class="alignleft actions bulkactions">
+                    <label for="bulk-action-selector-top" class="screen-reader-text">Select bulk action</label>
+                        <select name="action2" id="bulk-action-selector-top">
+                            <option value="-1">Bulk Actions</option>
+                            <option value="delete">Delete</option>
+                        </select>
+                        <input type="submit" id="doaction" class="button action" value="Apply">
+                </div>
 
                 <div class="tablenav-pages">
                     <span class="displaying-num"><?php echo $schedules['total']; ?> items</span>
@@ -220,7 +228,14 @@
             </table>
 
             <div class="tablenav bottom">
-
+                <div class="alignleft actions bulkactions">
+                    <label for="bulk-action-selector-top" class="screen-reader-text">Select bulk action</label>
+                        <select name="action3" id="bulk-action-selector-top">
+                            <option value="-1">Bulk Actions</option>
+                            <option value="delete">Delete</option>
+                        </select>
+                        <input type="submit" id="doaction" class="button action" value="Apply">
+                </div>
                 <div class="tablenav-pages">
                     <span class="displaying-num"><?php echo $targets['total']; ?> items</span>
                     <span class="pagination-links">
@@ -344,6 +359,14 @@
             </table>
 
             <div class="tablenav bottom">
+                <div class="alignleft actions bulkactions">
+                    <label for="bulk-action-selector-top" class="screen-reader-text">Select bulk action</label>
+                        <select name="action4" id="bulk-action-selector-top">
+                            <option value="-1">Bulk Actions</option>
+                            <option value="delete">Delete</option>
+                        </select>
+                        <input type="submit" id="doaction" class="button action" value="Apply">
+                </div>
 
                 <div class="tablenav-pages">
                     <span class="displaying-num"><?php echo $notifications['total']; ?> items</span>
