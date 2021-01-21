@@ -26,8 +26,6 @@
         }
 
         .cgss-head-text {
-            display: flex;
-            flex-direction: column;
             align-self: center;
         }
             
@@ -35,14 +33,21 @@
                 padding: 0;
                 margin: 0;
                 font-weight: 500;
+                margin-bottom: 5px;
             }
 
             .cgss-head-subtitle {
                 margin: 0;
-                margin-top: 5px;
+                margin-top: 10px;
                 padding: 0;
                 font-size: 1.1em;
+                color: #23282d;
+                text-decoration: none;
+            } 
+            .cgss-head-subtitle:hover {
+                text-decoration: underline;
             }
+
 
 
 
@@ -314,3 +319,10 @@ label:nth-child(1) input[type=radio] {
         font-size: 1.2em !important;
         padding: 0px 30px !important;
     }
+
+/* Disabled state for nav-tab items. */
+.disabled-state {
+    color: #a0a5aa !important;
+    background: #f7f7f7 !important;
+    border-color: #ddd !important;
+}

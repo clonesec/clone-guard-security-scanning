@@ -5,7 +5,7 @@
             <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title">CloneGuard Security Scanning</h1>
-                <p class="cgss-head-subtitle">By Clone Systems, Inc.</p>
+                <a href="https://www.clone-systems.com/" target="_blank" class="cgss-head-subtitle">By Clone Systems, Inc.</a>
             </span>
         </div>
     </div>
@@ -38,7 +38,7 @@
                                             <td>
                                                 <select name="schedule">
                                                     <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
-                                                    <?php foreach($schedules as $schedule): ?>
+                                                    <?php foreach($schedules['schedules'] as $schedule): ?>
                                                         <?php if($scan['schedule']['id'] == $schedule['id']): ?>
                                                             <option value="<?php echo esc_attr($schedule['id']); ?>" selected><?php echo esc_html($schedule['name']); ?></option>
                                                         <?php else: ?>
@@ -56,7 +56,7 @@
                                             <td>
                                                 <select name="target">
                                                     <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
-                                                    <?php foreach($targets as $target): ?>
+                                                    <?php foreach($targets['targets'] as $target): ?>
                                                         <?php if($scan['target']['id'] == $target['id']): ?>
                                                             <option value="<?php echo esc_attr($target['id']); ?>" selected><?php echo esc_html($target['name']); ?></option>
                                                         <?php else: ?>
@@ -72,7 +72,7 @@
                                         <!-- <tr>
                                             <td class="first"><label><?php _e('Notifications', 'cgss'); ?></label></td>
                                             <td>
-                                                <?php foreach($notifications as $notification): ?>
+                                                <?php foreach($notifications['notifications'] as $notification): ?>
                                                     <?php if(in_array($notification['id'], $scan['notification_list'])): ?>
                                                     <label><input type="checkbox" name="notifications[]" value="<?php echo esc_attr($notification['id']); ?>" checked> <?php echo esc_html($notification['name']); ?></label><br>
                                                     <br>
@@ -91,7 +91,7 @@
                                             <td>
                                                 <select class="select2-multiple" name="notifications" multiple="multiple">
                                                     <option value=""><?php echo esc_html_e('Select notification...', 'cgss'); ?></option>
-                                                    <?php foreach($notifications as $notification): ?>
+                                                    <?php foreach($notifications['notifications'] as $notification): ?>
                                                         <?php if(in_array($notification['id'], $scan['notification_list'])): ?>
                                                             <option value="<?php echo esc_attr($notification['id']); ?>>" selected><?php echo esc_html($notification['name']); ?></option>
                                                         <?php else: ?>

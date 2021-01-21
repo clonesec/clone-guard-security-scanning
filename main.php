@@ -27,6 +27,9 @@ class Clone_Guard_Security_Scanning {
 
     public $scans = [];
 
+    public $userDetails = [];
+    public $appType = '';
+
     // The class constructor.
     public function __construct() {
         add_action('init', [$this, 'init']);
@@ -152,126 +155,6 @@ class Clone_Guard_Security_Scanning {
         $this->hook_settings = add_submenu_page($this->key_ . 'scans', 'Settings', 'Settings', 'manage_options', $this->key_ . 'settings', [$this, 'adminSettings']);
     }
 
-    // Output the admin reports page.
-    public function adminReports() {
-        global $cloneGuardSecurityAPI;
-        $action = $this->key_ . 'reports';
-        $title = 'Reports';
-
-        if(isset($_GET['key'])) {
-            $key = sanitize_text_field($_GET['key']);
-        } else {
-            $key = '';
-        }
-
-        if(isset($_GET['subkey'])) {
-            $subkey = sanitize_text_field($_GET['subkey']);
-        } else {
-            $subkey = '';
-        }
-
-        if(isset($_GET['paged'])) {
-            $paged = sanitize_text_field($_GET['paged']);
-        } else {
-            $paged = 1;
-        }
-
-        if($key == 'report-view' && $subkey) {
-            if($paged > 1) {
-                $url_back = $this->adminLink('reports', $paged);
-            } else {
-                $url_back = $this->adminLink('reports');
-            }
-            $nonce_report_download = wp_create_nonce($this->key_ . 'report_download');
-
-            $report = $cloneGuardSecurityAPI->getReport($subkey);
-
-            $report['date'] = date('D M j Y G:i:s', strtotime($report['name']));
-            $report['quarter'] = $this->getQuarter($report['name']);
-            if(isset($report['task']) && isset($report['task']['name'])) {
-                $report['scan_name'] = $report['task']['name'];
-            } else {
-                $report['scan_name'] = '';
-            }
-            if(isset($report['results_count']) && isset($report['results_count']['high_and_medium'])) {
-                $report['display_vulnerabilities'] = $report['results_count']['high_and_medium'];
-            } else {
-                $report['display_vulnerabilities'] = '';
-            }
-            if(isset($report['compliance']) && $report['compliance']) {
-                $report['display_compliance'] = '<span class="icon_pass">Pass</span>';
-            } else {
-                $report['display_compliance'] = '<span class="icon_fail">Fail</span>';
-            }
-            if(isset($report['files']) && isset($report['files']['attestation'])) {
-                $report['attestation_status'] = 'generated';
-            } else {
-                $report['attestation_status'] = 'ungenerated';
-            }
-            if(isset($report['files']) && isset($report['files']['detailed'])) {
-                $report['detailed_status'] = 'generated';
-            } else {
-                $report['detailed_status'] = 'ungenerated';
-            }
-            if(isset($report['files']) && isset($report['files']['executive'])) {
-                $report['executive_status'] = 'generated';
-            } else {
-                $report['executive_status'] = 'ungenerated';
-            }
-            if(isset($report['files']) && isset($report['files']['remediation'])) {
-                $report['remediation_status'] = 'generated';
-            } else {
-                $report['remediation_status'] = 'ungenerated';
-            }
-            $report['feedback_status'] = 'generated';
-            //echo '<pre>'; print_r($report);die;
-
-            include 'views/admin_report_view.php';
-        } else {
-            $url_current = $this->adminLink('reports');
-            $nonce_report_delete = wp_create_nonce($this->key_ . 'report_delete');
-
-            if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
-                $page = $_GET['paged'];
-            } else {
-                $page = 1;
-            }
-            $reports = $cloneGuardSecurityAPI->getReports($page);
-
-            foreach($reports['reports'] as $key => $report) {
-                $reports['reports'][$key]['date'] = date('D M j Y G:i:s', strtotime($report['name']));
-                $reports['reports'][$key]['quarter'] = $this->getQuarter($report['name']);
-                if(isset($report['task']) && isset($report['task']['name'])) {
-                    $reports['reports'][$key]['scan_name'] = $report['task']['name'];
-                } else {
-                    $reports['reports'][$key]['scan_name'] = '';
-                }
-                if(isset($report['results']) && isset($report['results']['high_and_medium'])) {
-                    $reports['reports'][$key]['display_vulnerabilities'] = $report['results']['high_and_medium'];
-                } else {
-                    $reports['reports'][$key]['display_vulnerabilities'] = '';
-                }
-                if(isset($report['compliance']) && $report['compliance']) {
-                    $reports['reports'][$key]['display_compliance'] = '<span class="icon_pass">Pass</span>';
-                } else {
-                    $reports['reports'][$key]['display_compliance'] = '<span class="icon_fail">Fail</span>';
-                }
-            }
-            include 'views/admin_reports.php';
-        }
-    }
-
-    // Output the admin settings page.
-    public function adminSettings() {
-        $action = $this->key_ . 'settings';
-        $title = 'CloneGuard Security Scanning';
-
-        $user_token = get_option($this->key_ . 'user_token');
-        $api_key = get_option($this->key_ . 'api_key');
-
-        include 'views/admin_settings.php';
-    }
-
     // Output the admin scans page.
     public function adminScans() {
         global $cloneGuardSecurityAPI;
@@ -395,14 +278,136 @@ class Clone_Guard_Security_Scanning {
             $url_current = $this->adminLink('scans');
             $nonce_scan_action = wp_create_nonce($this->key_ . 'scan_action');
             $nonce_scan_delete = wp_create_nonce($this->key_ . 'scan_delete');
+            $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');
 
             if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
                 $page = $_GET['paged'];
             } else {
                 $page = 1;
             }
+
             $scans = $cloneGuardSecurityAPI->getScans($page);
+            $this->userDetails['appType'] = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
+            $this->userDetails['pciAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['pci'];
+            $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
+            $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];
+
             include 'views/admin_scans.php';
+        }
+    }
+
+    // Output the admin reports page.
+    public function adminReports() {
+        global $cloneGuardSecurityAPI;
+        $action = $this->key_ . 'reports';
+        $title = 'Reports';
+
+        if(isset($_GET['key'])) {
+            $key = sanitize_text_field($_GET['key']);
+        } else {
+            $key = '';
+        }
+
+        if(isset($_GET['subkey'])) {
+            $subkey = sanitize_text_field($_GET['subkey']);
+        } else {
+            $subkey = '';
+        }
+
+        if(isset($_GET['paged'])) {
+            $paged = sanitize_text_field($_GET['paged']);
+        } else {
+            $paged = 1;
+        }
+
+        if($key == 'report-view' && $subkey) {
+            if($paged > 1) {
+                $url_back = $this->adminLink('reports', $paged);
+            } else {
+                $url_back = $this->adminLink('reports');
+            }
+            $nonce_report_download = wp_create_nonce($this->key_ . 'report_download');
+
+            $report = $cloneGuardSecurityAPI->getReport($subkey);
+
+            $report['date'] = date('D M j Y G:i:s', strtotime($report['name']));
+            $report['quarter'] = $this->getQuarter($report['name']);
+            if(isset($report['task']) && isset($report['task']['name'])) {
+                $report['scan_name'] = $report['task']['name'];
+            } else {
+                $report['scan_name'] = '';
+            }
+            if(isset($report['results_count']) && isset($report['results_count']['high_and_medium'])) {
+                $report['display_vulnerabilities'] = $report['results_count']['high_and_medium'];
+            } else {
+                $report['display_vulnerabilities'] = '';
+            }
+            if(isset($report['compliance']) && $report['compliance']) {
+                $report['display_compliance'] = '<span class="icon_pass">Pass</span>';
+            } else {
+                $report['display_compliance'] = '<span class="icon_fail">Fail</span>';
+            }
+            if(isset($report['files']) && isset($report['files']['attestation'])) {
+                $report['attestation_status'] = 'generated';
+            } else {
+                $report['attestation_status'] = 'ungenerated';
+            }
+            if(isset($report['files']) && isset($report['files']['detailed'])) {
+                $report['detailed_status'] = 'generated';
+            } else {
+                $report['detailed_status'] = 'ungenerated';
+            }
+            if(isset($report['files']) && isset($report['files']['executive'])) {
+                $report['executive_status'] = 'generated';
+            } else {
+                $report['executive_status'] = 'ungenerated';
+            }
+            if(isset($report['files']) && isset($report['files']['remediation'])) {
+                $report['remediation_status'] = 'generated';
+            } else {
+                $report['remediation_status'] = 'ungenerated';
+            }
+            $report['feedback_status'] = 'generated';
+
+            include 'views/admin_report_view.php';
+        } else {
+            $url_current = $this->adminLink('reports');
+            $nonce_report_delete = wp_create_nonce($this->key_ . 'report_delete');
+            $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');
+
+            if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
+                $page = $_GET['paged'];
+            } else {
+                $page = 1;
+            }
+            $reports = $cloneGuardSecurityAPI->getReports($page);
+
+            foreach($reports['reports'] as $key => $report) {
+                $reports['reports'][$key]['date'] = date('D M j Y G:i:s', strtotime($report['name']));
+                $reports['reports'][$key]['quarter'] = $this->getQuarter($report['name']);
+                if(isset($report['task']) && isset($report['task']['name'])) {
+                    $reports['reports'][$key]['scan_name'] = $report['task']['name'];
+                } else {
+                    $reports['reports'][$key]['scan_name'] = '';
+                }
+                if(isset($report['results']) && isset($report['results']['high_and_medium'])) {
+                    $reports['reports'][$key]['display_vulnerabilities'] = $report['results']['high_and_medium'];
+                } else {
+                    $reports['reports'][$key]['display_vulnerabilities'] = '';
+                }
+                if(isset($report['compliance']) && $report['compliance']) {
+                    $reports['reports'][$key]['display_compliance'] = '<span class="icon_pass">Pass</span>';
+                } else {
+                    $reports['reports'][$key]['display_compliance'] = '<span class="icon_fail">Fail</span>';
+                }
+            }
+
+            $this->userDetails['appType'] = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
+            $this->userDetails['pciAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['pci'];
+            $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
+            $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];
+
+            include 'views/admin_reports.php';
         }
     }
 
@@ -474,6 +479,7 @@ class Clone_Guard_Security_Scanning {
             $nonce_schedule_delete = wp_create_nonce($this->key_ . 'schedule_delete');
             $nonce_target_delete = wp_create_nonce($this->key_ . 'target_delete');
             $nonce_notification_delete = wp_create_nonce($this->key_ . 'notification_delete');
+            $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');     
 
             if(isset($_GET['schedulesPaged'])) {
                 $schedulesPaged = sanitize_text_field($_GET['schedulesPaged']);
@@ -495,9 +501,25 @@ class Clone_Guard_Security_Scanning {
             } elseif(isset($_GET['notificationsPaged']) == NULL) {
                 $notifications = $cloneGuardSecurityAPI->getAllNotifications(1);
             }
-                 
+
+            $this->userDetails['appType'] = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
+            $this->userDetails['pciAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['pci'];
+            $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
+            $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];  
+
             include 'views/admin_options.php';
         }
+    }
+
+    // Output the admin settings page.
+    public function adminSettings() {
+        $action = $this->key_ . 'settings';
+        $title = 'CloneGuard Security Scanning';
+
+        $user_token = get_option($this->key_ . 'user_token');
+        $api_key = get_option($this->key_ . 'api_key');
+
+        include 'views/admin_settings.php';
     }
 
     // AJAX to create a notification. 
@@ -1575,7 +1597,41 @@ class Clone_Guard_Security_Scanning {
                 }
             }
         }
-    }  
+    }
+
+    function updateUserAppType() {
+        global $cloneGuardSecurityAPI;
+        $output = [];
+        $output['status'] = 'error';
+        $output['messages'] = [];
+        $pass = true;
+        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'update_user_app_type')) {
+            if(!isset($_POST['apptype']) || $_POST['apptype'] == '') {
+                $pass = false;
+                $output['messages'][] = 'There was a problem getting the app type.';
+            }
+
+            if($pass) {
+                $theAppType = sanitize_text_field($_POST['apptype']);
+
+                $success = $cloneGuardSecurityAPI->updateUserAppType($theAppType);
+
+                if($success) {
+                    $output['status'] = 'success';  
+                    $output['messages'] = ['The items have been successfully deleted.'];
+                    $output['reload'] = true;
+                    $output['appType'] = $theAppType;
+                }
+            }  
+        } else {
+            $output['status'] = 'error';    
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+        }
+        echo json_encode($output);
+        exit;
+    }
+
+
 
     // Initialize all the hooks and filters.
     public function init() {
@@ -1612,6 +1668,8 @@ class Clone_Guard_Security_Scanning {
         add_action('wp_ajax_' . $this->key_ . 'notification_create', [$this, 'ajaxNotificationCreate']);
         add_action('wp_ajax_' . $this->key_ . 'notification_update', [$this, 'ajaxNotificationUpdate']);
         add_action('wp_ajax_' . $this->key_ . 'notification_delete', [$this, 'ajaxNotificationDelete']);
+
+        add_action('wp_ajax_' . $this->key_ . 'update_user_app_type', [$this, 'updateUserAppType']);
 
         add_action('admin_init', [$this, 'adminTemplateRedirect']);
     }

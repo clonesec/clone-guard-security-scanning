@@ -6,7 +6,7 @@
             <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title">CloneGuard Security Scanning</h1>
-                <p class="cgss-head-subtitle">By Clone Systems, Inc.</p>
+                <a href="https://www.clone-systems.com/" target="_blank" class="cgss-head-subtitle">By Clone Systems, Inc.</a>
             </span>
         </div>
 
@@ -16,11 +16,50 @@
         
         <h1 class="wp-heading-inline">Reports</h1>
 
-        <div class="nav-tab-wrapper">
-            <a class="nav-tab nav-tab-active" href="#pci">PCI Scanning</a>
-            <a class="nav-tab" href="#vrms">Vulnerability Scanning</a>
-            <a class="nav-tab" href="#pentest">Penetration Scanning</a>
-        </div>
+        <form method="get" class="nav-tab-wrapper">
+            <?php if(($this->userDetails['pciAvailable']) && ($this->userDetails['appType']) !== 'pci'): ?>
+                <a  href="#"
+                    class="nav-tab update-app-type <?PHP echo ($this->userDetails['appType'] == 'pci')? 'nav-tab-active': ''; ?>"    
+                    data-apptype="<?php echo esc_attr('pci'); ?>"
+                    data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
+                    data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
+                    PCI Scanning
+                </a>
+            <?php elseif (($this->userDetails['pciAvailable']) && ($this->userDetails['appType']) == 'pci'): ?>
+                <a href="#" class="nav-tab nav-tab-active">PCI Scanning</a>
+            <?php else: ?>
+                <a class="nav-tab disabled-state">PCI Scanning</a>
+            <?php endif; ?>
+
+            <?php if(($this->userDetails['vrmsAvailable']) && ($this->userDetails['appType']) !== 'vrms'): ?>
+                <a  href="#" 
+                    class="nav-tab update-app-type <?PHP echo ($this->userDetails['appType'] == 'vrms')? 'nav-tab-active': ''; ?>"    
+                    data-apptype="<?php echo esc_attr('vrms'); ?>"
+                    data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
+                    data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
+                    Vulnerability Scanning
+                </a>
+            <?php elseif (($this->userDetails['vrmsAvailable']) && ($this->userDetails['appType']) == 'vrms'): ?>
+                <a href="#" class="nav-tab nav-tab-active">Vulnerability Scanning</a>
+            <?php else: ?>
+                <a class="nav-tab disabled-state">Vulnerability Scanning</a>
+            <?php endif; ?>
+
+            <?php if(($this->userDetails['penetrationAvailable']) && ($this->userDetails['appType']) !== 'penetration'): ?>
+                <a  href="#" 
+                    class="nav-tab update-app-type <?PHP echo ($this->userDetails['appType'] == 'penetration')? 'nav-tab-active': ''; ?>"    
+                    data-apptype="<?php echo esc_attr('penetration'); ?>"
+                    data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
+                    data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
+                    Penetration Testing
+                </a>
+            <?php elseif (($this->userDetails['penetrationAvailable']) && ($this->userDetails['appType']) == 'penetration'): ?>
+                <a href="#" class="nav-tab nav-tab-active">Penetration Testing</a>
+            <?php else: ?>
+                <a class="nav-tab disabled-state">Penetration Testing</a>
+            <?php endif; ?>
+            <span class="spinner inline"></span>
+        </form>
 
         <div id="ajax_message"></div>
 

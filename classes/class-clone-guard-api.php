@@ -306,7 +306,6 @@ class Clone_Guard_API {
         }
     }
 
-
     // Get a notification.
     public function getNotification($id) {
         $output = [];
@@ -429,7 +428,6 @@ class Clone_Guard_API {
             // echo '<pre>'; print_r($output); echo '</pre>';
             return $output;
         } else {
-            // echo '<pre>'; print_r($output); echo '</pre>';
             return $output;
         }
     }
@@ -614,5 +612,36 @@ class Clone_Guard_API {
         }
     }
 
-}
+    // Get the user details.
+    public function getUserDetails() {
+        $url = $this->base_url . '/my_details';
 
+        $response = $this->api('GET', $url);
+
+        if($response === false) {
+            return false;
+        }
+
+        $data = json_decode($response, true);
+        if (isset($data)) {
+            return $data['details'];
+        }
+    }
+
+    // Change user's app type.
+    public function updateUserAppType($appType) {
+        $url = $this->base_url . '/modules/?app_type=' . $appType;
+
+        $response = $this->api('PUT', $url);
+
+        if($response === false) {
+            return false;
+        } elseif(isset($response['status_text'])) {
+            return $response['status_text'];
+        } else {
+            return true;
+        }
+
+    }
+
+}
