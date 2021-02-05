@@ -10,13 +10,31 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A plugin that connects to Clone Systems security scanning account.
+A holistic security scanning plugin for PCI ASV compliant scans, vulnerability scans, and penetration tests. Know your website's weaknesses before others do!
 
 == Description ==
+DOWNLOAD THE ONLY AUTOMATED PLUGIN TO COVER ALL OF YOUR SECURITY SCANNING NEEDS
 
-The CloneGuard Security Scanning plugin is a plugin that allows Wordpress users to connect to their Clone Systems PCI ASV Compliance scanning account. The plugin creates an admin section where you can add, modify, and control the PCI ASV scans associated with you Clone Systems account.
+The CloneGuard Security Scanning plugin helps increase the Trust level of your website visitors.
 
-This plugin also adds a widget so that a Clone Systems security seal can be easily added to your site anywhere your theme allows widgets to be displayed.
+Easily add a certified CloneGuard Security Seal widget anywhere on your website or cart, by using your existing WP theme.
+
+View, start, create, modify, enable/disable your PCI ASV Scans, Vulnerability Scans, GDPR Scans, or Pentests.
+
+Start your website's easy certification process today: 
+
+   1. Place your order (use our discount code below for WordPress users)
+   2. Install the CloneGuard WP plugin
+   3. Login with your credentials that you've created in step 1 above
+   4. Schedule your scan(s) and let the automated AI platform perform them
+   5. Place the Security Seal widget anywhere on your website
+
+YOUR DISCOUNT
+WordPress users can get a discount by using a first-time order code: WORDPRESSNEW
+
+== Support ==
+
+Our clients enjoy our 24x7 support services. We've created a stable security solution so that you can focus on your website. Contact us for additional information and technical support: https://www.clone-systems.com/contact-us/
 
 == Installation ==
 
@@ -29,11 +47,26 @@ This plugin also adds a widget so that a Clone Systems security seal can be easi
 
 == Screenshots ==
 
-1. Create Scans to identify your websites weaknesses
-2. Review the Reports that contain all the information on the identified vulnerabilities
-3. Use the Settings page to setup access between the plugin and the security scanning portal
+1. Review the overall security posture of your website 
+2. When your site is secure add a website seal so your client's have access to your security report
+3. Create Scans to identify your websites' weaknesses
+4. Review the Reports that contain all the information on the identified vulnerabilities
+5. Manage all your scan components from this page
+6. Use the Settings page to setup access between the plugin and the security scanning portal
 
 == Changelog ==
+
+= 2.1.0 =
+* Added overview page
+* Implemented scan profiles for vulnerability management
+* Implemented scan profiles for pentesting
+* Added portal URL customization for partner portals
+
+= 2.0.0 =
+* Added vulnerability scanning module 
+* Added penetration testing module
+* Implemented tabs functionality
+* Implement bulk actions functionality on Options page
 
 = 1.8.0 =
 * Added Options page

@@ -5,16 +5,21 @@ class Clone_Guard_API {
     public $key = 'cgss';
     public $key_ = 'cgss_';
 
+    public $portal_url = '';
     public $api_key = '';
     public $user_token = '';
 
+    public $base_url = '';
+
     // Base URL for API.
-    public $base_url = 'https://pciscan.clone-systems.com/API/v1';
+    // public $base_url = 'https://pciscan.clone-systems.com/API/v1';
 
     // The class constructor.
     public function __construct() {
+            $this->portal_url = get_option($this->key_ . 'portal_url');
             $this->api_key = get_option($this->key_ . 'api_key');
             $this->user_token = get_option($this->key_ . 'user_token');
+            $this->base_url = 'https://' . $this->portal_url . '/API/v1';
     }
 
     // Base method to make API calls.
@@ -306,6 +311,64 @@ class Clone_Guard_API {
         }
     }
 
+    // Get scanners.
+    public function getScanners() {
+        $output = [];
+        $output['scanners'] = [];
+        $output['total'] = 0;
+        $output['total_pages'] = 0;
+        $output['current_page'] = 1;
+
+        $url = $this->base_url . '/scanners/activated'; //?per_page=20
+
+        $response = $this->api('GET', $url);
+
+        if($response === false) {
+            return false;
+        }
+
+        $data = json_decode($response, true);
+        // return $data;
+        if(count($data['scanners'])) {
+            $output['scanners'] =  $data['scanners'][0];
+            $output['total'] = $data['count']['total'];
+            // $output['total_pages'] = $data['pagination']['total_pages'];
+            // $output['current_page'] = $data['pagination']['current_page'];
+            return $output;
+        } else {
+            return $output;
+        }
+    }
+
+    // Get scan configs.
+    public function getScanConfigs() {
+        $output = [];
+        $output['configs'] = [];
+        $output['total'] = 0;
+        $output['total_pages'] = 0;
+        $output['current_page'] = 1;
+
+        $url = $this->base_url . '/configs?active=false'."&per_page=100";
+
+        $response = $this->api('GET', $url);
+
+        if($response === false) {
+            return false;
+        }
+
+        $data = json_decode($response, true);
+        // return $data;
+        if(count($data['configs'])) {
+            $output['configs'] =  $data['configs'][0];
+            $output['total'] = $data['pagination']['total_count'];
+            $output['total_pages'] = $data['pagination']['total_pages'];
+            $output['current_page'] = $data['pagination']['current_page'];
+            return $output;
+        } else {
+            return $output;
+        }
+    }
+
     // Get a notification.
     public function getNotification($id) {
         $output = [];
@@ -349,7 +412,7 @@ class Clone_Guard_API {
     }
 
     // Get a page of reports.
-    public function getReports($page = 1) {
+    public function getReports($page = 1, $perPage = 10) {
         $output = [];
         $output['reports'] = [];
         $output['total'] = 0;
@@ -357,8 +420,10 @@ class Clone_Guard_API {
         $output['current_page'] = $page;
 
         $url = $this->base_url . '/reports';
-        if (isset($page)) {
+        if (isset($page) && !isset($perPage)) {
             $url = $url."?page=".$page;
+        } elseif (isset($page) && isset($perPage)) {
+            $url = $url."?page=".$page."&per_page=".$perPage;
         }
 
         $response = $this->api('GET', $url);

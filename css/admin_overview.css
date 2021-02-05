@@ -1,0 +1,346 @@
+.cgss-overview-page {
+
+}
+
+.nav-tab-wrapper {
+    margin-bottom: 25px;
+}
+
+.overview-row {
+    display: flex;   
+}
+    .overview-row-box {
+        padding: 30px;
+        border-radius: 5px;
+        background: #fff;
+    }
+
+    .section-general {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .section-reports {
+        flex: 3;
+        margin-left: 5px;
+    }
+
+    .section-product {
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+    }
+
+
+@media(max-width: 960px) {
+    
+    .overview-row {
+        flex-direction: column;
+    }
+
+        .section-general {
+            margin-bottom: 10px;
+        }
+}
+
+/**
+ * Section Features 
+ */
+.overview-features {
+    align-self: center;
+}
+
+    .features-heading {
+
+    }
+
+    .features-list {
+        margin-top: 30px;
+    }
+    
+        .feature {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+        }
+
+            .feature-img {
+                width: 50px;
+                align-self: center;
+            }
+
+            .feature-text {
+                flex: 4;
+                align-self: center;
+                margin-left: 10px;
+            }
+
+                .feature-heading {
+                    margin: 0;
+                }
+
+                .feature-description {
+                    margin: 0;
+                    font-size: 1.2em;
+                }
+            
+            .feature-radio {
+                align-self: center;
+                flex: 1;
+                text-align: center;
+            }
+
+
+/**
+ * Section General 
+ */
+ .general-wrapper {
+    align-self: center;
+ }
+
+ .general-icon-container {
+     display: flex;
+     justify-content: center;
+     margin-bottom: 20px;
+ }
+    .general-icon {
+        width: 120px;
+    }
+
+.general-text {
+    display: flex;
+    flex-direction: column;
+}
+
+    .general-h1 {
+        text-align: center;
+        margin: 0px;
+        margin-bottom: 15px;
+        font-size: 2.2em;
+        line-height: 1.1;
+    }
+
+    .general-text p {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        font-size: 1.1em;
+    }
+
+.general-btn-container {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.btn-overview {
+    font-size: 1.2em !important;
+    padding: 0px 60px !important;
+    background-color: #47A730 !important;
+    color: #fff !important;
+    border: none !important;
+    margin-top: 30px !important;
+ }
+ .btn-overview:hover {
+     background-color: #3f9c28 !important;
+ }
+
+
+
+
+/**
+ * Section Reports  
+ */
+ .reports-h2 {
+    font-size: 1.8em;
+    line-height: 1.1;
+}
+
+.reports-btn-container {
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+}
+    .reports-btn-container a {
+        margin-top: 10px !important;
+        font-size: 18px !important;
+        padding: 0 60px !important;
+        display: flex;
+    }
+        .reports-btn-container a span{
+            line-height: 0 !important;
+            
+        }
+
+.report {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #DDD;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+}
+    
+    .report-date {
+        flex: 3;
+    }
+
+    .report-name {
+        flex: 4;
+    }
+
+    .report-vulnerabilities {
+        flex: 2;
+    }
+
+        .report-vulnerabilities small {
+            margin: 2px;
+            padding: 1px 8px;
+            border-radius: 3px;
+        }
+
+        .report-high {
+            background-color: #f96f6b;
+        }
+
+        .report-medium {
+            background-color: orange;
+        }
+
+        .report-low {
+            background-color: yellow;
+        }
+
+
+    .report-compliance {
+        flex: 1;
+        text-align: right;
+    }
+
+/**
+ * Section Product  
+ */
+.section-product-img {
+    width: 350px; 
+    box-shadow: 0px 0px 10px 10px #00000030;
+}
+
+.section-product-text {
+    /* padding: 0 30px; */
+}
+
+.section-product-text p {
+    font-size: 1.2em;
+}
+
+
+
+
+
+
+/**
+ * Features Checkbox switch
+ * Source: https://www.designlabthemes.com/css-toggle-switch/
+ * 
+ * .checkbox-animate2: The class for the OFF state.
+ */
+
+
+.checkbox-switch {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    width: 70px;
+    height: 25px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    line-height: 1.2;
+    font-size: 14px;
+}
+
+.checkbox-switch input.input-checkbox {
+	position: absolute;
+	left: 0;
+	top: 0;
+    width: 70px;
+    height: 25px;
+	padding: 0;
+	margin: 0;
+	opacity: 0;
+	z-index: 2;
+	cursor: grab;
+}
+
+.checkbox-switch .checkbox-animate,
+.checkbox-switch .checkbox-animate2 {
+    position: relative;
+    width: 70px;
+    height: 25px;
+    background-color: #95a5a6;
+    -webkit-transition: background 0.25s ease-out 0s;
+    transition: background 0.25s ease-out 0s;
+}
+
+.checkbox-switch .checkbox-animate:before,
+.checkbox-switch .checkbox-animate2:before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 17px;
+	height: 17px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	background-color: #7f8c8d;
+	top: 4px;
+	left: 5px;
+	 -webkit-transition: left 0.3s ease-out 0s;
+    transition: left 0.3s ease-out 0s;
+    z-index: 10;
+}
+
+.checkbox-switch .checkbox-off,
+.checkbox-switch .checkbox-on {
+	float: left;
+	color: #fff;
+	font-weight: 700;
+	padding-top: 6px;
+	 -webkit-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+}
+
+.checkbox-switch .checkbox-off {
+	margin-left: 30px;
+	opacity: 1;
+}
+
+.checkbox-switch .checkbox-on {
+	display: none;
+	float: right;
+	margin-right: 35px;
+	opacity: 0;
+}
+
+.checkbox-switch input.input-checkbox:checked + .checkbox-animate .checkbox-off,
+.checkbox-switch input.input-checkbox:checked + .checkbox-animate2 .checkbox-off {
+	display: none;
+	opacity: 0;
+}
+
+.checkbox-switch input.input-checkbox:checked + .checkbox-animate .checkbox-on {
+	display: block;
+	opacity: 1;
+}
+
+.checkbox-switch input.input-checkbox:checked + .checkbox-animate {
+	background-color: #47A730;
+}
+
+.checkbox-switch input.input-checkbox:checked + .checkbox-animate:before {
+	left: 49px;
+	background-color: #fff;
+}

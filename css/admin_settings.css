@@ -3,13 +3,6 @@
 }
 
 
-.cgss-title {
-    padding: 0;
-    margin: 0;
-    padding-left: 20px;
-    margin-top: 24px;
-}
-
 
 
 /**
@@ -87,7 +80,8 @@
 }
 
 .ajax_form .form-table input[type=text],
-.settings-form-input {
+.settings-form-input,
+.settings-input-password {
 	width: 100%;
 	max-width: 500px;
     margin-bottom: 6px;

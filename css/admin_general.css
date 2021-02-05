@@ -1,5 +1,6 @@
 /* Removing the left padding from the header. */
-.toplevel_page_cgss_scans #wpcontent,
+.toplevel_page_cgss_overview #wpcontent,
+.cloneguard-security_page_cgss_scans #wpcontent,
 .cloneguard-security_page_cgss_reports #wpcontent,
 .cloneguard-security_page_cgss_options #wpcontent,
 .cloneguard-security_page_cgss_settings #wpcontent {
@@ -42,13 +43,21 @@
                 padding: 0;
                 font-size: 1.1em;
                 color: #23282d;
-                text-decoration: none;
             } 
-            .cgss-head-subtitle:hover {
+            .cgss-head-subtitle a {
+                text-decoration: none;;
+            }
+            .cgss-head-subtitle a:hover {
                 text-decoration: underline;
             }
 
 
+.cgss-title {
+    padding: 0;
+    margin: 0;
+    padding-left: 20px;
+    margin-top: 24px;
+}
 
 
 /**
@@ -99,23 +108,29 @@
 
 
 /**
- *  Tabs UI
+ *  Tabs
  */
- .tabs {
-    list-style: none;
-    margin: 0;
-    border-bottom: 2px solid #eee;
+ /* Disabled state for nav-tab items. */
+
+.nav-tab {
+    font-size: 13px !important;
 }
 
-    .tablink {
-        border-top: 2px solid #eee;
-        border-left: 2px solid #eee;
-        border-right: 2px solid #eee;
-        border-bottom: 0;
-        padding-bottom: 2px;
-        background: #fff;
-    }
+.nav-tab-wrapper a {
+    display: flex;
+    align-items: center;
+}
 
+.nav-tab img {
+    width: 30px;
+    margin-right: 5px;
+}
+
+.disabled-state {
+    color: #a0a5aa !important;
+    background: #f7f7f7 !important;
+    border-color: #ddd !important;
+}
 
 
 
@@ -320,9 +335,16 @@ label:nth-child(1) input[type=radio] {
         padding: 0px 30px !important;
     }
 
-/* Disabled state for nav-tab items. */
-.disabled-state {
-    color: #a0a5aa !important;
-    background: #f7f7f7 !important;
-    border-color: #ddd !important;
-}
+
+/**
+ *  Helpers
+ */
+
+
+ .success-pci-color {
+    color: #3FA327;
+ }
+
+ .warning-pci-color {
+    color: #FECF1B;
+ }

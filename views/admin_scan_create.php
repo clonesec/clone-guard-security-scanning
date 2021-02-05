@@ -5,7 +5,7 @@
             <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title">CloneGuard Security Scanning</h1>
-                <a href="https://www.clone-systems.com/" target="_blank" class="cgss-head-subtitle">By Clone Systems, Inc.</a>
+                <span class="cgss-head-subtitle">By <a href="https://www.clone-systems.com/" target="_blank">Clone Systems, Inc.</a></span>
             </span>
         </div>
     </div>
@@ -52,7 +52,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('Target', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php _e('Target*', 'cgss'); ?></label></td>
                                             <td>
                                                 <select name="target">
                                                     <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
@@ -69,23 +69,6 @@
                                             </td>
                                         </tr>
 
-                                        <!-- <tr>
-                                            <td class="first"><label><?php _e('Notifications', 'cgss'); ?></label></td>
-                                            <td>
-                                                <?php foreach($notifications['notifications'] as $notification): ?>
-                                                    <?php if(in_array($notification['id'], $scan['notification_list'])): ?>
-                                                    <label><input type="checkbox" name="notifications[]" value="<?php echo esc_attr($notification['id']); ?>" checked> <?php echo esc_html($notification['name']); ?></label><br>
-                                                    <br>
-                                                    <?php else: ?>
-                                                    <label><input type="checkbox" name="notifications[]" value="<?php echo esc_attr($notification['id']); ?>"> <?php echo esc_html($notification['name']); ?></label><br>
-                                                    <br>
-                                                    <?php endif; ?>
-                                                <?php endforeach; ?>
-                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Notification', 'cgss'); ?></a>
-                                                <span class="spinner inline"></span>
-                                            </td>
-                                        </tr> -->
-
                                         <tr>
                                             <td class="first"><label><?php _e('Notifications', 'cgss'); ?></label></td>
                                             <td>
@@ -99,8 +82,59 @@
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </select>
+                                                <a class="button return"
+                                                   style="margin-left:8px;"
+                                                   href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" 
+                                                   data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" 
+                                                   data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"
+                                                   >
+                                                    <?php _e('New Notification', 'cgss'); ?>
+                                                </a>
                                             </td>
                                         </tr>
+
+                                        <?php if ($this->userDetails['appType'] == 'vrms' || $this->userDetails['appType'] == 'penetration'): ?>
+                                            <tr>
+                                                <td class="first"><label><?php _e('Scanner*', 'cgss'); ?></label></td>
+                                                <td>
+                                                    <select name="scanner">
+                                                        <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
+                                                        <?php foreach($scanners['scanners'] as $scanner): ?>
+                                                            <?php if($scan['scanner']['id'] == $scanner['id']): ?>
+                                                                <option value="<?php echo esc_attr($scanner['id']); ?>" selected><?php echo esc_html($scanner['name']); ?></option>
+                                                            <?php else: ?>
+                                                                <option value="<?php echo esc_attr($scanner['id']); ?>" ><?php echo esc_html($scanner['name']); ?></option>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+
+                                            <?php //print_r($scanners); ?>
+                                            <?php //echo '<br/> '; ?>
+                                            <?php //print_r($configs); ?>
+
+                                        <?php if ($this->userDetails['appType'] == 'vrms' || $this->userDetails['appType'] == 'penetration'): ?>
+                                            <tr>
+                                                <td class="first"><label><?php _e('Scanner Config*', 'cgss'); ?></label></td>
+                                                <td>
+                                                    <select name="scan_config">
+                                                        <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
+                                                        <?php foreach($configs['configs'] as $config): ?>
+                                                            <?php if($config['app_type'] == $this->userDetails['appType']): ?>
+                                                                <?php if($scan['config']['id'] == $config['id']): ?>
+                                                                    <option value="<?php echo esc_attr($config['id']); ?>" selected><?php echo esc_html($config['name']); ?></option>
+                                                                <?php else: ?>
+                                                                    <option value="<?php echo esc_attr($config['id']); ?>" ><?php echo esc_html($config['name']); ?></option>
+                                                                <?php endif; ?>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <?php //print_r($configs['configs']); ?>
+                                        <?php endif; ?>
 
                                         <tr>
                                             <td class="first"><label><?php _e('Comment', 'cgss'); ?></label></td>

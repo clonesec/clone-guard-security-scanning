@@ -6,7 +6,7 @@
             <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title"><?php echo esc_html($title); ?></h1>
-                <a href="https://www.clone-systems.com/" target="_blank" class="cgss-head-subtitle">By Clone Systems, Inc.</a>
+                <span class="cgss-head-subtitle">By <a href="https://www.clone-systems.com/" target="_blank">Clone Systems, Inc.</a></span>
             </span>
         </div>
 
@@ -14,7 +14,6 @@
 
     <h1 class="cgss-title">Settings</h1>
 
-    <!-- TODO -->
     <?php if(isset($_GET['msg']) && $_GET['msg'] == 'success'): ?>
     <div id="ajax_message" class="notice notice-success"><p>All updated.</p></div>
     <?php elseif(isset($_GET['msg']) && $_GET['msg'] == 'access'): ?>
@@ -53,17 +52,24 @@
                 <table class="form-table">
                     <tbody>
                         <tr class="form-field">
+                            <th scope="row"><label>Portal URL:</label></th>
+                            <td>
+                                <input class="settings-form-input" type="text" name="portal_url" value="<?php echo esc_attr($portal_url); ?>" placeholder="">
+                                <p class="description">You can set the URL of your portal.</p>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
                             <th scope="row"><label>User Token:</label></th>
                             <td>
-                                <input class="settings-form-input" type="password" name="user_token" value="<?php echo esc_attr($user_token); ?>" placeholder="">
+                                <input class="settings-form-input settings-input-password" type="password" name="user_token" value="<?php echo esc_attr($user_token); ?>" placeholder="">
                                 <p class="description">You can find your User Token in your account.</p>
                             </td>
                         </tr>
                         <tr class="form-field">
-                            <th scope="row"><label>API Key:</label></th>
+                            <th scope="row"><label>Key:</label></th>
                             <td>
-                                <input class="settings-form-input" type="password" name="api_key" value="<?php echo esc_attr($api_key); ?>" placeholder="">
-                                <p class="description">You can find your API Key in your account.</p>
+                                <input class="settings-form-input settings-input-password" type="password" name="api_key" value="<?php echo esc_attr($api_key); ?>" placeholder="">
+                                <p class="description">You can find your Key in your account.</p>
                             </td>
                         </tr>
                     </tbody>

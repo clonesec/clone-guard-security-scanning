@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
     // Listener for form submit.
 	function submit() {
 		$form = $(this);
+		console.log($form);
 		var $button = $form.find('.button-primary');
         var $spinner = $form.find('.spinner:not(.inline)');
 		var data = $(this).serialize();
@@ -113,7 +114,7 @@ jQuery(document).ready(function($) {
 
 	// Listener for Settings Page password type inputs.
 	function toggleInputPassword() {
-		var settingsInput = $('.settings-form-input');
+		var settingsInput = $('.settings-input-password');
 
 		settingsInput.focus(function(){
 			$(this).prop('type', 'text')
