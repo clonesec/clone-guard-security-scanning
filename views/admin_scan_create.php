@@ -46,7 +46,13 @@
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Schedule', 'cgss'); ?></a>
+                                                <a class="button return" 
+                                                    href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" 
+                                                    data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" 
+                                                    data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"
+                                                >
+                                                    <?php _e('New Schedule', 'cgss'); ?>
+                                                </a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
@@ -64,7 +70,14 @@
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <a class="button return" href="<?php echo $this->adminLink('scans', 'target-create', $scan['id']); ?>" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"><?php _e('New Target', 'cgss'); ?></a>
+                                                <a class="button return"
+                                                    href="<?php echo $this->adminLink('scans', 'target-create', $scan['id']); ?>" 
+                                                    data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" 
+                                                    data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" 
+                                                    data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"
+                                                >
+                                                    <?php _e('New Target', 'cgss'); ?>
+                                                 </a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
@@ -93,7 +106,7 @@
                                             </td>
                                         </tr>
 
-                                        <?php if ($this->userDetails['appType'] == 'vrms' || $this->userDetails['appType'] == 'penetration'): ?>
+                                        <?php if ($app_type == 'vrms' || $app_type == 'penetration'): ?>
                                             <tr>
                                                 <td class="first"><label><?php _e('Scanner*', 'cgss'); ?></label></td>
                                                 <td>
@@ -111,18 +124,14 @@
                                             </tr>
                                         <?php endif; ?>
 
-                                            <?php //print_r($scanners); ?>
-                                            <?php //echo '<br/> '; ?>
-                                            <?php //print_r($configs); ?>
-
-                                        <?php if ($this->userDetails['appType'] == 'vrms' || $this->userDetails['appType'] == 'penetration'): ?>
+                                        <?php if ($app_type == 'vrms' || $app_type == 'penetration'): ?>
                                             <tr>
                                                 <td class="first"><label><?php _e('Scanner Config*', 'cgss'); ?></label></td>
                                                 <td>
                                                     <select name="scan_config">
                                                         <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
                                                         <?php foreach($configs['configs'] as $config): ?>
-                                                            <?php if($config['app_type'] == $this->userDetails['appType']): ?>
+                                                            <?php if($config['app_type'] == $app_type): ?>
                                                                 <?php if($scan['config']['id'] == $config['id']): ?>
                                                                     <option value="<?php echo esc_attr($config['id']); ?>" selected><?php echo esc_html($config['name']); ?></option>
                                                                 <?php else: ?>
@@ -133,7 +142,6 @@
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <?php //print_r($configs['configs']); ?>
                                         <?php endif; ?>
 
                                         <tr>

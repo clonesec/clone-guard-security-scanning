@@ -132,7 +132,7 @@
                         </span>
 
                         <span class="reports-btn-container" style="margin-top:10px;">
-                            <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo $this->adminLink('reports'); ?>">View Reports</a>
+                            <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo $this->adminLink('vulnerabilities'); ?>">View Vulnerabilities</a>
                         </span>
                     <?php endif; ?>
                     </div>
@@ -264,9 +264,9 @@
                         $protocols = array('http://', 'https://');
                     ?>  
                         <?php if(!empty($reports['reports'])): ?>
-                            <a class="button btn-overview" href=https://seals.clone-systems.com/report?dn=<?php echo str_replace($protocols, '', get_bloginfo('wpurl')); ?> target="_blank" style="font-size:1.2em!important;padding:0 20px!important;">View Security Report</a>
+                            <a class="button btn-overview" href=https://seals.clone-systems.com/report?dn=<?php echo str_replace($protocols, '', get_bloginfo('wpurl')); ?> target="_blank" style="font-size:1.2em!important;padding:0 20px!important;">View Validation Report</a>
                         <?php else: ?>
-                            <button class="button btn-overview" style="font-size:1.2em!important;padding:0 20px!important;" disabled>View Security Report</a>
+                            <button class="button btn-overview" style="font-size:1.2em!important;padding:0 20px!important;" disabled>View Validation Report</a>
                         <?php endif; ?>
                     </span>
                 </div>

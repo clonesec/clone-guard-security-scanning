@@ -23,6 +23,7 @@ class Clone_Guard_Security_Scanning {
     public $hook_overview;
     public $hook_scans;
     public $hook_reports;
+    public $hook_vulnerabilities;
     public $hook_options;
     public $hook_settings;
 
@@ -78,6 +79,20 @@ class Clone_Guard_Security_Scanning {
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
         }
 
+        if($this->hook_vulnerabilities == $hook) {
+            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
+
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
+
+            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
+
+            wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
+            wp_enqueue_style($this->key_ . 'admin_vulnerability', plugins_url('css/admin_vulnerability.css', __FILE__), [], $this->version);
+
+        }
+
         if($this->hook_options == $hook) {
             wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
             wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
@@ -116,7 +131,6 @@ class Clone_Guard_Security_Scanning {
         return $url;
     }
 
-    // 
     /**
      * Creates the multipagination url params in the options page.
      *
@@ -166,6 +180,7 @@ class Clone_Guard_Security_Scanning {
         $this->hook_overview = add_submenu_page($this->key_ . 'overview', 'Overview', 'Overview', 'manage_options', $this->key_ . 'overview', [$this, 'adminOverview']);
         $this->hook_scans = add_submenu_page($this->key_ . 'overview', 'Scans', 'Scans', 'manage_options', $this->key_ . 'scans', [$this, 'adminScans']);
         $this->hook_reports = add_submenu_page($this->key_ . 'overview', 'Reports', 'Reports', 'manage_options', $this->key_ . 'reports', [$this, 'adminReports']);
+        $this->hook_vulnerabilities = add_submenu_page($this->key_ . 'overview', 'Vulnerabilities', 'Vulnerabilities', 'manage_options', $this->key_ . 'vulnerabilities', [$this, 'adminVulnerabilities']);
         $this->hook_options = add_submenu_page($this->key_ . 'overview', 'Options', 'Options', 'manage_options', $this->key_ . 'options', [$this, 'adminOptions']);
         $this->hook_settings = add_submenu_page($this->key_ . 'overview', 'Settings', 'Settings', 'manage_options', $this->key_ . 'settings', [$this, 'adminSettings']);
     }
@@ -183,6 +198,13 @@ class Clone_Guard_Security_Scanning {
         $this->userDetails['pciAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['pci'];
         $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
         $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];
+
+        if ($app_type == 'penetration') {
+            $this->hook_vulnerabilities = add_submenu_page($this->key_ . 'overview', 'Findings', 'Findings', 'manage_options', $this->key_ . 'vulnerabilities', [$this, 'adminVulnerabilities']);
+        } 
+        // else {
+        //     $this->hook_vulnerabilities = add_submenu_page($this->key_ . 'overview', 'Vulnerabilities', 'Vulnerabilities', 'manage_options', $this->key_ . 'vulnerabilities', [$this, 'adminVulnerabilities']);
+        // }
 
         $page = 1;
 
@@ -257,13 +279,13 @@ class Clone_Guard_Security_Scanning {
             $scan['config']['id'] = '';
             $scan['comment'] = '';
 
-            $notifications = $cloneGuardSecurityAPI->getAllNotifications();
-            $targets = $cloneGuardSecurityAPI->getAllTargets();
             $schedules = $cloneGuardSecurityAPI->getAllSchedules();
-            
-            $this->userDetails['appType'] = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
-            $configs = $cloneGuardSecurityAPI->getScanConfigs();
+            $targets = $cloneGuardSecurityAPI->getAllTargets();
+            $notifications = $cloneGuardSecurityAPI->getAllNotifications();
             $scanners = $cloneGuardSecurityAPI->getScanners();
+            $configs = $cloneGuardSecurityAPI->getScanConfigs();
+            
+            $app_type = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
 
             if(isset($_GET['return']) && $_GET['return'] == 'yes') {
                 $user_id = get_current_user_id();
@@ -281,8 +303,13 @@ class Clone_Guard_Security_Scanning {
                         $scan['notification_list'] = explode(',', $scans[$scan['id']]['notifications']);
                     }
                     // TODO
-                    // if(isset($scan['config'])) {
-                    //     $scan['config']['id'] = $scans[$scan['id']]['config'];
+                    // if ($app_type == 'vrms' || $app_type == 'penetration') {
+                    //     if(isset($scan['scanner'])) {
+                    //         $scan['scanner']['id'] =  $scans[$scan['id']]['scanner'];
+                    //     }
+                    //     if(isset($scan['config'])) {
+                    //         $scan['config']['id'] =  $scans[$scan['id']]['config'];
+                    //     }
                     // }
                     $scan['comment'] = $scans[$scan['id']]['comment'];
                 }
@@ -348,8 +375,13 @@ class Clone_Guard_Security_Scanning {
                         $scan['notification_list'] = explode(',', $scans[$scan['id']]['notifications']);
                     }
                     // TODO
-                    // if(isset($scan['config'])) {
-                    //     $scan['config']['id'] = $scans[$scan['id']]['config'];
+                    // if ($app_type == 'vrms' || $app_type == 'penetration') {
+                    //     if(isset($scan['scanner'])) {
+                    //         $scan['scanner']['id'] =  $scans[$scan['id']]['scanner'];
+                    //     }
+                    //     if(isset($scan['config'])) {
+                    //         $scan['config']['id'] =  $scans[$scan['id']]['config'];
+                    //     }
                     // }
                     $scan['comment'] = $scans[$scan['id']]['comment'];
                 }
@@ -493,6 +525,100 @@ class Clone_Guard_Security_Scanning {
             $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];
 
             include 'views/admin_reports.php';
+        }
+    }
+
+    // Output the vulnerabilities page.
+    public function adminVulnerabilities() {
+        global $cloneGuardSecurityAPI;
+        $action = $this->key_ . 'vulnerabilities';
+        $title = 'vulnerabilities';
+
+        if(isset($_GET['key'])) {
+            $key = sanitize_text_field($_GET['key']);
+        } else {
+            $key = '';
+        }
+
+        if(isset($_GET['subkey'])) {
+            $subkey = sanitize_text_field($_GET['subkey']);
+        } else {
+            $subkey = '';
+        }
+
+        if(isset($_GET['paged'])) {
+            $paged = sanitize_text_field($_GET['paged']);
+        } else {
+            $paged = 1;
+        }
+
+        if($key == 'vulnerability-view' && $subkey) {
+            if($paged > 1) {
+                $url_back = $this->adminLink('vulnerabilities', $paged);
+            } else {
+                $url_back = $this->adminLink('vulnerabilities');
+            }
+            // $nonce_report_download = wp_create_nonce($this->key_ . 'report_download');
+
+            $vulnerability = $cloneGuardSecurityAPI->getResult($subkey);
+
+            $cve = $vulnerability['nvt']['cve'];
+            $cve_links = array_map('trim', explode(",", $cve)); // https://stackoverflow.com/questions/19347005/how-can-i-explode-and-trim-whitespace
+
+            // String parser for nvt.tags object.
+            $tags = $vulnerability['nvt']['tags'];
+            $seperated_strings = explode("|", $tags);
+
+            $index = 0;
+            foreach($seperated_strings as $string) {
+                if (strpos($string, 'summary=') !== false) {
+                    $summary = $seperated_strings[$index];
+                    $summary = substr($summary, strpos($summary, '=') + 1);
+                } elseif (strpos($string, 'affected=') !== false) {
+                    $affected = $seperated_strings[$index];
+                    $affected = substr($affected, strpos($affected, '=') + 1);
+                } elseif (strpos($string, 'solution=') !== false) {
+                    $solution = $seperated_strings[$index];
+                    $solution = substr($solution, strpos($solution, '=') + 1);
+                } elseif (strpos($string, 'qod_type=') !== false) {
+                  $qod_type = $seperated_strings[$index];
+                    $qod_type = substr($qod_type, strpos($qod_type, '=') + 1);
+                } elseif (strpos($string, 'impact=') !== false) {
+                    $impact = $seperated_strings[$index];
+                    $impact = substr($impact, strpos($impact, '=') + 1);
+                } elseif (strpos($string, 'insight=') !== false) {
+                    $insight = $seperated_strings[$index];
+                    $insight = substr($insight, strpos($insight, '=') + 1);
+                } elseif (strpos($string, 'vuldetect=') !== false) {
+                    $vuldetect = $seperated_strings[$index];
+                    $vuldetect = substr($vuldetect, strpos($vuldetect, '=') + 1);
+                } elseif (strpos($string, 'solution_type=') !== false) {
+                    $solution_type = $seperated_strings[$index];
+                    $solution_type = substr($solution_type, strpos($solution_type, '=') + 1);
+                }
+                $index++;
+            }
+
+            include 'views/admin_vulnerability_view.php';
+        } else {
+            $url_current = $this->adminLink('vulnerabilities');
+            // $nonce_report_delete = wp_create_nonce($this->key_ . 'report_delete');
+            $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');
+
+            if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
+                $page = $_GET['paged'];
+            } else {
+                $page = 1;
+            }
+
+            $app_type = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
+            $this->userDetails['pciAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['pci'];
+            $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
+            $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];
+
+            $vulnerabilities = $cloneGuardSecurityAPI->getResults($page);
+
+            include 'views/admin_vulnerabilities.php';
         }
     }
 
@@ -1185,8 +1311,9 @@ class Clone_Guard_Security_Scanning {
                 $scan['schedule'] = isset($_POST['schedule']) ? sanitize_text_field($_POST['schedule']) : '';
                 $scan['target'] = isset($_POST['target']) ? sanitize_text_field($_POST['target']) : '';
                 $scan['notifications'] = isset($_POST['notifications']) ? sanitize_text_field($_POST['notifications']) : '';
-                if ($this->userDetails['appType'] == 'vrms' || $this->userDetails['appType'] == 'penetration') {
-                    $scan['config_id'] = isset($_POST['scan_config']) ? sanitize_textarea_field($_POST['scan_config']) : '';
+                if ($app_type == 'vrms' || $app_type == 'penetration') {
+                    $scan['scanner'] = isset($_POST['scanner']) ? sanitize_textarea_field($_POST['scanner']) : '';
+                    $scan['config'] = isset($_POST['scan_config']) ? sanitize_textarea_field($_POST['scan_config']) : '';
                 }
                 $scan['comment'] = isset($_POST['comment']) ? sanitize_textarea_field($_POST['comment']) : '';
 
@@ -1446,12 +1573,15 @@ class Clone_Guard_Security_Scanning {
                 $item['targets[hosts]'] = sanitize_textarea_field($_POST['hosts']);
                 $item['targets[comment]'] = sanitize_textarea_field($_POST['comment']);
 
-                $success = $cloneGuardSecurityAPI->createTarget($item);
+                $success = $cloneGuardSecurityAPI->createTarget($item)['status'];
+                // TODO
+                // $target_id = $cloneGuardSecurityAPI->createTarget($item)['id'];
 
                 if($success === true) {
                     $output['status'] = 'success';  
                     $output['messages'] = ['The items have been successfully created.'];
                     $output['redirect'] = true;
+                    $output['targetId'] = $target_id;
                 } elseif($success) {
                     // Error message returned.
                     $output['messages'] = [$success];

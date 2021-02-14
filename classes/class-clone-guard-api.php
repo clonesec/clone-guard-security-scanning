@@ -106,6 +106,7 @@ class Clone_Guard_API {
     }
 
     // Creates a target.
+    // TODO
     public function createTarget($item) {
         $url = $this->base_url . '/targets';
 
@@ -119,6 +120,7 @@ class Clone_Guard_API {
             return true;
         }
     }
+
 
     // Deletes a report.
     public function deleteReport($id) {
@@ -438,6 +440,61 @@ class Clone_Guard_API {
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
             $output['current_page'] = $data['pagination']['current_page'];          
+            return $output;
+        } else {
+            return $output;
+        }
+    }
+
+    // Get results - vulnerabilities.
+    public function getResults($page = 1, $perPage = 10) {
+        $output = [];
+        $output['results'] = [];
+        $output['total'] = 0;
+        $output['total_pages'] = 0;
+        $output['current_page'] = $page;
+
+        $url = $this->base_url . '/results';
+        if (isset($page) && !isset($perPage)) {
+            $url = $url."?page=".$page;
+        } elseif (isset($page) && isset($perPage)) {
+            $url = $url."?page=".$page."&per_page=".$perPage;
+        }
+
+        $response = $this->api('GET', $url);
+
+        if($response === false) {
+            return false;
+        }
+
+        $data = json_decode($response, true);
+        // return $data;
+        if(count($data['results'])) {
+            $output['results'] = $data['results'];
+            $output['total'] = $data['pagination']['total_count'];
+            $output['total_pages'] = $data['pagination']['total_pages'];
+            $output['current_page'] = $data['pagination']['current_page'];          
+            return $output;
+        } else {
+            return $output;
+        }
+    }
+
+    // Get a result.
+    public function getResult($id) {
+        $output = [];
+
+        $url = $this->base_url . '/results/' . $id;
+        $response = $this->api('GET', $url);
+
+        $data = json_decode($response, true);
+        if(count($data['results'])) {
+            $results = $data['results'];
+            foreach($results as $key => $result) {
+                $output = $result;
+                return $output;
+                break;
+            }
             return $output;
         } else {
             return $output;
