@@ -49,7 +49,7 @@
                                         </tr>
                                         <tr>
                                             <td class="first"><label for="display_compliance"><?php esc_html_e('Compliance', 'cgss'); ?></label></td>
-                                            <td><?php echo $report['display_compliance']; ?></td>
+  					    <td><?php echo $report['display_compliance']; ?></td>
                                         </tr>
 
                                         <tr>

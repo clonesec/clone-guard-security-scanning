@@ -34,7 +34,7 @@
     }
 
 
-@media(max-width: 960px) {
+@media(max-width: 1080px) {
     
     .overview-row {
         flex-direction: column;
@@ -42,6 +42,14 @@
 
         .section-general {
             margin-bottom: 10px;
+        }
+
+        .section-product {
+            flex-direction: column;
+        }
+
+        .btn-overview {
+            margin-bottom: 20px !important;
         }
 }
 
@@ -127,23 +135,22 @@
     .general-text p {
         text-align: center;
         margin: 0;
-        padding: 0;
+        padding: 0 50px;
         font-size: 1.1em;
     }
 
 .general-btn-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 18px;
 }
 
 .btn-overview {
-    font-size: 1.2em !important;
+    font-size: 18px !important;
     padding: 0px 60px !important;
     background-color: #47A730 !important;
     color: #fff !important;
     border: none !important;
-    margin-top: 30px !important;
  }
  .btn-overview:hover {
      background-color: #3f9c28 !important;
@@ -225,8 +232,15 @@
  * Section Product  
  */
 .section-product-img {
-    width: 350px; 
-    box-shadow: 0px 0px 10px 10px #00000030;
+   width: 490px; 
+    /* Not used
+    box-shadow: 0px 0px 10px 10px #00000030; */
+}
+
+@media(max-width: 960px) {
+    .section-product-img {
+        width: auto;
+    }
 }
 
 .section-product-text {
@@ -343,4 +357,17 @@
 .checkbox-switch input.input-checkbox:checked + .checkbox-animate:before {
 	left: 49px;
 	background-color: #fff;
+}
+
+
+
+/**
+ * Helpers 
+ */
+.p-0-25 {
+    padding: 0 25px !important;
+}
+
+.p-0-35 {
+    padding: 0 35px !important;
 }

@@ -1,10 +1,10 @@
 <?php
 /*
  * Plugin Name: CloneGuard Security Scanning
- * Description: Connects a site to the CloneGuard Security Scanning system.
+ * Description: Secure your website with direct access to CloneGuard Security Compliance, Scanning and Verification servers.
  * Author: Clone Systems, Inc.
  * Author URI: https://www.clone-systems.com
- * Version: 2.1.0
+ * Version: 2.5
  */
 
 defined('ABSPATH') || exit;
@@ -15,7 +15,7 @@ require_once(__DIR__ . '/classes/class-clone-guard-widget.php');
 class Clone_Guard_Security_Scanning {
     public $key = 'cgss';
     public $key_ = 'cgss_';
-    public $version = '2.0.0';
+    public $version = '2.5';
 
     public $feedback_url = 'https://pciscan.clone-systems.com/downloads/ASV-Feedback-Form.pdf';
 
@@ -88,9 +88,10 @@ class Clone_Guard_Security_Scanning {
 
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
 
+            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
+
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
             wp_enqueue_style($this->key_ . 'admin_vulnerability', plugins_url('css/admin_vulnerability.css', __FILE__), [], $this->version);
-
         }
 
         if($this->hook_options == $hook) {
@@ -532,7 +533,7 @@ class Clone_Guard_Security_Scanning {
     public function adminVulnerabilities() {
         global $cloneGuardSecurityAPI;
         $action = $this->key_ . 'vulnerabilities';
-        $title = 'vulnerabilities';
+        $title = 'Vulnerabilities';
 
         if(isset($_GET['key'])) {
             $key = sanitize_text_field($_GET['key']);
@@ -552,13 +553,12 @@ class Clone_Guard_Security_Scanning {
             $paged = 1;
         }
 
-        if($key == 'vulnerability-view' && $subkey) {
+        if($key == 'vulnerability-view' && isset($_GET['subkey'])) {
             if($paged > 1) {
                 $url_back = $this->adminLink('vulnerabilities', $paged);
             } else {
                 $url_back = $this->adminLink('vulnerabilities');
             }
-            // $nonce_report_download = wp_create_nonce($this->key_ . 'report_download');
 
             $vulnerability = $cloneGuardSecurityAPI->getResult($subkey);
 
@@ -600,9 +600,35 @@ class Clone_Guard_Security_Scanning {
             }
 
             include 'views/admin_vulnerability_view.php';
-        } else {
+        } 
+        elseif($key == 'vulnerability-add-exception' && isset($_GET['subkey'])) {
+            $action = $this->key_ . 'exception_create';
+            if($paged > 1) {
+                $url_back = $this->adminLink('vulnerabilities', $paged);
+            } else {
+                $url_back = $this->adminLink('vulnerabilities');
+            }
+
+            $vulnerability = $cloneGuardSecurityAPI->getResult($subkey);
+            
+            include 'views/admin_vulnerability_add_exception.php';
+        }
+        elseif($key == 'vulnerability-edit-exception' && isset($_GET['subkey'])) {
+            $action = $this->key_ . 'exception_update';
+            if($paged > 1) {
+                $url_back = $this->adminLink('vulnerabilities', $paged);
+            } else {
+                $url_back = $this->adminLink('vulnerabilities');
+            }
+
+            $vulnerability = $cloneGuardSecurityAPI->getResult($subkey);
+            $exception = $cloneGuardSecurityAPI->getException($vulnerability['overrides']['id'])[0];
+            $exception = $exception[array_key_first($exception)];
+
+            include 'views/admin_vulnerability_edit_exception.php';
+        }
+        else {
             $url_current = $this->adminLink('vulnerabilities');
-            // $nonce_report_delete = wp_create_nonce($this->key_ . 'report_delete');
             $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');
 
             if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
@@ -610,13 +636,28 @@ class Clone_Guard_Security_Scanning {
             } else {
                 $page = 1;
             }
-
+            
             $app_type = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
             $this->userDetails['pciAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['pci'];
             $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
             $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];
 
             $vulnerabilities = $cloneGuardSecurityAPI->getResults($page);
+
+            // Count how many vulnerabilities have exceptions. 
+            $count_exceptions = 0;
+            foreach($vulnerabilities['results'] as $key => $vul) {
+                if(isset($vul['overrides']['status'])) {
+                    $count_exceptions = $count_exceptions + 1;
+                }
+            }
+
+            // If all the vulnerabilities have exceptions, then hide the 'Add Exception' option.
+            if($count_exceptions == count($vulnerabilities['results'])) {
+                $hide_add_exception_option = true;
+            } else {
+                $hide_add_exception_option = false;
+            }
 
             include 'views/admin_vulnerabilities.php';
         }
@@ -730,6 +771,13 @@ class Clone_Guard_Security_Scanning {
         $title = 'CloneGuard Security Scanning';
 
         $portal_url = get_option($this->key_ . 'portal_url');
+
+        if(!isset($portal_url) || $portal_url == '') {
+            $portal_url = 'pciscan.clone-systems.com';
+        } else {
+            $portal_url = get_option($this->key_ . 'portal_url');
+        }
+        
         $user_token = get_option($this->key_ . 'user_token');  // 'cgss_user_token'
         $api_key = get_option($this->key_ . 'api_key');
 
@@ -1756,6 +1804,54 @@ class Clone_Guard_Security_Scanning {
             }
         }
 
+        if($pagenow == 'admin.php' && isset($_GET['page']) && $_GET['page'] == $this->key_ . 'vulnerabilities') {
+            $this->user_token = get_option($this->key_ . 'user_token');
+            $this->api_key = get_option($this->key_ . 'api_key');
+
+            // Make sure the API keys are valid.
+            if(
+                !isset($this->user_token) 
+                || empty($this->user_token)
+                || !isset($this->api_key) 
+                || empty($this->api_key)
+            ) {
+                wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                exit;
+            } else {
+                $vulnerabilities = $cloneGuardSecurityAPI->getResults(1);
+                if($vulnerabilities === false) {
+                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                    exit;
+                }
+            }
+
+            // Handle vulnerabilities exceptions.
+            if((isset($_GET['action']) && $_GET['action'] == 'add-exception') || (isset($_GET['action2']) && $_GET['action2'] == 'add-exception')) 
+            {
+                if(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'vulnerabilities') && isset($_GET['vulnerabilities']) && is_array($_GET['vulnerabilities'])) {
+
+                    $vulnerabilitiesIds = $_GET['vulnerabilities'];
+
+                    foreach($vulnerabilitiesIds as $key => $vul) {
+                        $current_vul = $cloneGuardSecurityAPI->getResult($vul);
+                        $item = [];
+                        $item['exceptions[text]'] = $_GET['modal_justification_text'];
+                        $item['exceptions[nvt]'] = sanitize_text_field($current_vul['nvt']['oid']);
+                        $item['exceptions[task]'] = sanitize_text_field($current_vul['task']['id']);
+                        $cloneGuardSecurityAPI->createException($item);
+                    }
+
+                    $paged = 1;
+                    if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
+                        $paged = $_GET['paged'];
+                    }
+                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'vulnerabilities' . '&paged=' . $paged));
+                    exit;
+                }
+            }
+
+        }
+
         if($pagenow == 'admin.php' && isset($_GET['page']) && $_GET['page'] == $this->key_ . 'reports') {
             $this->user_token = get_option($this->key_ . 'user_token');
             $this->api_key = get_option($this->key_ . 'api_key');
@@ -1913,6 +2009,113 @@ class Clone_Guard_Security_Scanning {
         exit;
     }
 
+    // AJAX to create an exception.
+    public function ajaxExceptionCreate() {
+        global $cloneGuardSecurityAPI;
+        $output = [];
+        $output['status'] = 'error';
+        $output['messages'] = [];
+        $pass = true;
+
+        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'exception_create')) {
+            if(!isset($_POST['justification_text']) || $_POST['justification_text'] == '') {
+                $pass = false;
+                $output['messages'][] = 'Please enter a Justification.';
+            }
+            if(!isset($_POST['nvt_oid']) || $_POST['nvt_oid'] == '') {
+                $pass = false;
+                $output['messages'][] = 'NVT oid is missing.';
+            }
+            if(!isset($_POST['scanOrHost']) || $_POST['scanOrHost'] == '') {
+                $pass = false;
+                $output['messages'][] = 'Scan or Host radio button has no value.';
+            }
+            if ($_POST['scanOrHost'] == 'scan') {
+                if(!isset($_POST['task_id']) || $_POST['task_id'] == '') {
+                    $pass = false;
+                    $output['messages'][] = 'Task id is missing';
+                }
+            }
+            if ($_POST['scanOrHost'] == 'host') {
+                if(!isset($_POST['host']) || $_POST['host'] == '') {
+                    $pass = false;
+                    $output['messages'][] = 'Host IP address is missing.';
+                }
+            }
+
+            if($pass) {
+                $item = [];
+                $item['exceptions[text]'] = sanitize_text_field($_POST['justification_text']);
+                $item['exceptions[nvt]'] = sanitize_text_field($_POST['nvt_oid']);
+
+                if ($_POST['scanOrHost'] == 'scan') {
+                    $item['exceptions[task]'] = sanitize_text_field($_POST['task_id']);
+                } 
+                elseif ($_POST['scanOrHost'] == 'host') {
+                    $item['exceptions[hosts]'] = sanitize_text_field($_POST['host']);
+                }
+
+                $success = $cloneGuardSecurityAPI->createException($item);
+
+                if($success === true) {
+                    $output['status'] = 'success';  
+                    $output['messages'] = ['The items have been successfully created.'];
+                    $output['redirect'] = true;
+                } elseif($success) {
+                    $output['messages'] = [$success];
+                }
+            }
+        } else {
+            $output['status'] = 'error';    
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+        }
+        echo json_encode($output);
+        exit;
+    }
+
+    // AJAX to update an exception.
+    public function ajaxExceptionUpdate() {
+        global $cloneGuardSecurityAPI;
+        $output = [];
+        $output['status'] = 'error';
+        $output['messages'] = [];
+        $pass = true;
+        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'exception_update')) {
+            if(!isset($_POST['justification_text_edit']) || $_POST['justification_text_edit'] == '') {
+                $pass = false;
+                $output['messages'][] = 'Please enter a Justification.';
+            }
+            if(!isset($_POST['nvt_oid']) || $_POST['nvt_oid'] == '') {
+                $pass = false;
+                $output['messages'][] = 'NVT oid is missing.';
+            }
+
+
+            if($pass) {
+                $id = sanitize_text_field($_POST['exception_id']);
+
+                $text = sanitize_text_field($_POST['justification_text_edit']);
+                $nvt_oid = sanitize_text_field($_POST['nvt_oid']);
+
+                $success = $cloneGuardSecurityAPI->updateException($id, $text, $nvt_oid);
+
+                if($success === true) {
+                    $output['status'] = 'success';  
+                    $output['messages'] = ['The items have been successfully updated.'];
+                    $output['redirect'] = true;
+                } elseif($success) {
+                    // Error message returned.
+                    $output['messages'] = [$success];
+                }
+            }  
+        } else {
+            $output['status'] = 'error';    
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+        }
+        echo json_encode($output);
+        exit;
+    }
+
     // Initialize all the hooks and filters.
     public function init() {
         add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
@@ -1925,7 +2128,7 @@ class Clone_Guard_Security_Scanning {
         add_action('wp_ajax_' . $this->key_ . 'report_download', [$this, 'ajaxReportDownload']);
         add_action('wp_ajax_' . $this->key_ . 'report_generate', [$this, 'ajaxReportGenerate']);
         add_action('wp_ajax_' . $this->key_ . 'report_generate_check', [$this, 'ajaxReportGenerateCheck']);
-
+        
         add_action('wp_ajax_' . $this->key_ . 'scan_create', [$this, 'ajaxScanCreate']);
         add_action('wp_ajax_' . $this->key_ . 'scan_delete', [$this, 'ajaxScanDelete']);
         add_action('wp_ajax_' . $this->key_ . 'scan_start', [$this, 'ajaxScanStart']);
@@ -1950,6 +2153,10 @@ class Clone_Guard_Security_Scanning {
         add_action('wp_ajax_' . $this->key_ . 'notification_delete', [$this, 'ajaxNotificationDelete']);
 
         add_action('wp_ajax_' . $this->key_ . 'update_user_app_type', [$this, 'updateUserAppType']);
+
+        add_action('wp_ajax_' . $this->key_ . 'exception_create', [$this, 'ajaxExceptionCreate']);
+        add_action('wp_ajax_' . $this->key_ . 'exception_update', [$this, 'ajaxExceptionUpdate']);
+
 
         add_action('admin_init', [$this, 'adminTemplateRedirect']);
     }

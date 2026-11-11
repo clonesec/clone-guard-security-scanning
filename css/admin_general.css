@@ -72,12 +72,6 @@
     padding: 10px 20px 0px 20px
 }
 
-@media(max-width: 960px) {
-    .cgss_main {
-        flex-direction: column-reverse;
-    }
-}
-
 .main-inside {
     background: #ffffff;
     border-radius: 6px;
@@ -341,11 +335,18 @@ label:nth-child(1) input[type=radio] {
  *  Helpers
  */
 
-
  .success-pci-color {
     color: #3FA327;
  }
 
  .warning-pci-color {
     color: #FECF1B;
+ }
+
+ .hide {
+    display: none;
+ }
+
+ .show {
+     display: block;
  }

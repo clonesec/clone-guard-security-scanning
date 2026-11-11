@@ -161,7 +161,7 @@
                     <tr>
                         <?php if(isset($scan['name'])): ?>
                         <th scope="row" class="check-column"><input type="checkbox" name="scans[]" value="<?php echo esc_attr($scan['id']); ?>"></th>
-                        <td data-id="<?php echo esc_attr($scan['id']); ?>" data-nonce="<?php echo esc_attr($nonce_scan_action); ?>"
+                        <td style="display:flex;" data-id="<?php echo esc_attr($scan['id']); ?>" data-nonce="<?php echo esc_attr($nonce_scan_action); ?>"
                             <?php 
                             if(isset($scan['schedule']) && isset($scan['schedule']['id']) && $scan['schedule']['id']) {
                                 $scheduled = true;

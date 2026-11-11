@@ -1,19 +1,18 @@
 === CloneGuard Security Scanning ===
 
-Author URI: https://www.clone-systems.com/
-Plugin URI: https://github.com/
-Requires PHP:  5.6
-Requires at least: 4.0
-Tested up to: 5.6
+Contributors: clonesupport
 Tags: pci scan, pci scanning, vulnerability scanning, vulnerability scan, pci compliance, penetration testing, pci asv, web application scanning, web app scan, OWASP
+Requires at least: 4.0
+Tested up to: 6.5.2
 Stable tag: trunk
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A holistic security scanning plugin for PCI ASV compliant scans, vulnerability scans, and penetration tests. Know your website's weaknesses before others do!
+Automated Security Scanning plugin: Activate PCI ASV Compliant scans, Vulnerability scans, Penetration tests, Security Trust Seals, and Darkweb probes...
 
 == Description ==
-DOWNLOAD THE ONLY AUTOMATED PLUGIN TO COVER ALL OF YOUR SECURITY SCANNING NEEDS
+AUTOMATED PLUGIN FOR ALL OF YOUR SECURITY SCANNING NEEDS
 
 The CloneGuard Security Scanning plugin helps increase the Trust level of your website visitors.
 
@@ -29,12 +28,12 @@ Start your website's easy certification process today:
    4. Schedule your scan(s) and let the automated AI platform perform them
    5. Place the Security Seal widget anywhere on your website
 
-YOUR DISCOUNT
-WordPress users can get a discount by using a first-time order code: WORDPRESSNEW
+= YOUR DISCOUNT =
+WordPress users can get a discount by using a first-time order code: **WORDPRESSNEW**
 
 == Support ==
 
-Our clients enjoy our 24x7 support services. We've created a stable security solution so that you can focus on your website. Contact us for additional information and technical support: https://www.clone-systems.com/contact-us/
+Our clients enjoy our 24x7 support services. We've created a stable security solution so that you can focus on your website. [Contact us](https://www.clone-systems.com/contact-us/) for additional information and technical support.
 
 == Installation ==
 
@@ -55,6 +54,40 @@ Our clients enjoy our 24x7 support services. We've created a stable security sol
 6. Use the Settings page to setup access between the plugin and the security scanning portal
 
 == Changelog ==
+
+= 2.5 =
+* Uploaded new Validation Report screenshot
+* Tested plugin up to 6.5.2 Wordpress version
+
+= 2.4 = 
+* Made minor Overview page styling enhancements.
+* Added new product screenshots to the Overview page.
+
+= 2.3.3 = 
+* Changed the Banner with a new one.
+
+= 2.3.2 =
+* Changed Plugin description texts
+* Fixed icons position text in Scans Page
+* Added Banner on the Wordpress Plugin Directory.
+
+= 2.3.1 =
+* Added multi-select capability to the exception submission process
+
+= 2.3 =
+* Added capability to submit vulnerability exceptions
+
+= 2.2.2 =
+* Visualization updates on vulnerabilities and overview pages
+
+= 2.2.1 =
+* My Settings fixes
+* Updated images
+
+= 2.2.0 =
+* Added vulnerabilities page
+* Added vulnerability details page
+* Responsive functionality fixes
 
 = 2.1.0 =
 * Added overview page

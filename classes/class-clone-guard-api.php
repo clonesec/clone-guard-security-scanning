@@ -766,4 +766,49 @@ class Clone_Guard_API {
 
     }
 
+    public function getException($id) {
+        $output = [];
+
+        $url = $this->base_url . '/exceptions/' . $id;
+        $response = $this->api('GET', $url);
+
+        $data = json_decode($response, true);
+        
+        return $data['exceptions'];
+        
+    }
+
+    // Creates an exception.
+    public function createException($item) {
+        $url = $this->base_url . '/exceptions';
+
+        $response = $this->api('POST', $url, $item);
+    
+        if($response === false) {
+            return false;
+        } elseif(isset($response['status_text'])) {
+            return $response['status_text'];
+        } else {
+            return true;
+        }
+    }
+
+    // Updates an exception.
+    public function updateException($id, $text, $nvt_oid) {
+        // $url = $this->base_url . '/exceptions/' . $id;
+
+        $url = $this->base_url . '/exceptions/' . $id . '?exceptions[text]=' . $text . '&exceptions[nvt]=' . $nvt_oid;
+
+        $response = $this->api('PUT', $url);
+
+        if($response === false) {
+            return false;
+        } elseif(isset($response['status_text'])) {
+            return $response['status_text'];
+        } else {
+            return true;
+        }
+    }
+
 }
+

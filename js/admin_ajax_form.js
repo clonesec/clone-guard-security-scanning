@@ -136,20 +136,128 @@ jQuery(document).ready(function($) {
 		
 	}
 
+	// Listener for Add Exception Page functionalities.
+	function addExceptionFunctionalities() {
+
+		var denialTextRadio = $('input[type=radio][name=denialTextIsEnabled]');
+		var scanOrHostRadio = $('input[type=radio][name=scanOrHost]');
+
+		denialTextRadio.change(function() {
+			if (this.value == 'false') {
+				$('#add-exception-justification-text').val('');
+				$('#add-exception-justification-text').prop('readonly', false);
+			}
+			else if (this.value == 'true') {
+				$('#add-exception-justification-text').val('Denial-of-Service-only vulnerability marked as compliant');
+				$('#add-exception-justification-text').prop('readonly', true);
+			}
+		});
+
+		scanOrHostRadio.change(function() {
+			if (this.value == 'scan') {
+				$('.add-exception-scan-tr').removeClass("hide");
+				$('.add-exception-host-tr').addClass("hide");
+			}
+			else if (this.value == 'host') {
+				$('.add-exception-host-tr').removeClass("hide");
+				$('.add-exception-scan-tr').addClass("hide");
+			}
+		});
+
+	}
+
+	// Listener for Edit Exception Page functionalities.
+	function editExceptionFunctionalities() {
+
+		var denialTextRadioEdit = $('input[type=radio][name=editDenialTextIsEnabled]');
+		var dosTextradioFalse = $('#dos-text-radio-false-edit');
+		var dosTextradioTrue = $('#dos-text-radio-true-edit');
+		var justificationText = $('#edit-exception-justification-text').val();
+		var DoSText = 'Denial-of-Service-only vulnerability marked as compliant';
+
+
+		if (justificationText === DoSText) {
+			dosTextradioTrue.prop('checked', true);
+		} else {
+			dosTextradioFalse.prop('checked', true);
+		}
+
+		denialTextRadioEdit.change(function() {
+			if (this.value == 'false') {
+				$('#edit-exception-justification-text').val('');
+				$('#edit-exception-justification-text').prop('readonly', false);
+			}
+			else if (this.value == 'true') {
+				$('#edit-exception-justification-text').val('Denial-of-Service-only vulnerability marked as compliant');
+				$('#edit-exception-justification-text').prop('readonly', true);
+			}
+		});
+
+	}
+
+	// Listener for Bulk Action Add Exception on Vulnerabilities page. 
+	function addExceptionModal() {
+		var modal = $('#newExceptionModal');
+		var closeElement = $('.close');	
+
+		$(".select-bulk-add-exception").change(function() {
+			if ($(this).val() === 'add-exception') {
+				modal.css("display", "block");
+				$('#newExceptionModal textarea').css('border','1px solid #8c8f94');
+				$('.modal-validation-text').addClass('hide');
+			}
+		});
+		
+		$('.modal-footer button').on('click', function() {
+			if($("#newExceptionModal textarea").val() == '') {
+				$("#newExceptionModal textarea").css('border','1px solid red');
+				$('.modal-validation-text').removeClass('hide');
+				return false;
+			} else {
+				modal.css("display", "none");
+			}
+		});
+
+		closeElement.on('click', function() {
+			modal.css("display", "none");
+		});
+
+		$('#newExceptionModal textarea').blur(function(){
+			if($(this).val() == '') {
+				$(this).css('border','1px solid red');
+				$('.modal-validation-text').removeClass('hide');
+			} else {
+				$(this).css('border','1px solid green');
+				$('.modal-validation-text').addClass('hide');
+			}
+		});
+
+		// Not working.
+		$(window).click(function(e) {
+			if (e.target === modal) {
+				modal.css("display", "none");
+			}
+		});
+	}
+
     // Initialize listeners. 
 	function init() {
 		$(document).on('submit', '.ajax_form', submit);
 
 		toggleInputPassword();
 
-		toggleScheduleRepeatInput()	
+		toggleScheduleRepeatInput();
+
+		addExceptionFunctionalities();
+
+		editExceptionFunctionalities();
 		
 		$('.schedule-frequency input[name="frequency"]').change(function() {
 			toggleScheduleRepeatInput()	
 		})
 
+		addExceptionModal();
 	}
 
-    // Get everything started.
 	init();
 });
