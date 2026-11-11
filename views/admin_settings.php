@@ -30,12 +30,12 @@
                 <ul class="cgss-purchase-list">
                     <li class="cgss-purchase-list-item">PCI ASV Compliant Scanning</li>
                     <li class="cgss-purchase-list-item">Certified ASV Reports</li>
-                    <li class="cgss-purchase-list-item">Online SAQ v3.2 Wizard</li>
+                    <li class="cgss-purchase-list-item">Online SAQ Wizard</li>
                     <li class="cgss-purchase-list-item">Nothing to install</li>
                     <li class="cgss-purchase-list-item">24/7 email support</li>
-                    <li class="cgss-purchase-list-item">IPv4, and IPv6</li>
+                    <li class="cgss-purchase-list-item">IPv4 and IPv6 targets</li>
                 </ul>
-                <a class="cgss-purchase-link" href="https://www.clone-systems.com/purchase-pci-compliance-scanning/" target="_blank">Purchase a License</a>
+                <a class="cgss-purchase-link" href="https://www.clone-systems.com/pricing?mode=pci" target="_blank" rel="noopener">Purchase a License</a>
             </div>
 
             <div class="cgss-settings-token">

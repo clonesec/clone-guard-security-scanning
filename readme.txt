@@ -33,7 +33,7 @@ WordPress users can get a discount by using a first-time order code: **WORDPRESS
 
 == Support ==
 
-Our clients enjoy our 24x7 support services. We've created a stable security solution so that you can focus on your website. [Contact us](https://www.clone-systems.com/contact-us/) for additional information and technical support.
+Our clients enjoy our 24x7 support services. We've created a stable security solution so that you can focus on your website. [Contact us](https://www.clone-systems.com/contact) for additional information and technical support.
 
 == Installation ==
 
