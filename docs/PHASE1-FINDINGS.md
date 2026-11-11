@@ -121,3 +121,7 @@ Full read-only pass plus failure-path checks re-run on PHP 8.4 and 8.2: `debug.l
 | F10 performance | Improved: `getUserDetails()` called once per request (was 4 to 5 times). Overview about 13.5 s (was 16 to 19 s); deeper fix (one `getReport()` per scan) left for Phase 2. |
 | Also fixed | delete/start/stop/generate no longer report success on a network or 5xx error; app-type switch only treats `true` as success; `generateReportCheck()` `strpos` bug; `print_r()` of scan config into the Scans page source removed. |
 | Account state | The account's product mode changed from VRMS (step 2) to PCI (step 4) outside these tests, so the scan forms no longer show the scanner and config selects (VRMS/penetration only, by design). |
+
+## Status after step 4b, page speed (2026-11-11)
+
+F10 addressed in Phase 1 at the owner's request. Credential check now reuses the cached `/my_details` call (one fewer list call per page, three fewer on Options); Overview fetches the last report of each scan in parallel (15 s limit) and caches its summary for 5 minutes; scan configs and scanners are cached for 15 minutes. Measured on the same portal state (before / after first load / after repeat load): Overview 35.8 s / 17.6 s / 1.3 s; scan edit 9.9 / 9.3 / 3.3 s; scan create 8.6 / about 6.5 / 2.4 s; Options 4.6 / 2.4 s; Scans 4.1 / 2.0 s; Reports 2.7 / 1.5 s. Root cause of the slow Overview first load: one report detail is 56 MB (portal question 4f). Still slow: first scan-form load per 15 minutes; Vulnerabilities when the portal has not cached the page (question 4d).

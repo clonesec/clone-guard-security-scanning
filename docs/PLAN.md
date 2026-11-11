@@ -97,6 +97,22 @@ Actions:
 
 Acceptance: `docs/API-V1-CONTRACT.md` complete; every page renders real data with no blank primary columns; the failure-path checks above (portal URL set to `portal.invalid`, and a hand-typed unknown scan ID) log nothing in `debug.log`.
 
+### - [ ] Step 4b: Page speed (owner request 2026-11-11: performance in Phase 1)
+
+Why: pages wait on several portal calls made one after another (measured after step 4: Overview 13.8 s, scan edit 9.0 s, scan create 8.1 s, Options 4.2 s, Scans 3.5 s, Reports 2.6 s). Settings, with no portal calls, loads in 0.03 s, so the time is all portal round trips.
+
+Actions:
+1. Credential check without a duplicate list call: `adminTemplateRedirect()` fetches the page's list (or three lists on Options) only to detect a 401, and the page then fetches it again. Check with the per-request cached `/my_details` call instead (`Clone_Guard_API::hasAccess()`), which every page makes anyway. Keep the redirect to Settings with `msg=access` on 401.
+2. Overview: the compliance card needs `results_count.high_and_medium` from the last report of each scan on page 1 (about 10 `GET /reports/{id}` calls in a row). The scan list does not include the counts, the report list does not contain those reports (checked: 0 of 10 among the latest 50), and the reports are all `scan_run_status: Running`, so caching them is not safe. Fetch them in parallel with WordPress's bundled Requests library (`WpOrg\Requests\Requests::request_multiple`, or `Requests::request_multiple` before WordPress 6.2), falling back to one at a time for any that fail.
+3. Cache the slow reference data used by the scan forms for 15 minutes in transients, keyed by portal URL + token: `getScanConfigs()` (about 4 s) and `getScanners()`. Clear both when the app type is switched.
+4. Measure every page before and after on 8.4; re-run the full pass and failure paths on 8.4 and 8.2 (debug.log must stay empty).
+
+Not in Phase 1: parallel requests for other pages, caching of lists that users edit (targets, schedules, notifications), and the portal-side `/results` slowness (question 4d).
+
+Acceptance: Overview and the scan forms at least 2x faster; no page slower; same data shown; debug.log empty after the full pass and failure paths on 8.4 and 8.2.
+
+Status 2026-11-11 (code done, commit below; not ticked because one acceptance item is open). Same portal state, before (step 4 code) / after, first load / repeat load: Overview 35.8 s (with a timeout error) / 17.6 s / 1.3 s; scan edit 9.9 s / 8.9-9.3 s / 3.3 s; scan create 8.6 s / about 6.5 s / 2.4 s; Options 4.6 / 2.4 s; Scans 4.1 / 2.0 s; Reports 2.7 / 1.5 s. No page slower; parallel and sequential report data identical; debug.log empty on 8.4 and 8.2. **Open:** the first scan-form load in each 15-minute window is not 2x faster (it still waits for the 4 s configs call plus five other calls one after another). Fix options: run the scan-form calls in parallel too, or accept and move on. Owner to decide.
+
 ### - [ ] Step 5: Update links and Settings copy (interim)
 
 Actions:

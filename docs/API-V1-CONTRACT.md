@@ -20,10 +20,11 @@ Top-level keys seen on success: lists `status, status_text, pagination, {collect
 
 | Method | Endpoint | Fields the plugin reads | Status |
 |---|---|---|---|
-| `getUserDetails()` | `GET /my_details` | `details.app_type`, `details.organization.available_products.{pci,vrms,penetration}` | Verified. Since step 4: called once per request and cached; returns defaults (`app_type ''`, products `false`) if the call fails. Current values: `app_type` is `pci` or `vrms` (switched between step 2 and step 4); products also list `darkweb`, `agent_scan`, `webapp` (unused). |
+| `getUserDetails()` / `hasAccess()` | `GET /my_details` | `details.app_type`, `details.organization.available_products.{pci,vrms,penetration}` | Verified. Since step 4: called once per request and cached; returns defaults (`app_type ''`, products `false`) if the call fails. Since step 4b it is also the credential check (`hasAccess()` is false on 401), replacing the duplicate list calls in `adminTemplateRedirect()`. Current values: `app_type` is `pci` or `vrms` (switched between step 2 and step 4); products also list `darkweb`, `agent_scan`, `webapp` (unused). |
 | `getScans($page)` | `GET /scans?page=N` | per scan: `id, name, status, progress, target.{id,name}, schedule.{id,next_time}, last_report.{id,name}, notifications, scanner.id, config.id, comment`; `pagination.*` | Verified. `schedule.next_time` can be `null` (handled in step 3). |
 | `getScan($id)` | `GET /scans/{id}` | same as above; `notifications[0][*].id` | Verified. Unknown id: 404 (detail page shows "not found"). |
 | `getReports($page, $perPage)` | `GET /reports?page=N&per_page=M` | per report: `id, name` (a date string), `task.name, compliance, results.{high,medium,low,high_and_medium}, files`; `pagination.*` | Verified. List still has `compliance`. |
+| `getReportsByIds($ids, $timeout)` | `GET /reports/{id}` for each id, in parallel | same as `getReport()` | Step 4b, used by Overview only (15 s limit; result cached 5 min as a summary). Uses WordPress's bundled Requests library; one at a time if it cannot run or a proxy is configured. Report detail size varies a lot: 17 KB to **56 MB** (one report took 35 s) because the detail embeds all findings (question 4f). |
 | `getReport($id)` | `GET /reports/{id}` | `id, name, task.name, compliance, results_count.high_and_medium, files.{attestation,executive,detailed,remediation}` | Verified, **changed**: no `compliance` any more (step 4 shows "Not available" instead of "Fail"; question 4a). `files` is `[]` on many reports. Unknown id: 404. |
 | `generateReportCheck($id, $type)` | `GET /reports/{id}/details` | `reports[0][*].files.{type}.status == 'done'` | Verified (GET, status and keys). `strpos` bug fixed in step 4. Polling through the plugin not exercised (report generate not approved). |
 | `downloadReport($id, $type)` | `GET /reports/{id}.pdf?type={type}` | raw file | Verified: `attestation`, `executive`, `detailed` (PDF), `remediation` (.xlsx, served as `.xlsx` since step 4 when the file starts with `PK`), `feedback` (plugin redirects to the static PDF, no API call). File types **changed**: PCI reports also offer `certificate_of_compliance`; VRMS reports offer `executive_vrms`, `vulnerability_assessment`, `vulnerability_summary`, `scan_comparison`, `remediation` (question 4b). |
@@ -36,8 +37,8 @@ Top-level keys seen on success: lists `status, status_text, pagination, {collect
 | `getTarget($id)` | `GET /targets/{id}` | `id, name, hosts, comment` | Verified. |
 | `getAllNotifications($page)` | `GET /notifications?page=N` | per notification: `id (integer), name, status_changed, email_options.to_address`; `pagination.*` | Verified, **changed**: `status_changed` values are event names (`scan_completed`, `scan_started`, `scan_failed`, `scan_stopped`, `compliance_failed`, `high_severity_findings`, `kev_detected`, `report_generated`, `report_generation_failed`), not `Done`/`Running` (question 4c). |
 | `getNotification($id)` | `GET /notifications/{id}` | same | Verified. Edit form cannot pre-select the event-name values (F7, open). |
-| `getScanners()` | `GET /scanners/activated` | `scanners[0][*].{id,name}`, `count.total` | Verified. |
-| `getScanConfigs()` | `GET /configs?active=false&per_page=100` | `configs[0][*].{id,name,app_type}`; `pagination.*` | Verified (100 configs, about 4 s). |
+| `getScanners()` | `GET /scanners/activated` | `scanners[0][*].{id,name}`, `count.total` | Verified. Cached 15 min in a transient (step 4b), cleared on app type switch. |
+| `getScanConfigs()` | `GET /configs?active=false&per_page=100` | `configs[0][*].{id,name,app_type}`; `pagination.*` | Verified (100 configs, about 4 s). Cached 15 min in a transient (step 4b), cleared on app type switch. |
 
 ## Writes
 
