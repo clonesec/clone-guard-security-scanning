@@ -186,9 +186,6 @@
                             <span class="action_stop_disabled"><span class="stopicon"></span></span>
 
                             <span class="action_spinner"><span class="spinner inline is-active"></span></span>
-                            <!-- <span><?php print_r($scan['config']['id']); ?></span>
-                            <br>
-                            <span><?php print_r($scan['config']['name']); ?></span> -->
                         </td>
                         <td><strong><a href="<?php echo $this->adminLink('scans', $key); ?>"><?php echo esc_html($scan['name']); ?></a></strong></td>
                         <td><?php echo esc_html($scan['target']['name']); ?></td>

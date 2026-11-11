@@ -11,6 +11,15 @@ class Clone_Guard_API {
 
     public $base_url = '';
 
+    // Message of the first network or server error in this request ('' if none).
+    public $last_error = '';
+
+    // True once a network error happened in this request; later calls fail fast instead of waiting again.
+    private $transport_failed = false;
+
+    // User details, fetched once per request.
+    private $user_details = null;
+
     // Base URL for API.
     // public $base_url = 'https://pciscan.clone-systems.com/API/v1';
 
@@ -24,6 +33,12 @@ class Clone_Guard_API {
 
     // Base method to make API calls.
     public function api($method, $url, $data = []) {
+        global $cloneGuardSecurityScanning;
+
+        if($this->transport_failed) {
+            return $this->error($this->last_error);
+        }
+
         $headers = [];
         //$headers[] = 'Authorization: Basic ' . $this->user_token;
         //$headers[] = 'x-api-key: ' . $this->api_key;
@@ -31,7 +46,8 @@ class Clone_Guard_API {
         $headers['x-api-key'] = $this->api_key;
 
         $args = [];
-        $args['timeout'] = 10;
+        $args['timeout'] = 30;
+        $args['user-agent'] = 'CloneGuardSecurityScanning/' . (isset($cloneGuardSecurityScanning->version) ? $cloneGuardSecurityScanning->version : '') . '; ' . home_url();
         $args['headers'] = $headers;
         if($method == 'DELETE') {
             $args['method'] = 'DELETE';
@@ -46,6 +62,12 @@ class Clone_Guard_API {
         }
         $res = wp_remote_request($url, $args);
 
+        // Network failure (timeout, DNS, TLS).
+        if(is_wp_error($res)) {
+            $this->transport_failed = true;
+            return $this->error('The scanning portal could not be reached (' . $res->get_error_message() . '). Please check the Portal URL in Settings or try again later.');
+        }
+
         $status_code = wp_remote_retrieve_response_code($res);
         $response = wp_remote_retrieve_body($res);
 
@@ -55,9 +77,24 @@ class Clone_Guard_API {
             return json_decode($response, true);
         } elseif($status_code == 422) {
             return json_decode($response, true);
+        } elseif($status_code >= 500) {
+            return $this->error('The scanning portal returned an error (HTTP ' . $status_code . '). Please try again later.');
         } else {
             return $response;
         }
+    }
+
+    // Builds an error shaped like the portal's own error responses, so callers that check 'status_text' show it.
+    private function error($message) {
+        if($this->last_error === '') {
+            $this->last_error = $message;
+        }
+        return ['status' => 0, 'status_text' => $message, 'cgss_error' => true];
+    }
+
+    // True if $response is an error built by error() (network or server failure).
+    public function isError($response) {
+        return is_array($response) && !empty($response['cgss_error']);
     }
 
     // Creates a notification.
@@ -128,7 +165,7 @@ class Clone_Guard_API {
 
         $response = $this->api('DELETE', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -141,7 +178,7 @@ class Clone_Guard_API {
 
         $response = $this->api('DELETE', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -158,8 +195,11 @@ class Clone_Guard_API {
         if(isset($response['status_text'])) {
             echo $response['status_text'];
         } else {
-            // Remediation files are excel files.
-            if($type == 'remediation') {
+            // Remediation files are excel files. The portal now sends .xlsx (a ZIP file, starts with "PK").
+            if($type == 'remediation' && substr((string) $response, 0, 2) === 'PK') {
+                header('Content-type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename=' . $type . '.xlsx');
+            } elseif($type == 'remediation') {
                 header('Content-type:application/vnd.ms-excel');
                 header('Content-Disposition: attachment; filename=' . $type . '.xls');
             } else {
@@ -179,7 +219,7 @@ class Clone_Guard_API {
 
         $response = $this->api('GET', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -195,7 +235,7 @@ class Clone_Guard_API {
 
         if(isset($response['status_text'])) {
             return false;
-        } elseif(strpos($response, '{"status":404,') !== -1) {
+        } elseif(strpos((string) $response, '{"status":404,') === false) {
             $data = is_array($response) ? $response : json_decode((string) $response, true);
             if(!empty($data['reports'])) {
                 $reports = $data['reports'][0];
@@ -602,7 +642,7 @@ class Clone_Guard_API {
 
         $response = $this->api('POST', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -615,7 +655,7 @@ class Clone_Guard_API {
 
         $response = $this->api('POST', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -628,7 +668,7 @@ class Clone_Guard_API {
 
         $response = $this->api('POST', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -701,7 +741,7 @@ class Clone_Guard_API {
 
         $response = $this->api('DELETE', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -714,7 +754,7 @@ class Clone_Guard_API {
 
         $response = $this->api('DELETE', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -727,7 +767,7 @@ class Clone_Guard_API {
 
         $response = $this->api('DELETE', $url);
 
-        if($response === false) {
+        if($response === false || $this->isError($response)) {
             return false;
         } else {
             return true;
@@ -736,18 +776,25 @@ class Clone_Guard_API {
 
     // Get the user details.
     public function getUserDetails() {
+        if($this->user_details !== null) {
+            return $this->user_details;
+        }
+
+        // Keys the pages read; used when the call fails or a key is missing.
+        $defaults = [
+            'app_type' => '',
+            'organization' => ['available_products' => ['pci' => false, 'vrms' => false, 'penetration' => false]],
+        ];
+
         $url = $this->base_url . '/my_details';
 
         $response = $this->api('GET', $url);
 
-        if($response === false) {
-            return false;
-        }
-
         $data = is_array($response) ? $response : json_decode((string) $response, true);
-        if (isset($data['details'])) {
-            return $data['details'];
-        }
+        $details = (is_array($data) && isset($data['details']) && is_array($data['details'])) ? $data['details'] : [];
+
+        $this->user_details = array_replace_recursive($defaults, $details);
+        return $this->user_details;
     }
 
     // Change user's app type.

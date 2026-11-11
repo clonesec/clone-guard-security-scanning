@@ -135,6 +135,26 @@ class Clone_Guard_Security_Scanning {
         return $url;
     }
 
+    // Prints an error notice if a portal call in this request failed (network or server error).
+    public function apiErrorNotice() {
+        global $cloneGuardSecurityAPI;
+        if(!empty($cloneGuardSecurityAPI->last_error)) {
+            echo '<div class="notice notice-error"><p>' . esc_html($cloneGuardSecurityAPI->last_error) . '</p></div>';
+        }
+    }
+
+    // Prints a notice instead of a view when the requested item could not be loaded, with a link back.
+    public function notFoundNotice($label, $url_back) {
+        global $cloneGuardSecurityAPI;
+        if(!empty($cloneGuardSecurityAPI->last_error)) {
+            $message = $cloneGuardSecurityAPI->last_error;
+        } else {
+            $message = 'This ' . $label . ' could not be found. It may have been deleted.';
+        }
+        echo '<div class="notice notice-error"><p>' . esc_html($message) . '</p></div>';
+        echo '<p><a href="' . esc_url($url_back) . '">&larr; Back</a></p>';
+    }
+
     /**
      * Creates the multipagination url params in the options page.
      *
@@ -242,6 +262,7 @@ class Clone_Guard_Security_Scanning {
             $compliance_status= 'pass';
         }
 
+        $this->apiErrorNotice();
         include 'views/admin_overview.php';
     }
 
@@ -321,6 +342,7 @@ class Clone_Guard_Security_Scanning {
 
             $nonce_scan_temp_save = wp_create_nonce($this->key_ . 'scan_temp_save');
 
+            $this->apiErrorNotice();
             include 'views/admin_scan_create.php';
         } elseif($key == 'schedule-create' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'schedule_create';
@@ -328,6 +350,7 @@ class Clone_Guard_Security_Scanning {
             $url_back = $this->adminLink('scans', $last_key);
             $url_back .= '&return=yes';
 
+            $this->apiErrorNotice();
             include 'views/admin_schedule_create.php';
         } elseif($key == 'target-create' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'target_create';
@@ -335,6 +358,7 @@ class Clone_Guard_Security_Scanning {
             $url_back = $this->adminLink('scans', $last_key);
             $url_back .= '&return=yes';
 
+            $this->apiErrorNotice();
             include 'views/admin_target_create.php';
         } elseif($key == 'notification-create' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'notification_create';
@@ -342,12 +366,17 @@ class Clone_Guard_Security_Scanning {
             $url_back = $this->adminLink('scans', $last_key);
             $url_back .= '&return=yes';
 
+            $this->apiErrorNotice();
             include 'views/admin_notification_create.php';
         } elseif($key) {
             $action = $this->key_ . 'scan_update';
             $url_back = $this->adminLink('scans');
 
             $scan = $cloneGuardSecurityAPI->getScan($key);
+            if(empty($scan)) {
+                $this->notFoundNotice('scan', $url_back);
+                return;
+            }
             $notifications = $cloneGuardSecurityAPI->getAllNotifications();
             $targets = $cloneGuardSecurityAPI->getAllTargets();
             $schedules = $cloneGuardSecurityAPI->getAllSchedules();
@@ -394,6 +423,7 @@ class Clone_Guard_Security_Scanning {
 
             $nonce_scan_temp_save = wp_create_nonce($this->key_ . 'scan_temp_save');
 
+            $this->apiErrorNotice();
             include 'views/admin_scan_edit.php';
         } else {
             $url_current = $this->adminLink('scans');
@@ -413,6 +443,7 @@ class Clone_Guard_Security_Scanning {
             $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
             $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];
 
+            $this->apiErrorNotice();
             include 'views/admin_scans.php';
         }
     }
@@ -450,6 +481,10 @@ class Clone_Guard_Security_Scanning {
             $nonce_report_download = wp_create_nonce($this->key_ . 'report_download');
 
             $report = $cloneGuardSecurityAPI->getReport($subkey);
+            if(empty($report)) {
+                $this->notFoundNotice('report', $url_back);
+                return;
+            }
 
             $report['date'] = date('D M j Y G:i:s', strtotime($report['name']));
             $report['quarter'] = $this->getQuarter($report['name']);
@@ -465,6 +500,9 @@ class Clone_Guard_Security_Scanning {
             }
             if(isset($report['compliance']) && $report['compliance']) {
                 $report['display_compliance'] = '<span class="icon_pass">Pass</span>';
+            } elseif(!isset($report['compliance'])) {
+                // The report detail endpoint no longer returns 'compliance' (see CONTEXT.md open question 4a).
+                $report['display_compliance'] = 'Not available';
             } else {
                 $report['display_compliance'] = '<span class="icon_fail">Fail</span>';
             }
@@ -490,6 +528,7 @@ class Clone_Guard_Security_Scanning {
             }
             $report['feedback_status'] = 'generated';
 
+            $this->apiErrorNotice();
             include 'views/admin_report_view.php';
         } else {
             $url_current = $this->adminLink('reports');
@@ -528,6 +567,7 @@ class Clone_Guard_Security_Scanning {
             $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
             $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];
 
+            $this->apiErrorNotice();
             include 'views/admin_reports.php';
         }
     }
@@ -564,6 +604,10 @@ class Clone_Guard_Security_Scanning {
             }
 
             $vulnerability = $cloneGuardSecurityAPI->getResult($subkey);
+            if(empty($vulnerability)) {
+                $this->notFoundNotice('vulnerability', $url_back);
+                return;
+            }
 
             $cve = $vulnerability['nvt']['cve'];
             $cve_links = array_map('trim', explode(",", $cve)); // https://stackoverflow.com/questions/19347005/how-can-i-explode-and-trim-whitespace
@@ -602,6 +646,7 @@ class Clone_Guard_Security_Scanning {
                 $index++;
             }
 
+            $this->apiErrorNotice();
             include 'views/admin_vulnerability_view.php';
         } 
         elseif($key == 'vulnerability-add-exception' && isset($_GET['subkey'])) {
@@ -613,7 +658,12 @@ class Clone_Guard_Security_Scanning {
             }
 
             $vulnerability = $cloneGuardSecurityAPI->getResult($subkey);
-            
+            if(empty($vulnerability)) {
+                $this->notFoundNotice('vulnerability', $url_back);
+                return;
+            }
+
+            $this->apiErrorNotice();
             include 'views/admin_vulnerability_add_exception.php';
         }
         elseif($key == 'vulnerability-edit-exception' && isset($_GET['subkey'])) {
@@ -625,9 +675,18 @@ class Clone_Guard_Security_Scanning {
             }
 
             $vulnerability = $cloneGuardSecurityAPI->getResult($subkey);
-            $exception = $cloneGuardSecurityAPI->getException($vulnerability['overrides']['id'])[0];
+            if(empty($vulnerability['overrides']['id'])) {
+                $this->notFoundNotice('exception', $url_back);
+                return;
+            }
+            $exception = $cloneGuardSecurityAPI->getException($vulnerability['overrides']['id'])[0] ?? [];
+            if(empty($exception)) {
+                $this->notFoundNotice('exception', $url_back);
+                return;
+            }
             $exception = $exception[array_key_first($exception)];
 
+            $this->apiErrorNotice();
             include 'views/admin_vulnerability_edit_exception.php';
         }
         else {
@@ -662,6 +721,7 @@ class Clone_Guard_Security_Scanning {
                 $hide_add_exception_option = false;
             }
 
+            $this->apiErrorNotice();
             include 'views/admin_vulnerabilities.php';
         }
     }
@@ -688,12 +748,17 @@ class Clone_Guard_Security_Scanning {
             $action = $this->key_ . 'schedule_create';
             $url_back = $this->adminLink('options');
 
+            $this->apiErrorNotice();
             include 'views/admin_schedule_create.php';
         } elseif($key == 'schedule-update' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'schedule_update';
             $url_back = $this->adminLink('options');
 
             $schedule = $cloneGuardSecurityAPI->getSchedule($subkey);
+            if(empty($schedule)) {
+                $this->notFoundNotice('schedule', $url_back);
+                return;
+            }
 
             $frequency = 'one_time';
             if($schedule['period_unit'] == 'day') {
@@ -704,30 +769,43 @@ class Clone_Guard_Security_Scanning {
                 $frequency = 'monthly';
             }
 
+            $this->apiErrorNotice();
             include 'views/admin_schedule_edit.php';
         } elseif($key == 'target-create') {
             $action = $this->key_ . 'target_create';
             $url_back = $this->adminLink('options');
 
+            $this->apiErrorNotice();
             include 'views/admin_target_create.php';
         } elseif($key == 'target-update' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'target_update';
             $url_back = $this->adminLink('options');
 
             $target = $cloneGuardSecurityAPI->getTarget($subkey);
-            
+            if(empty($target)) {
+                $this->notFoundNotice('target', $url_back);
+                return;
+            }
+
+            $this->apiErrorNotice();
             include 'views/admin_target_edit.php';
         } elseif($key == 'notification-create') {
             $action = $this->key_ . 'notification_create';
             $url_back = $this->adminLink('options');
 
+            $this->apiErrorNotice();
             include 'views/admin_notification_create.php';
         } elseif($key == 'notification-update' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'notification_update';
             $url_back = $this->adminLink('options');
 
             $notification = $cloneGuardSecurityAPI->getNotification($subkey);
-            
+            if(empty($notification)) {
+                $this->notFoundNotice('notification', $url_back);
+                return;
+            }
+
+            $this->apiErrorNotice();
             include 'views/admin_notification_edit.php';
         } else {
             $url_current = $this->adminLink('options');
@@ -762,6 +840,7 @@ class Clone_Guard_Security_Scanning {
             $this->userDetails['vrmsAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['vrms'];
             $this->userDetails['penetrationAvailable'] = $cloneGuardSecurityAPI->getUserDetails()['organization']['available_products']['penetration'];  
 
+            $this->apiErrorNotice();
             include 'views/admin_options.php';
         }
     }
@@ -1996,7 +2075,7 @@ class Clone_Guard_Security_Scanning {
 
                 $success = $cloneGuardSecurityAPI->updateUserAppType($theAppType);
 
-                if($success) {
+                if($success === true) {
                     $output['status'] = 'success';  
                     $output['messages'] = ['The items have been successfully deleted.'];
                     $output['reload'] = true;
