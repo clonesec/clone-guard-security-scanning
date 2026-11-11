@@ -20,6 +20,9 @@ class Clone_Guard_API {
     // User details, fetched once per request.
     private $user_details = null;
 
+    // True if the portal rejected the credentials (HTTP 401) on /my_details in this request.
+    private $unauthorized = false;
+
     // Base URL for API.
     // public $base_url = 'https://pciscan.clone-systems.com/API/v1';
 
@@ -33,8 +36,6 @@ class Clone_Guard_API {
 
     // Base method to make API calls.
     public function api($method, $url, $data = []) {
-        global $cloneGuardSecurityScanning;
-
         if($this->transport_failed) {
             return $this->error($this->last_error);
         }
@@ -47,7 +48,7 @@ class Clone_Guard_API {
 
         $args = [];
         $args['timeout'] = 30;
-        $args['user-agent'] = 'CloneGuardSecurityScanning/' . (isset($cloneGuardSecurityScanning->version) ? $cloneGuardSecurityScanning->version : '') . '; ' . home_url();
+        $args['user-agent'] = $this->userAgent();
         $args['headers'] = $headers;
         if($method == 'DELETE') {
             $args['method'] = 'DELETE';
@@ -95,6 +96,71 @@ class Clone_Guard_API {
     // True if $response is an error built by error() (network or server failure).
     public function isError($response) {
         return is_array($response) && !empty($response['cgss_error']);
+    }
+
+    // User agent sent with every portal request.
+    private function userAgent() {
+        global $cloneGuardSecurityScanning;
+        return 'CloneGuardSecurityScanning/' . (isset($cloneGuardSecurityScanning->version) ? $cloneGuardSecurityScanning->version : '') . '; ' . home_url();
+    }
+
+    // Transient name for cached portal data, unique per portal and account.
+    public function cacheKey($name) {
+        return $this->key_ . md5($this->portal_url . '|' . $this->user_token . '|' . $name);
+    }
+
+    // True unless the portal rejected the credentials. Uses the cached /my_details call, so it costs no extra request.
+    public function hasAccess() {
+        $this->getUserDetails();
+        return !$this->unauthorized;
+    }
+
+    // Gets several reports in parallel (each limited to $timeout seconds), keyed by id; [] for a report that could not be loaded.
+    // Falls back to getReport() one at a time when the parallel call cannot run (no library, a proxy is configured, or it throws).
+    public function getReportsByIds($ids, $timeout = 30) {
+        $output = [];
+        $ids = array_values(array_unique(array_filter($ids)));
+
+        $requests = [];
+        foreach($ids as $id) {
+            $requests[$id] = [
+                'url' => $this->base_url . '/reports/' . $id,
+                'headers' => ['Authorization' => 'Basic ' . $this->user_token, 'x-api-key' => $this->api_key],
+                'type' => 'GET',
+            ];
+        }
+
+        // WordPress 6.2+ bundles WpOrg\Requests; older versions bundle the same library as Requests.
+        $requests_class = class_exists('\WpOrg\Requests\Requests') ? '\WpOrg\Requests\Requests' : (class_exists('Requests') ? 'Requests' : '');
+        // The parallel call bypasses WordPress's HTTP proxy settings, so it is not used when a proxy is configured.
+        $proxy = new WP_HTTP_Proxy();
+        $responses = [];
+        $parallel_ran = false;
+        if($requests_class !== '' && count($requests) > 1 && !$this->transport_failed && !$proxy->is_enabled()) {
+            try {
+                $responses = $requests_class::request_multiple($requests, ['timeout' => $timeout, 'useragent' => $this->userAgent()]);
+                $parallel_ran = true;
+            } catch(\Exception $e) {
+                $responses = [];
+            }
+        }
+
+        foreach($ids as $id) {
+            $report = [];
+            // Failed requests come back as exception objects, which have no status_code.
+            if(isset($responses[$id]) && is_object($responses[$id]) && isset($responses[$id]->status_code) && $responses[$id]->status_code == 200) {
+                $data = json_decode((string) $responses[$id]->body, true);
+                if(!empty($data['reports'][0]) && is_array($data['reports'][0])) {
+                    $report = reset($data['reports'][0]);
+                }
+            }
+            if(empty($report) || !is_array($report)) {
+                $report = $parallel_ran ? [] : $this->getReport($id);
+            }
+            $output[$id] = $report;
+        }
+
+        return $output;
     }
 
     // Creates a notification.
@@ -361,6 +427,12 @@ class Clone_Guard_API {
         $output['total_pages'] = 0;
         $output['current_page'] = 1;
 
+        // Cached for 15 minutes; cleared when the app type changes.
+        $cached = get_transient($this->cacheKey('scanners'));
+        if(is_array($cached)) {
+            return $cached;
+        }
+
         $url = $this->base_url . '/scanners/activated'; //?per_page=20
 
         $response = $this->api('GET', $url);
@@ -376,6 +448,7 @@ class Clone_Guard_API {
             $output['total'] = $data['count']['total'];
             // $output['total_pages'] = $data['pagination']['total_pages'];
             // $output['current_page'] = $data['pagination']['current_page'];
+            set_transient($this->cacheKey('scanners'), $output, 15 * MINUTE_IN_SECONDS);
             return $output;
         } else {
             return $output;
@@ -389,6 +462,12 @@ class Clone_Guard_API {
         $output['total'] = 0;
         $output['total_pages'] = 0;
         $output['current_page'] = 1;
+
+        // Cached for 15 minutes (this call takes about 4 s); cleared when the app type changes.
+        $cached = get_transient($this->cacheKey('configs'));
+        if(is_array($cached)) {
+            return $cached;
+        }
 
         $url = $this->base_url . '/configs?active=false'."&per_page=100";
 
@@ -405,6 +484,7 @@ class Clone_Guard_API {
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
             $output['current_page'] = $data['pagination']['current_page'];
+            set_transient($this->cacheKey('configs'), $output, 15 * MINUTE_IN_SECONDS);
             return $output;
         } else {
             return $output;
@@ -789,6 +869,7 @@ class Clone_Guard_API {
         $url = $this->base_url . '/my_details';
 
         $response = $this->api('GET', $url);
+        $this->unauthorized = ($response === false);
 
         $data = is_array($response) ? $response : json_decode((string) $response, true);
         $details = (is_array($data) && isset($data['details']) && is_array($data['details'])) ? $data['details'] : [];
@@ -808,6 +889,9 @@ class Clone_Guard_API {
         } elseif(isset($response['status_text'])) {
             return $response['status_text'];
         } else {
+            // Scanners and configs may differ per app type.
+            delete_transient($this->cacheKey('scanners'));
+            delete_transient($this->cacheKey('configs'));
             return true;
         }
 

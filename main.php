@@ -234,32 +234,53 @@ class Clone_Guard_Security_Scanning {
 
         $reports = $cloneGuardSecurityAPI->getReports($page, 5);
 
-        $scans = $cloneGuardSecurityAPI->getScans($page);
-        $last_reports_ids = [];
-        foreach($scans['scans'] as $scan) {
-            array_push($last_reports_ids, $scan['last_report']['id']);
-        }
-
-        $last_reports = [];
-        $last_reports_statuses = [];
-        $vulnerabilities_sum = 0;
-        foreach($last_reports_ids as $id) {
-            $current_report = $cloneGuardSecurityAPI->getReport($id);
-            array_push($last_reports, $current_report);
-            if (isset($current_report['results_count']['high_and_medium'])) {
-                if($current_report['results_count']['high_and_medium'] == 0) {
-                    array_push($last_reports_statuses, 'pass');
-                } elseif ($current_report['results_count']['high_and_medium'] > 0) {
-                    array_push($last_reports_statuses, 'fail');
-                    $vulnerabilities_sum = $vulnerabilities_sum + $current_report['results_count']['high_and_medium'];
+        // The compliance card needs the last report of each scan on page 1. Some reports are very large
+        // (one was 56 MB and took 35 s), so they are fetched in parallel with a 15 s limit and the result
+        // is cached for 5 minutes per account and app type.
+        $summary_key = $cloneGuardSecurityAPI->cacheKey('overview_summary_' . $app_type);
+        $summary = get_transient($summary_key);
+        if(!is_array($summary)) {
+            $scans = $cloneGuardSecurityAPI->getScans($page);
+            $last_reports_ids = [];
+            foreach($scans['scans'] as $scan) {
+                if(!empty($scan['last_report']['id'])) {
+                    array_push($last_reports_ids, $scan['last_report']['id']);
                 }
+            }
+
+            $last_reports_statuses = [];
+            $vulnerabilities_sum = 0;
+            $incomplete = false;
+            $last_reports_by_id = $cloneGuardSecurityAPI->getReportsByIds($last_reports_ids, 15);
+            foreach($last_reports_ids as $id) {
+                $current_report = isset($last_reports_by_id[$id]) ? $last_reports_by_id[$id] : [];
+                if (isset($current_report['results_count']['high_and_medium'])) {
+                    if($current_report['results_count']['high_and_medium'] == 0) {
+                        array_push($last_reports_statuses, 'pass');
+                    } elseif ($current_report['results_count']['high_and_medium'] > 0) {
+                        array_push($last_reports_statuses, 'fail');
+                        $vulnerabilities_sum = $vulnerabilities_sum + $current_report['results_count']['high_and_medium'];
+                    }
+                } else {
+                    $incomplete = true;
+                }
+            }
+
+            $summary = [
+                'compliance_status' => in_array("fail", $last_reports_statuses) ? 'fail' : 'pass',
+                'vulnerabilities_sum' => $vulnerabilities_sum,
+                'incomplete' => $incomplete,
+            ];
+            // Do not cache a summary built while the portal was unreachable or failing.
+            if(empty($cloneGuardSecurityAPI->last_error)) {
+                set_transient($summary_key, $summary, 5 * MINUTE_IN_SECONDS);
             }
         }
 
-        if(in_array("fail", $last_reports_statuses)) {
-            $compliance_status = 'fail';
-        } else {
-            $compliance_status= 'pass';
+        $compliance_status = $summary['compliance_status'];
+        $vulnerabilities_sum = $summary['vulnerabilities_sum'];
+        if($summary['incomplete'] && empty($cloneGuardSecurityAPI->last_error)) {
+            $cloneGuardSecurityAPI->last_error = 'Some report details could not be loaded in time, so the summary below may be incomplete.';
         }
 
         $this->apiErrorNotice();
@@ -1823,8 +1844,7 @@ class Clone_Guard_Security_Scanning {
                 wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
-                $scans = $cloneGuardSecurityAPI->getScans(1);
-                if($scans === false) {
+                if(!$cloneGuardSecurityAPI->hasAccess()) {
                     wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
@@ -1845,8 +1865,7 @@ class Clone_Guard_Security_Scanning {
                 wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
-                $scans = $cloneGuardSecurityAPI->getScans(1);
-                if($scans === false) {
+                if(!$cloneGuardSecurityAPI->hasAccess()) {
                     wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
@@ -1899,8 +1918,7 @@ class Clone_Guard_Security_Scanning {
                 wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
-                $vulnerabilities = $cloneGuardSecurityAPI->getResults(1);
-                if($vulnerabilities === false) {
+                if(!$cloneGuardSecurityAPI->hasAccess()) {
                     wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
@@ -1947,8 +1965,7 @@ class Clone_Guard_Security_Scanning {
                 wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
-                $reports = $cloneGuardSecurityAPI->getReports(1);
-                if($reports === false) {
+                if(!$cloneGuardSecurityAPI->hasAccess()) {
                     wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
@@ -1996,11 +2013,7 @@ class Clone_Guard_Security_Scanning {
                 wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
-                $schedules = $cloneGuardSecurityAPI->getAllSchedules(1);
-                $targets = $cloneGuardSecurityAPI->getAllTargets(1);
-                $notifications = $cloneGuardSecurityAPI->getAllNotifications(1);
-
-                if($schedules === false || $targets === false || $notifications === false) {
+                if(!$cloneGuardSecurityAPI->hasAccess()) {
                     wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
