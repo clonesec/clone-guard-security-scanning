@@ -5,98 +5,80 @@ class Clone_Guard_Widget extends WP_Widget {
     public $key = 'cgss';
     public $key_ = 'cgss_';
 
+    // Sizes saved by plugin versions before 2.6, which showed an image instead of the seal script.
+    const LEGACY_SIZES = [
+        '140x54' => 'lg',
+        '106x42' => 'md',
+        '82x32' => 'sm',
+    ];
+
     // The class constructor.
     public function __construct() {
-        parent::__construct('clone_guard_widget', $name = 'CloneGuard Seal', array('description' => ''));
-
-        add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
+        parent::__construct('clone_guard_widget', $name = 'CloneGuard Seal', array('description' => 'Shows the Clone Systems Trust Seal.'));
     }
 
-    // Load the asset files for specific admin pages.
-    public function adminEnqueueScripts($hook) {
-        global $cloneGuardSecurityScanning;
-        if($hook == 'widgets.php') {
-            wp_enqueue_style($this->key_ . 'admin_widgets', plugins_url('../css/admin_widgets.css', __FILE__), [], $cloneGuardSecurityScanning->version);
+    // Returns the seal settings of a widget instance. Instances saved before 2.6 have no icon
+    // or position, and a size like 140x54 (empty meant 140x54): they get the default icon and the matching size.
+    private function seal_atts($instance) {
+        $size = isset($instance['size']) ? $instance['size'] : '';
+        if($size === '' && !isset($instance['icon']) && (isset($instance['domain']) || isset($instance['image']))) {
+            $size = '140x54';
         }
+        if(isset(self::LEGACY_SIZES[$size])) {
+            $size = self::LEGACY_SIZES[$size];
+        }
+
+        return Clone_Guard_Seal::sanitize([
+            'icon' => isset($instance['icon']) ? $instance['icon'] : '',
+            'size' => $size,
+            'position' => isset($instance['position']) ? $instance['position'] : '',
+        ]);
     }
 
     // Output the widget content on the front end.
     public function widget($args, $instance) {
-        $urlparts = parse_url(home_url());
-        $domain = !empty($instance['domain']) ? $instance['domain'] : $urlparts['host']; 
-        $image = !empty($instance['image']) ? $instance['image'] : 'https://seals.clone-systems.com/images/security-seal/certified1_lg.png'; 
-        $size = !empty($instance['size']) ? $instance['size'] : '140x54'; 
+        $title = apply_filters('widget_title', isset($instance['title']) ? $instance['title'] : '', $instance, $this->id_base);
 
-        $sizes = explode('x', $size);
-        if(count($sizes) == 2) {
-            $width = $sizes[0];
-            $height = $sizes[1];
-        } else {
-            $width = '140';
-            $height = '54';
+        echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup from the theme's sidebar.
+        if($title !== '') {
+            echo $args['before_title'] . esc_html($title) . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup from the theme's sidebar.
         }
-
-        $htm = '';
-
-        $htm .= '<div>';
-        $htm .= '<a href="https://seals.clone-systems.com/report?dn=' . urlencode($domain) . '" target="_blank">';
-        $htm .= '<img width="' . esc_attr($width) . '" height="' . esc_attr($height) . '" src ="' . esc_url($image) . '">';
-        $htm .= '</a>';
-        $htm .= '</div>';
-        
-        echo $htm;
+        echo Clone_Guard_Seal::render($this->seal_atts($instance)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from whitelisted values.
+        echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup from the theme's sidebar.
     }
 
     // Output the option form field on the admin widgets screen.
     public function form( $instance ) {
-        $urlparts = parse_url(home_url());
-        $domain = !empty($instance['domain']) ? $instance['domain'] : $urlparts['host']; 
-        $image = !empty($instance['image']) ? $instance['image'] : 'https://seals.clone-systems.com/images/security-seal/certified1_lg.png'; 
-        $size = !empty($instance['size']) ? $instance['size'] : '140x54'; 
+        $title = isset($instance['title']) ? $instance['title'] : '';
+        $atts = $this->seal_atts($instance);
+        $fields = [
+            'icon' => ['Seal', Clone_Guard_Seal::ICONS],
+            'size' => ['Size', Clone_Guard_Seal::SIZES],
+            'position' => ['Position', Clone_Guard_Seal::POSITIONS],
+        ];
 ?>
 <p>
-    <label for="<?php echo $this->get_field_id('domain'); ?>">Website Domain</label>
-    <input class="widefat" id="<?php echo $this->get_field_id('domain'); ?>" name="<?php echo $this->get_field_name('domain'); ?>" value="<?php echo esc_attr($domain); ?>" />
+    <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Title (optional)</label>
+    <input class="widefat" type="text" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" value="<?php echo esc_attr($title); ?>" />
 </p>
+<?php foreach($fields as $field => $field_data): ?>
 <p>
-    <label>Select Your Security Seal Image</label>
-    <div class="cgss_images">
-    <?php $value = 'https://seals.clone-systems.com/images/security-seal/certified1_lg.png'; ?>
-    <label><input type="radio" name="<?php echo $this->get_field_name('image'); ?>" value="<?php echo esc_url($value); ?>" <?php echo ($value == $image) ? 'checked' : ''; ?> /> <img src="<?php echo esc_url($value); ?>" alt="Seal Image" /></label>
-    <?php $value = 'https://seals.clone-systems.com/images/security-seal/certified2_lg.png'; ?>
-    <label><input type="radio" name="<?php echo $this->get_field_name('image'); ?>" value="<?php echo esc_url($value); ?>" <?php echo ($value == $image) ? 'checked' : ''; ?> /> <img src="<?php echo esc_url($value); ?>" alt="Seal Image" /></label>
-    <?php $value = 'https://seals.clone-systems.com/images/security-seal/certified3_lg.png'; ?>
-    <label><input type="radio" name="<?php echo $this->get_field_name('image'); ?>" value="<?php echo esc_url($value); ?>" <?php echo ($value == $image) ? 'checked' : ''; ?> /> <img src="<?php echo esc_url($value); ?>" alt="Seal Image" /></label>
-    <?php $value = 'https://seals.clone-systems.com/images/security-seal/certified4_lg.png'; ?>
-    <label><input type="radio" name="<?php echo $this->get_field_name('image'); ?>" value="<?php echo esc_url($value); ?>" <?php echo ($value == $image) ? 'checked' : ''; ?> /> <img src="<?php echo esc_url($value); ?>" alt="Seal Image" /></label>
-    <?php $value = 'https://seals.clone-systems.com/images/security-seal/certified5_lg.png'; ?>
-    <label><input type="radio" name="<?php echo $this->get_field_name('image'); ?>" value="<?php echo esc_url($value); ?>" <?php echo ($value == $image) ? 'checked' : ''; ?> /> <img src="<?php echo esc_url($value); ?>" alt="Seal Image" /></label>
-    <?php $value = 'https://seals.clone-systems.com/images/security-seal/certified6_lg.png'; ?>
-    <label><input type="radio" name="<?php echo $this->get_field_name('image'); ?>" value="<?php echo esc_url($value); ?>" <?php echo ($value == $image) ? 'checked' : ''; ?> /> <img src="<?php echo esc_url($value); ?>" alt="Seal Image" /></label>
-    <?php $value = 'https://seals.clone-systems.com/images/security-seal/certified7_lg.png'; ?>
-    <label><input type="radio" name="<?php echo $this->get_field_name('image'); ?>" value="<?php echo esc_url($value); ?>" <?php echo ($value == $image) ? 'checked' : ''; ?> /> <img src="<?php echo esc_url($value); ?>" alt="Seal Image" /></label>
-    <?php $value = 'https://seals.clone-systems.com/images/security-seal/certified8_lg.png'; ?>
-    <label><input type="radio" name="<?php echo $this->get_field_name('image'); ?>" value="<?php echo esc_url($value); ?>" <?php echo ($value == $image) ? 'checked' : ''; ?> /> <img src="<?php echo esc_url($value); ?>" alt="Seal Image" /></label>
-    </div>
+    <label for="<?php echo esc_attr($this->get_field_id($field)); ?>"><?php echo esc_html($field_data[0]); ?></label>
+    <select class="widefat" id="<?php echo esc_attr($this->get_field_id($field)); ?>" name="<?php echo esc_attr($this->get_field_name($field)); ?>">
+        <?php foreach($field_data[1] as $value => $label): ?>
+        <option value="<?php echo esc_attr($value); ?>" <?php selected($atts[$field], $value); ?>><?php echo esc_html($label); ?></option>
+        <?php endforeach; ?>
+    </select>
 </p>
-<p>
-    <label>Select Image Size</label>
-    <div class="cgss_sizes">
-    <label><input type="radio" name="<?php echo $this->get_field_name('size'); ?>" value="140x54" <?php echo ('140x54' == $size) ? 'checked' : ''; ?> /> 140x54</label>
-    <label><input type="radio" name="<?php echo $this->get_field_name('size'); ?>" value="106x42" <?php echo ('106x42' == $size) ? 'checked' : ''; ?> /> 106x42</label>
-    <label><input type="radio" name="<?php echo $this->get_field_name('size'); ?>" value="82x32" <?php echo ('82x32' == $size) ? 'checked' : ''; ?> /> 82x32</label>
-    </div>
-</p>
+<?php endforeach; ?>
+<p class="description">The seal only appears on domains with an active Clone Systems account and current scans. It links to the security report for this site's domain.</p>
 <?php
     }
 
     // Save the options for the widget.
     public function update( $new_instance, $old_instance ) {
-        $instance = $old_instance;
-        $instance['domain'] = strip_tags($new_instance['domain']);
-        $instance['image'] = strip_tags($new_instance['image']);
-        $instance['size'] = strip_tags($new_instance['size']);
+        $instance = Clone_Guard_Seal::sanitize($new_instance);
+        $instance['title'] = isset($new_instance['title']) ? sanitize_text_field($new_instance['title']) : '';
         return $instance;
     }
 }
-

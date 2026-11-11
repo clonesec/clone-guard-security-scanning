@@ -10,6 +10,7 @@
 defined('ABSPATH') || exit;
 
 require_once(__DIR__ . '/classes/class-clone-guard-api.php');
+require_once(__DIR__ . '/classes/class-clone-guard-seal.php');
 require_once(__DIR__ . '/classes/class-clone-guard-widget.php');
 
 class Clone_Guard_Security_Scanning {

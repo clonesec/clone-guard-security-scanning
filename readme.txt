@@ -16,7 +16,7 @@ AUTOMATED PLUGIN FOR ALL OF YOUR SECURITY SCANNING NEEDS
 
 The CloneGuard Security Scanning plugin helps increase the Trust level of your website visitors.
 
-Easily add a certified CloneGuard Security Seal widget anywhere on your website or cart, by using your existing WP theme.
+Easily add a certified CloneGuard Security Seal widget anywhere on your website or cart, by using your existing WP theme. You can also place the seal with the shortcode `[cloneguard_seal icon="cs-secure-dark" size="md" position="relative"]` (sizes: lg, md, sm; positions: relative, left, right).
 
 View, start, create, modify, enable/disable your PCI ASV Scans, Vulnerability Scans, GDPR Scans, or Pentests.
 
@@ -34,6 +34,16 @@ WordPress users can get a discount by using a first-time order code: **WORDPRESS
 == Support ==
 
 Our clients enjoy our 24x7 support services. We've created a stable security solution so that you can focus on your website. [Contact us](https://www.clone-systems.com/contact) for additional information and technical support.
+
+== External services ==
+
+This plugin connects to services run by Clone Systems, Inc.
+
+**Scanning portal API.** The admin pages read and manage your scans, reports, vulnerabilities, schedules, targets and notifications through the API of the portal set in CloneGuard > Settings (by default `pciscan.clone-systems.com`). Requests are made from your server only when an administrator opens a CloneGuard admin page or performs an action there. Each request sends your User Token and Key, the data of the action (for example a target's name and hosts), the plugin version and your site's address.
+
+**Trust Seal.** Pages that show the CloneGuard Seal widget or the `[cloneguard_seal]` shortcode load the script `https://www.clone-systems.com/generate-seal/get-seal.js` and the seal image from www.clone-systems.com in the visitor's browser. The seal links to the security report for your site's domain at `https://www.clone-systems.com/report/?dn={your domain}`. After the page has loaded, the script also asks the WordPress.com mShots service (`s.wordpress.com/mshots`) for a screenshot of your home page, so the report can show it. No visitor data is sent by the plugin itself; the browser sends its usual request information (such as IP address and user agent) to these hosts.
+
+Clone Systems [Subscription Agreement](https://www.clone-systems.com/legal/subscription-agreement) and [Privacy Policy](https://www.clone-systems.com/privacy-policy). WordPress.com mShots is provided by Automattic: [Terms of Service](https://automattic.com/tos/) and [Privacy Policy](https://automattic.com/privacy/).
 
 == Installation ==
 
