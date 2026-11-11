@@ -127,7 +127,9 @@ Actions:
 
 Acceptance: `grep -rn "purchase-pci-compliance-scanning\|SAQ v3" .` returns nothing; all hard-coded URLs return 200 directly.
 
-### - [ ] Step 5b: Replace the seal with the website embed (moved from step 9)
+### - [x] Step 5b: Replace the seal with the website embed (moved from step 9)
+
+Done 2026-11-11. Deviations from the actions below, each for a reason found in testing: (1) `render()` calls `wp_scripts()->do_items()` instead of `wp_print_scripts()`, which would also fire the global `wp_print_scripts` action in the middle of the page; (2) when the `<head>` scripts are not printed yet (always the case on block themes, which render the whole template before `<head>`), the seal enqueues `get-seal.js` for the `<head>` instead of printing it in place. In-place-only failed on Twenty Twenty-Five: blocks render before shortcodes, so a Legacy Widget block printed the script below two shortcode seals, which then threw "generateSecuritySeal is not defined". (3) A 2.5 instance with an empty size maps to `lg` (the old widget drew empty as 140x54). (4) Widget gets an optional title field. Known limitation (classic themes only): a Legacy Widget block in post content placed after a seal shortcode breaks that shortcode's seal; the post editor does not offer the Legacy Widget block, so it needs hand-written block markup.
 
 Why in Phase 1: the current widget shows 404 images on every live site. See "Website seal embed" in `CONTEXT.md` for the full spec. Owner decision: one implementation, no image-and-link widget.
 

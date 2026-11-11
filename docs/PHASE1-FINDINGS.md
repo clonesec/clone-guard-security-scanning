@@ -125,3 +125,15 @@ Full read-only pass plus failure-path checks re-run on PHP 8.4 and 8.2: `debug.l
 ## Status after step 4b, page speed (2026-11-11)
 
 F10 addressed in Phase 1 at the owner's request. Credential check now reuses the cached `/my_details` call (one fewer list call per page, three fewer on Options); Overview fetches the last report of each scan in parallel (15 s limit) and caches its summary for 5 minutes; scan configs and scanners are cached for 15 minutes. Measured on the same portal state (before / after first load / after repeat load): Overview 35.8 s / 17.6 s / 1.3 s; scan edit 9.9 / 9.3 / 3.3 s; scan create 8.6 / about 6.5 / 2.4 s; Options 4.6 / 2.4 s; Scans 4.1 / 2.0 s; Reports 2.7 / 1.5 s. Root cause of the slow Overview first load: one report detail is 56 MB (portal question 4f). Still slow: first scan-form load per 15 minutes; Vulnerabilities when the portal has not cached the page (question 4d).
+
+## Status after step 5b, seal (2026-11-11)
+
+| Item | Status |
+|---|---|
+| F11 seal images 404 | Fixed: the widget and the new `[cloneguard_seal]` shortcode render the website's seal (`get-seal.js` + `generateSecuritySeal(icon, size, position, 'svg')`) through one renderer, `Clone_Guard_Seal::render()`. Old image URLs and `css/admin_widgets.css` removed. |
+| Old widget instances | Render without re-saving: `106x42` shows as `md`, empty size as `lg`, `82x32` as `sm`; icon `cs-secure-dark`, position inline. The widget form preselects these values and has no domain field. |
+| Browser check (Chrome, headless) | Twenty Twenty-One: front page (2 widgets) and a page with 5 shortcodes (inline, left, right, defaults, invalid values) plus the 2 widgets: script loaded once, all seals load, 0 failed requests, 0 console errors. Twenty Twenty-Five: Shortcode blocks + Legacy Widget blocks (new instance, 2.5 instance, reference to a saved widget): same result, script in `<head>`; a page without a seal loads no script. Block widgets editor (Appearance > Widgets): previews show both seals, form renders, 0 console errors. PHP 8.2 site: same, `debug.log` empty on both sites. |
+| Saving | Invalid icon/size/position fall back to defaults; title through `sanitize_text_field`. |
+| Known limitation | Classic themes: a Legacy Widget block in post content after a seal shortcode breaks that shortcode's seal (blocks render before shortcodes). Not reachable from the post editor UI. |
+| Not controllable by the plugin | Optimization plugins that defer or delay scripts (e.g. "delay JS" options) would break inline mode, which needs `document.currentScript`. `get-seal.js` declares a top-level `const`, so a second copy on the page (for example the site owner also pasted the website snippet) throws a console error; the seal still works. |
+
