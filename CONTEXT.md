@@ -2,7 +2,7 @@
 
 Living context for the 2.6 update. **Read this file first in every session, and update it at the end of every step** (the Session log and the checkboxes in the plan). The detailed step-by-step plan is in [docs/PLAN.md](docs/PLAN.md). Source brief: "CloneGuard WordPress Plugin: Developer Handoff" (Elyse, 3 Nov 2026).
 
-Last updated: 2026-11-11 (planning sessions, Fable 5.1 then Opus 5.5). Implementation sessions run on Opus 5.5.
+Last updated: 2026-11-11 (Phase 1 step 1, Opus 5.5). Implementation sessions run on Opus 5.5.
 
 ## Goal
 
@@ -13,14 +13,14 @@ Ship version 2.6 to WordPress.org so the "not tested with the latest 3 major rel
 | Phase | State |
 |---|---|
 | 0. Planning | Done 2026-11-11 |
-| 1. Get current, ship 2.6 | Not started |
+| 1. Get current, ship 2.6 | In progress on branch `release/2.6` (step 1 done; next: step 1b) |
 | 2. Modernize | Not started |
 | 3. Marketing refresh (needs Elyse) | Not started |
 
 ## Verified facts (checked 2026-11-11, not assumptions)
 
 - **WordPress.org copy = SVN trunk = version 2.5.** `readme.txt` uses `Stable tag: trunk`, and the downloaded zip's `main.php` is byte-identical to `trunk/main.php`. Tags exist for 1.0 through 2.5 (incl. 2.3.3.1). Download: `https://downloads.wordpress.org/plugin/clone-guard-security-scanning.zip`. SVN: `https://plugins.svn.wordpress.org/clone-guard-security-scanning/`.
-- **GitHub copy (this repo, branch `main`) is at 2.2.0 code with a 2.1.0 header** and `readme.txt` says `Tested up to: 5.6`. Files only in the 2.5 copy: `css/admin_ajax_form.css`, `css/admin_scan.css`, `views/admin_vulnerability_add_exception.php`, `views/admin_vulnerability_edit_exception.php`, several `img/*` screenshots and banners, and a stray `views/admin_overview.php.save` (do not carry over). Changed files: `main.php`, `classes/class-clone-guard-api.php`, `readme.txt`, several css/js/views.
+- **Synced 2026-11-11:** branch `release/2.6` now holds the exact 2.5 trunk (commit `db7c35e`); `main` stays at the old copy until `release/2.6` is merged in step 8. SVN trunk and the zip have the same 67 files (the `.save` file is in both). Before the sync: **GitHub copy (this repo, branch `main`) is at 2.2.0 code with a 2.1.0 header** and `readme.txt` says `Tested up to: 5.6`. Files only in the 2.5 copy: `css/admin_ajax_form.css`, `css/admin_scan.css`, `views/admin_vulnerability_add_exception.php`, `views/admin_vulnerability_edit_exception.php`, several `img/*` screenshots and banners, and a stray `views/admin_overview.php.save` (do not carry over). Changed files: `main.php`, `classes/class-clone-guard-api.php`, `readme.txt`, several css/js/views.
 - **2.5 readme header**: `Requires at least: 4.0`, `Tested up to: 6.5.2`, `Requires PHP: 5.6`, `Stable tag: trunk`.
 - **Portal API**: plugin calls `https://{cgss_portal_url}/API/v1/...` with `Authorization: Basic {user token}` + `x-api-key`. `https://pciscan.clone-systems.com/API/v1/my_details` returns **401** unauthenticated (endpoint exists). The Go SDK (`clonesec/cg-scanning-sdk-go`) targets a **different, newer API**: prefix `/v2`, paths like `/user/me`, `/targets`, `/scans`, `/reports`, auth `Basic {access token}` or `Bearer {jwt}`, products `pci | vrms | pentest`, docs at `https://scanning-api.clone-systems.com/`. Do **not** migrate to v2 in Phase 1; v1 is what the views are written against.
 - **Seal widget is broken today**: `https://seals.clone-systems.com/images/security-seal/certified1_lg.png` returns 404 (all 8 `certifiedN_lg.png` images are presumably gone). `https://seals.clone-systems.com/report?dn=...` returns 200. `seals.clone-systems.com/` root now serves the corporate website shell.
@@ -77,3 +77,4 @@ Append one entry per working session: date, model, what was done, what changed, 
 
 - **2026-11-11, Fable 5.1 (planning).** Read the handoff PDF. Verified the facts above by downloading the 2.5 zip, diffing it against this repo, probing the portal, seal server, website and Go SDK. Wrote this file, `docs/PLAN.md` and `CLAUDE.md`. Nothing in plugin code changed. Next: owner answers the open questions, then an Opus 5.5 session starts Phase 1 step 1 (SVN trunk sync).
 - **2026-11-11, Opus 5.5 (planning follow-up).** Owner answered: seal code comes from `/trust-seal`; test credentials available; `platform-*` containers unrelated; WP 5.9 / PHP 7.4 floor approved. Reverse-engineered `/trust-seal` and `get-seal.js` (options, sizes, inline-mode constraint, mshots preload) and recorded them above. Decided wp-env as primary test env, `.env` for API script secrets. Rewrote Plan step 9 around the real embed and moved it into Phase 1 as step 5b (open question 7). No plugin code changed. Next: Phase 1 step 1.
+- **2026-11-11, Opus 5.5 (Phase 1 step 1: sync trunk 2.5).** Created branch `release/2.6`. Downloaded the WordPress.org zip, confirmed `main.php` is byte-identical to SVN `trunk/main.php` and that trunk and the zip list the same 67 files. Committed the planning docs separately (`cf72682`), then replaced `main.php`, `readme.txt`, `classes/`, `css/`, `js/`, `img/`, `views/` with the 2.5 copy, left out `views/admin_overview.php.save`, and added `.gitignore`, `.distignore`, `.env.example` (no secrets; portal URL default only) in commit `db7c35e` "Sync with WordPress.org trunk (2.5)". No GitHub-only files existed, so nothing was deleted. Acceptance: `diff -rq` against the zip shows only meta files and the `.save` file; `main.php` shows `2.5` in the header and `$version`. Nothing in CONTEXT.md was wrong; only reworded the GitHub-copy fact to say it describes `main` before the sync. Branch is local only (not pushed). Next: step 1b (wp-env with WordPress 7.1, PHP 8.4, Plugin Check).

@@ -21,7 +21,7 @@ Paste this at the start of each implementation session:
 
 Prerequisites: none for steps 1 and 1b. Step 2 onward needs the test account (open question 2).
 
-### - [ ] Step 1: Sync WordPress.org trunk (2.5) into GitHub
+### - [x] Step 1: Sync WordPress.org trunk (2.5) into GitHub
 
 Goal: `main` matches the published 2.5 exactly, so all later work starts from the real code.
 
