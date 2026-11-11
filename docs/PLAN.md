@@ -52,7 +52,9 @@ Actions:
 
 Acceptance: plugin activates with no fatal; `CloneGuard Security` menu appears; Plugin Check appears under Tools.
 
-### - [ ] Step 2: Click-through with a real account and collect every notice
+### - [x] Step 2: Click-through with a real account and collect every notice
+
+Done 2026-11-11 on 8.4 and 8.2. Results in `docs/PHASE1-FINDINGS.md`. Not run (owner decision or no browser): product tab switch, report generate, scan submit/start/stop, exceptions, JS console. See `CONTEXT.md` open question 8.
 
 Prerequisite: test account (open question 2).
 
