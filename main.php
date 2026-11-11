@@ -32,6 +32,9 @@ class Clone_Guard_Security_Scanning {
     public $userDetails = [];
     public $appType = '';
 
+    public $user_token = '';
+    public $api_key = '';
+
     // The class constructor.
     public function __construct() {
         add_action('init', [$this, 'init']);
@@ -354,7 +357,7 @@ class Clone_Guard_Security_Scanning {
             $scanners = $cloneGuardSecurityAPI->getScanners();
 
             $scan['notification_list'] = [];
-            if(count($scan['notifications'])) {
+            if(!empty($scan['notifications'])) {
                 foreach($scan['notifications'][0] as $notification) {
                     $scan['notification_list'][] = $notification['id'];
                 }
@@ -1621,7 +1624,7 @@ class Clone_Guard_Security_Scanning {
                 $item['targets[hosts]'] = sanitize_textarea_field($_POST['hosts']);
                 $item['targets[comment]'] = sanitize_textarea_field($_POST['comment']);
 
-                $success = $cloneGuardSecurityAPI->createTarget($item)['status'];
+                $success = $cloneGuardSecurityAPI->createTarget($item);
                 // TODO
                 // $target_id = $cloneGuardSecurityAPI->createTarget($item)['id'];
 
@@ -1629,7 +1632,6 @@ class Clone_Guard_Security_Scanning {
                     $output['status'] = 'success';  
                     $output['messages'] = ['The items have been successfully created.'];
                     $output['redirect'] = true;
-                    $output['targetId'] = $target_id;
                 } elseif($success) {
                     // Error message returned.
                     $output['messages'] = [$success];

@@ -251,7 +251,7 @@
                                     if (strpos($hostsString, ",") !== false) {
                                         // $modifiedString = substr($hostsString, 0 , strpos($hostsString, ","));
                                         $modifiedString = explode(",", $hostsString);
-                                        echo ($modifiedString[0] . $modifiedString[1] . $modifiedString[2]);
+                                        echo esc_html(implode(', ', array_slice(array_map('trim', $modifiedString), 0, 3)));
                                     } else {
                                         echo $hostsString;
                                     }

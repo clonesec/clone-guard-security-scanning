@@ -196,8 +196,8 @@ class Clone_Guard_API {
         if(isset($response['status_text'])) {
             return false;
         } elseif(strpos($response, '{"status":404,') !== -1) {
-            $data = json_decode($response, true);
-            if(count($data['reports'])) {
+            $data = is_array($response) ? $response : json_decode((string) $response, true);
+            if(!empty($data['reports'])) {
                 $reports = $data['reports'][0];
                 foreach($reports as $key => $report) {
                     if(
@@ -239,8 +239,8 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
-        if(count($data['schedules'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['schedules'])) {
             $output['schedules'] = $data['schedules'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
@@ -270,8 +270,8 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
-        if(count($data['targets'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['targets'])) {
             $output['targets'] = $data['targets'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
@@ -301,8 +301,8 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
-        if(count($data['notifications'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['notifications'])) {
             $output['notifications'] = $data['notifications'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
@@ -329,9 +329,9 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
         // return $data;
-        if(count($data['scanners'])) {
+        if(!empty($data['scanners'])) {
             $output['scanners'] =  $data['scanners'][0];
             $output['total'] = $data['count']['total'];
             // $output['total_pages'] = $data['pagination']['total_pages'];
@@ -358,9 +358,9 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
         // return $data;
-        if(count($data['configs'])) {
+        if(!empty($data['configs'])) {
             $output['configs'] =  $data['configs'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
@@ -378,8 +378,8 @@ class Clone_Guard_API {
         $url = $this->base_url . '/notifications/' . $id;
         $response = $this->api('GET', $url);
 
-        $data = json_decode($response, true);
-        if(count($data['notifications'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['notifications'])) {
             $notifications = $data['notifications'][0];
             foreach($notifications as $key => $notification) {
                 $output = $notification;
@@ -399,8 +399,8 @@ class Clone_Guard_API {
         $url = $this->base_url . '/reports/' . $id;
         $response = $this->api('GET', $url);
 
-        $data = json_decode($response, true);
-        if(count($data['reports'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['reports'])) {
             $reports = $data['reports'][0];
             foreach($reports as $key => $report) {
                 $output = $report;
@@ -434,8 +434,8 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
-        if(count($data['reports'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['reports'])) {
             $output['reports'] = $data['reports'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
@@ -467,9 +467,9 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
         // return $data;
-        if(count($data['results'])) {
+        if(!empty($data['results'])) {
             $output['results'] = $data['results'];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
@@ -487,8 +487,8 @@ class Clone_Guard_API {
         $url = $this->base_url . '/results/' . $id;
         $response = $this->api('GET', $url);
 
-        $data = json_decode($response, true);
-        if(count($data['results'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['results'])) {
             $results = $data['results'];
             foreach($results as $key => $result) {
                 $output = $result;
@@ -508,8 +508,8 @@ class Clone_Guard_API {
         $url = $this->base_url . '/scans/' . $id;
         $response = $this->api('GET', $url);
 
-        $data = json_decode($response, true);
-        if(count($data['scans'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['scans'])) {
             $scans = $data['scans'][0];
             foreach($scans as $key => $scan) {
                 $output = $scan;
@@ -541,8 +541,8 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
-        if(count($data['scans'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['scans'])) {
             $output['scans'] = $data['scans'][0];
             $output['total'] = $data['pagination']['total_count'];
             $output['total_pages'] = $data['pagination']['total_pages'];
@@ -561,8 +561,8 @@ class Clone_Guard_API {
         $url = $this->base_url . '/schedules/' . $id;
         $response = $this->api('GET', $url);
 
-        $data = json_decode($response, true);
-        if(count($data['schedules'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['schedules'])) {
             $schedules = $data['schedules'][0];
             foreach($schedules as $key => $schedule) {
                 $output = $schedule;
@@ -582,8 +582,8 @@ class Clone_Guard_API {
         $url = $this->base_url . '/targets/' . $id;
         $response = $this->api('GET', $url);
 
-        $data = json_decode($response, true);
-        if(count($data['targets'])) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if(!empty($data['targets'])) {
             $targets = $data['targets'][0];
             foreach($targets as $key => $target) {
                 $output = $target;
@@ -744,8 +744,8 @@ class Clone_Guard_API {
             return false;
         }
 
-        $data = json_decode($response, true);
-        if (isset($data)) {
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
+        if (isset($data['details'])) {
             return $data['details'];
         }
     }
@@ -772,9 +772,9 @@ class Clone_Guard_API {
         $url = $this->base_url . '/exceptions/' . $id;
         $response = $this->api('GET', $url);
 
-        $data = json_decode($response, true);
+        $data = is_array($response) ? $response : json_decode((string) $response, true);
         
-        return $data['exceptions'];
+        return isset($data['exceptions']) ? $data['exceptions'] : [];
         
     }
 

@@ -179,7 +179,7 @@
                             class="basic"
                             <?php endif; ?>
                         >
-                            <span class="show action_schedule" href="<?php echo $this->adminLink('scans', 'schedule-update', $scan['schedule']['id']); ?>"><span class="dashicons dashicons-clock"></span></span></span>
+                            <span class="show action_schedule" href="<?php echo $this->adminLink('options', 'schedule-update', $scan['schedule']['id']); ?>"><span class="dashicons dashicons-clock"></span></span></span>
                             <a href="#" class="action_play"><span class="dashicons dashicons-controls-play"></span></a>
 
                             <a href="#" class="action_stop"><span class="stopicon"></span></a>
@@ -205,7 +205,7 @@
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?php if($scan['schedule']['next_time'] != 'n/a'): ?>
+                            <?php if(!empty($scan['schedule']['next_time']) && $scan['schedule']['next_time'] != 'n/a'): ?>
                             <?php echo esc_html(date('D M j Y G:i:s', strtotime($scan['schedule']['next_time']))); ?>
                             <?php endif; ?>
                         </td>
