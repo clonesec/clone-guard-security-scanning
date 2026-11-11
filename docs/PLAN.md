@@ -34,7 +34,9 @@ Actions:
 
 Acceptance: `diff -rq <unzipped 2.5 dir> <repo>` shows only the ignored/meta files and the `.save` file as differences. `grep -n "Version\|version = " main.php` shows `2.5` twice.
 
-### - [ ] Step 1b: Local test environment (wp-env, WordPress 7.1, PHP 8.4)
+### - [x] Step 1b: Local test environment (wp-env, WordPress 7.1, PHP 8.4)
+
+Done 2026-11-11. Deviations: Plugin Check comes from `plugin-check.zip` (the `latest-stable` URL installs into a folder named `plugin-check.latest-stable`); the PHP 8.2 pass uses a second config `.wp-env.php82.json` on port 8890; `testsEnvironment: false`. Details in `CONTEXT.md` > Local environment.
 
 Goal: a reproducible local site with `WP_DEBUG` on, the plugin mounted, and Plugin Check installed.
 

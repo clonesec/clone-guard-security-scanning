@@ -2,7 +2,7 @@
 
 Living context for the 2.6 update. **Read this file first in every session, and update it at the end of every step** (the Session log and the checkboxes in the plan). The detailed step-by-step plan is in [docs/PLAN.md](docs/PLAN.md). Source brief: "CloneGuard WordPress Plugin: Developer Handoff" (Elyse, 3 Nov 2026).
 
-Last updated: 2026-11-11 (Phase 1 step 1, Opus 5.5). Implementation sessions run on Opus 5.5.
+Last updated: 2026-11-11 (Phase 1 step 1b, Opus 5.5). Implementation sessions run on Opus 5.5.
 
 ## Goal
 
@@ -13,7 +13,7 @@ Ship version 2.6 to WordPress.org so the "not tested with the latest 3 major rel
 | Phase | State |
 |---|---|
 | 0. Planning | Done 2026-11-11 |
-| 1. Get current, ship 2.6 | In progress on branch `release/2.6` (step 1 done; next: step 1b) |
+| 1. Get current, ship 2.6 | In progress on branch `release/2.6` (steps 1 and 1b done; next: step 2) |
 | 2. Modernize | Not started |
 | 3. Marketing refresh (needs Elyse) | Not started |
 
@@ -39,11 +39,33 @@ Ship version 2.6 to WordPress.org so the "not tested with the latest 3 major rel
   - The page states: "The seal only appears on domains with an active Clone Systems account and current scans."
   - **Implementation constraint**: inline mode needs the inline call to be a classic, synchronous script printed in place, and `get-seal.js` must already be loaded at that point. Do not add `defer`/`async`, do not load it in the footer, and do not wrap the call in `DOMContentLoaded` (that breaks `document.currentScript`).
 - **Links**: old purchase URL `clone-systems.com/purchase-pci-compliance-scanning/` 301s to `https://www.clone-systems.com/pricing?mode=pci` (200). Feedback PDF `pciscan.clone-systems.com/downloads/ASV-Feedback-Form.pdf` returns 200 (still exists; keep).
-- **PHP 8 risk already identified**: `main.php` assigns undeclared `$this->user_token` and `$this->api_key` (dynamic properties, deprecated in PHP 8.2). Expect more notices at runtime (undefined array keys etc.).
+- **PHP 8 risk already identified**: `main.php` assigns undeclared `$this->user_token` and `$this->api_key` (dynamic properties, deprecated in PHP 8.2). Expect more notices at runtime (undefined array keys etc.). Confirmed on wp-env PHP 8.4 (2026-11-11): with no credentials saved, opening the 5 plugin pages that redirect to Settings logs `Creation of dynamic property ... $user_token / $api_key` at `main.php` lines 1732-1733, 1754-1755, 1808-1809, 1856-1857, 1910-1911. No other notices and no fatals without credentials.
 - **Security surface for Plugin Check**: in 2.5 `main.php` there are ~30 nonce checks, 162 raw `$_POST[...]` reads, ~100 `sanitize_*`/`strip_tags` calls, only **1** `current_user_can` call, and ~100 `echo $...` in views (many unescaped). Expect Plugin Check to flag escaping, sanitization, and capability checks.
 - **Vendored libs**: Select2 4.0.13, jQuery datetimepicker (2020 copies) in `js/` and `css/`.
 - **Local tooling on this machine**: Docker 29 and Node 22 are installed. PHP, `svn` and `wp` CLI are **not** installed. Use `@wordpress/env` (wp-env) via Docker for the test site, and the `svn` Docker image or `brew install svn` for the SVN commit (or the 10up GitHub Action from Phase 2).
 - The main plugin class is `Clone_Guard_Security_Scanning` in `main.php` (global `$cloneGuardSecurityScanning`), API client `Clone_Guard_API`, widget `Clone_Guard_Widget` (id `clone_guard_widget`). Option keys: `cgss_portal_url`, `cgss_user_token`, `cgss_api_key`.
+
+## Local environment (wp-env, set up 2026-11-11)
+
+Two independent sites, each with its own containers and database. Both mount this repo as the plugin (folder `clone-guard-security-scanning`) and install Plugin Check from `https://downloads.wordpress.org/plugin/plugin-check.zip` (2.2.0 at setup). wp-env itself is pinned at `@wordpress/env` 12.1.0 in `package.json`.
+
+| | Main site | Second pass |
+|---|---|---|
+| Config | `.wp-env.json` | `.wp-env.php82.json` |
+| URL | http://localhost:8888/wp-admin | http://localhost:8890/wp-admin |
+| WordPress | 7.1 (the `7.1` tag; `#7.1` resolves fine; newest 7.1.x on 2026-11-11 is 7.1.4) | same |
+| PHP | 8.4 (8.4.27 at setup) | 8.2 (8.2.35 at setup) |
+| Start / stop | `npm run env:start` / `npm run env:stop` | `npm run env:start:php82` / `npm run env:stop:php82` |
+| WP-CLI | `npm run env:cli -- <args>` (e.g. `npm run env:cli -- plugin list`) | `npm run env:cli:php82 -- <args>` |
+
+- Admin login: `admin` / `password` (wp-env defaults; local only).
+- Debug constants: `WP_DEBUG`, `WP_DEBUG_LOG`, `SCRIPT_DEBUG` on, `WP_DEBUG_DISPLAY` off. Read the log with `npx wp-env run cli cat wp-content/debug.log`, clear it with `npx wp-env run cli sh -c ': > wp-content/debug.log'` (for the 8.2 site add `--config=.wp-env.php82.json` right after `wp-env`).
+- Plugin Check CLI: `npm run plugin-check` (table output). Valid `--format` values are table, csv, json, ctrf and the `strict-*` variants (no `count`).
+- PHP lint: `npm run lint:php` (php:8.4-cli Docker image; added now, first run is Step 3).
+- `testsEnvironment: false` is set in both configs: wp-env 12 otherwise also starts a "tests" site on 8889 and prints a deprecation warning. The 8.2 site uses a separate config file instead, as wp-env 12 recommends.
+- Credentials for the plugin go in each site's Settings page (each site has its own DB, so enter them on both for Step 2). An optional `.wp-env.override.json` / `.wp-env.php82.override.json` is git-ignored and dist-ignored.
+- `npx wp-env destroy` wipes a site (DB included); `npx wp-env start --update` re-reads the config.
+- First start takes about 3 to 5 minutes (WordPress clone + images); later starts take about 20 seconds.
 
 ## Decisions
 
@@ -78,3 +100,4 @@ Append one entry per working session: date, model, what was done, what changed, 
 - **2026-11-11, Fable 5.1 (planning).** Read the handoff PDF. Verified the facts above by downloading the 2.5 zip, diffing it against this repo, probing the portal, seal server, website and Go SDK. Wrote this file, `docs/PLAN.md` and `CLAUDE.md`. Nothing in plugin code changed. Next: owner answers the open questions, then an Opus 5.5 session starts Phase 1 step 1 (SVN trunk sync).
 - **2026-11-11, Opus 5.5 (planning follow-up).** Owner answered: seal code comes from `/trust-seal`; test credentials available; `platform-*` containers unrelated; WP 5.9 / PHP 7.4 floor approved. Reverse-engineered `/trust-seal` and `get-seal.js` (options, sizes, inline-mode constraint, mshots preload) and recorded them above. Decided wp-env as primary test env, `.env` for API script secrets. Rewrote Plan step 9 around the real embed and moved it into Phase 1 as step 5b (open question 7). No plugin code changed. Next: Phase 1 step 1.
 - **2026-11-11, Opus 5.5 (Phase 1 step 1: sync trunk 2.5).** Created branch `release/2.6`. Downloaded the WordPress.org zip, confirmed `main.php` is byte-identical to SVN `trunk/main.php` and that trunk and the zip list the same 67 files. Committed the planning docs separately (`cf72682`), then replaced `main.php`, `readme.txt`, `classes/`, `css/`, `js/`, `img/`, `views/` with the 2.5 copy, left out `views/admin_overview.php.save`, and added `.gitignore`, `.distignore`, `.env.example` (no secrets; portal URL default only) in commit `db7c35e` "Sync with WordPress.org trunk (2.5)". No GitHub-only files existed, so nothing was deleted. Acceptance: `diff -rq` against the zip shows only meta files and the `.save` file; `main.php` shows `2.5` in the header and `$version`. Nothing in CONTEXT.md was wrong; only reworded the GitHub-copy fact to say it describes `main` before the sync. Branch is local only (not pushed). Next: step 1b (wp-env with WordPress 7.1, PHP 8.4, Plugin Check).
+- **2026-11-11, Opus 5.5 (Phase 1 step 1b: wp-env).** Added `package.json` (`@wordpress/env` 12.1.0; scripts `env:start`, `env:stop`, `env:cli`, `lint:php`, `plugin-check`, plus `env:*:php82`), `package-lock.json`, `.wp-env.json` (WordPress `#7.1`, PHP 8.4, plugin + Plugin Check, debug constants) and `.wp-env.php82.json` (same, PHP 8.2, port 8890). Added the 8.2 config and its override file to `.distignore` / `.gitignore`. Deviations from the plan text: Plugin Check from `plugin-check.zip` instead of `plugin-check.latest-stable.zip` (the latter installs into an odd folder name); `testsEnvironment: false` because wp-env 12 otherwise starts an extra tests site on 8889 and deprecates it; second config file instead of `env.tests` (wp-env 12 recommendation). Acceptance on 8888: WordPress 7.1, PHP 8.4.27, plugin 2.5 active with no fatal, "CloneGuard Security" menu with Overview/Scans/Reports/Vulnerabilities/Options/Settings, Plugin Check under Tools (page loads 200), `wp plugin check` CLI runs. 8890 also verified (WordPress 7.1, PHP 8.2.35, both plugins active), then stopped. New fact: without credentials, 5 plugin pages redirect (302) to Settings and log only the known dynamic-property deprecations (lines recorded under Verified facts). `debug.log` cleared afterwards so Step 2 starts clean. Main site left running. Next: Step 2 (click-through with the real account), which needs the owner to enter portal URL, token and key on the Settings page of each site.

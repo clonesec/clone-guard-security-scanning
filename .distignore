@@ -16,3 +16,5 @@ docs
 tests
 scripts
 *.zip
+.wp-env.php82.json
+.wp-env.php82.override.json
