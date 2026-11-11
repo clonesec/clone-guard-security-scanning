@@ -104,3 +104,20 @@ Re-ran the full read-only pass above on PHP 8.4 and 8.2 after the step 3 fixes. 
 | PHP 8 grep (each, create_function, FILTER_SANITIZE_STRING, money_format, strftime, utf8_encode, `${}` interpolation, optional-before-required params) | None found. `array_key_first` needs PHP 7.3, fine with the 7.4 minimum. |
 | Failure paths: unreachable portal, slow `/my_details`, unknown IDs in detail URLs | No fatals any more, but they still log warnings (`getUserDetails()` returning `null`, 4 per page; 215 to 253 undefined keys on a scan edit with an unknown ID) and show no error message. Moved to step 4, action 5. |
 | F2 (`/results` slowness) | Unchanged on the portal side: measured up to 28.8 s uncached. With the 10 s timeout the Vulnerabilities page now shows an empty list instead of crashing; step 4 raises the timeout to 30 s. |
+
+## Status after step 4 (2026-11-11)
+
+Full read-only pass plus failure-path checks re-run on PHP 8.4 and 8.2: `debug.log` empty in every case, including an unreachable portal URL (`portal.invalid`) and unknown IDs on every detail and edit route. Contract in `docs/API-V1-CONTRACT.md`; read-only probe in `scripts/api-probe.sh`.
+
+| Item | Status |
+|---|---|
+| F1 (failed or slow call) | Fixed: `api()` checks `is_wp_error()`, 30 s timeout, user agent `CloneGuardSecurityScanning/{version}; {home_url}`. Network and 5xx errors come back as a portal-style error (`status_text`); pages print it as an error notice; after the first network error, later calls in the same request fail fast. Unreachable portal: every page loads in under 0.1 s with the message instead of empty lists. |
+| F2 (`/results` slowness) | Mitigated only. Still 10 to 35 s uncached; with 30 s some Vulnerabilities pages still time out, and now say so. Portal question 4d. |
+| F3 / unknown IDs | Fixed: scan, report, vulnerability, add/edit exception, target, schedule and notification routes show "This … could not be found" with a back link (or the network message) instead of rendering the view. |
+| F5 report detail compliance | Mitigated: shows "Not available" when the field is missing (missing in PCI and VRMS mode). Portal question 4a. |
+| F6 report file types | PCI `attestation`, `executive`, `detailed` download as PDF through the plugin. Unsupported: PCI `certificate_of_compliance`, VRMS `executive_vrms`, `vulnerability_assessment`, `vulnerability_summary`, `scan_comparison`. Waiting on portal question 4b. |
+| F7 notification status values | Open, waiting on portal question 4c. |
+| F8 remediation `.xls` | Fixed: served as `.xlsx` with the right content type when the file starts with the ZIP signature. Not re-tested live (no generated remediation file in PCI mode). |
+| F10 performance | Improved: `getUserDetails()` called once per request (was 4 to 5 times). Overview about 13.5 s (was 16 to 19 s); deeper fix (one `getReport()` per scan) left for Phase 2. |
+| Also fixed | delete/start/stop/generate no longer report success on a network or 5xx error; app-type switch only treats `true` as success; `generateReportCheck()` `strpos` bug; `print_r()` of scan config into the Scans page source removed. |
+| Account state | The account's product mode changed from VRMS (step 2) to PCI (step 4) outside these tests, so the scan forms no longer show the scanner and config selects (VRMS/penetration only, by design). |

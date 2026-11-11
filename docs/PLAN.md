@@ -80,7 +80,9 @@ Actions:
 
 Acceptance: zero lines mentioning `clone-guard-security-scanning` in `debug.log` after a full pass on 8.4 and 8.2; `lint:php` passes. Record the list of fixed items in the Session log.
 
-### - [ ] Step 4: Confirm the API client against the portal
+### - [x] Step 4: Confirm the API client against the portal
+
+Done 2026-11-11. `docs/API-V1-CONTRACT.md`, `scripts/api-probe.sh`, hardened `api()` and the carried-over failure paths. Open: F6 (unsupported report file types) and F7 (notification status values) wait for portal answers 4b and 4c; the write endpoints the owner did not approve remain untested (open question 8).
 
 Actions:
 1. For every public method in `classes/class-clone-guard-api.php`, list the endpoint, HTTP method and the response keys the views consume (from `main.php` and `views/`). Put the table in `docs/API-V1-CONTRACT.md`.
