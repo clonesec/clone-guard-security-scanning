@@ -97,7 +97,9 @@ Actions:
 
 Acceptance: `docs/API-V1-CONTRACT.md` complete; every page renders real data with no blank primary columns; the failure-path checks above (portal URL set to `portal.invalid`, and a hand-typed unknown scan ID) log nothing in `debug.log`.
 
-### - [ ] Step 4b: Page speed (owner request 2026-11-11: performance in Phase 1)
+### - [x] Step 4b: Page speed (owner request 2026-11-11: performance in Phase 1)
+
+Ticked 2026-11-11: owner accepted the result as is (first scan-form load per 15 minutes stays about 9 s; repeat loads about 3x faster). Parallel scan-form calls left for Phase 2.
 
 Why: pages wait on several portal calls made one after another (measured after step 4: Overview 13.8 s, scan edit 9.0 s, scan create 8.1 s, Options 4.2 s, Scans 3.5 s, Reports 2.6 s). Settings, with no portal calls, loads in 0.03 s, so the time is all portal round trips.
 
@@ -113,7 +115,9 @@ Acceptance: Overview and the scan forms at least 2x faster; no page slower; same
 
 Status 2026-11-11 (code done, commit below; not ticked because one acceptance item is open). Same portal state, before (step 4 code) / after, first load / repeat load: Overview 35.8 s (with a timeout error) / 17.6 s / 1.3 s; scan edit 9.9 s / 8.9-9.3 s / 3.3 s; scan create 8.6 s / about 6.5 s / 2.4 s; Options 4.6 / 2.4 s; Scans 4.1 / 2.0 s; Reports 2.7 / 1.5 s. No page slower; parallel and sequential report data identical; debug.log empty on 8.4 and 8.2. **Open:** the first scan-form load in each 15-minute window is not 2x faster (it still waits for the 4 s configs call plus five other calls one after another). Fix options: run the scan-form calls in parallel too, or accept and move on. Owner to decide.
 
-### - [ ] Step 5: Update links and Settings copy (interim)
+### - [x] Step 5: Update links and Settings copy (interim)
+
+Done 2026-11-11. Kept the existing feature claims and only removed the SAQ version (did not add the example "Unlimited rescans", an unconfirmed product claim; Phase 3 brings final copy). Acceptance grep run on the shipped files (the repo-wide grep also matches CONTEXT.md and docs/, which quote the old URL on purpose). Seal image URLs still 404 until step 5b.
 
 Actions:
 1. In `views/admin_settings.php`: change the Purchase a License `href` to `https://www.clone-systems.com/pricing?mode=pci`. Replace the feature list with neutral current wording that does not name a PCI DSS or SAQ version (Phase 3 brings the final copy): e.g. "PCI ASV scanning by an approved scanning vendor", "Unlimited rescans", "Online SAQ wizard", "IPv4 and IPv6 targets", "24x7 support". Remove the `v3.2`.
