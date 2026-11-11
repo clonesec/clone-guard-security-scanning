@@ -67,7 +67,9 @@ Actions:
 
 Acceptance: `docs/PHASE1-FINDINGS.md` exists with a complete page-by-page table, and `CONTEXT.md` lists any endpoint whose behavior changed.
 
-### - [ ] Step 3: Fix PHP 8.x deprecations and warnings
+### - [x] Step 3: Fix PHP 8.x deprecations and warnings
+
+Done 2026-11-11 (commit `399e0a0`). Normal-operation pass clean on 8.4 and 8.2; failure-path warnings moved to step 4 action 5. Details in `docs/PHASE1-FINDINGS.md` > Status after step 3.
 
 Actions:
 1. Add `lint:php` script: `docker run --rm -v "$PWD":/app -w /app php:8.4-cli sh -c 'find . -name "*.php" -not -path "./node_modules/*" -print0 | xargs -0 -n1 php -l'`. Run it; fix any syntax-level issue.
@@ -85,8 +87,13 @@ Actions:
 2. Mark each row as verified from step 2, or untested. For untested ones that are safe (GET only), add `scripts/api-probe.sh` that reads `.env` and calls each GET endpoint with curl, printing only HTTP status and top-level JSON keys (never the token, never full bodies, since bodies can contain customer data). Never call create, update, delete, start or stop endpoints from the script.
 3. Harden `Clone_Guard_API::api()`: check `is_wp_error($res)` and return a structured error; set a `timeout` (30s) and `user-agent` (`CloneGuardSecurityScanning/{version}; {home_url}`); never `print_r`/`var_dump` responses.
 4. Do **not** switch to API v2. If an endpoint turned out to be gone or changed, fix the view minimally and log it as a product question in `CONTEXT.md`.
+5. Carried over from step 3 (failure paths; step 3 removed the fatals, these still log warnings or fail silently):
+   - `getUserDetails()` returns `null` when `/my_details` fails, and every list page reads `getUserDetails()['app_type']` and `['organization']['available_products'][...]` (4 calls, 4 warnings per page, e.g. `main.php:411`, `526-529`, `643-646`, `760-763`). Call it once per request, cache it, and return an array with safe defaults.
+   - On a transport error (timeout, DNS, wrong portal URL) the getters now return empty lists, so pages render empty with no explanation. Show an admin notice ("The scanning portal did not respond…") and keep the redirect to Settings only for 401.
+   - Detail and edit routes with an unknown or deleted ID (`getScan`, `getReport`, `getResult`, `getTarget`, `getSchedule`, `getNotification` return `[]`) render the view with hundreds of undefined-key warnings (215 to 253 on the scan edit view). Show a "not found" notice and return before including the view.
+   - `generateReportCheck()`: `strpos(...) !== -1` is always true (`strpos` returns `false`, never `-1`).
 
-Acceptance: `docs/API-V1-CONTRACT.md` complete; every page renders real data with no blank primary columns.
+Acceptance: `docs/API-V1-CONTRACT.md` complete; every page renders real data with no blank primary columns; the failure-path checks above (portal URL set to `portal.invalid`, and a hand-typed unknown scan ID) log nothing in `debug.log`.
 
 ### - [ ] Step 5: Update links and Settings copy (interim)
 

@@ -86,3 +86,21 @@ Throwaway entries created for the write tests were named "ZZ plugin test …" (t
 | Browser console / JavaScript behaviour (tabs, Select2, datetimepicker, AJAX form messages) | No browser driven in this pass. Needs a manual check by the owner, or a browser session, in step 3 or step 6. |
 
 These can be run on a disposable account, or with the owner's go-ahead, during the step 3 re-run.
+
+## Status after step 3 (2026-11-11)
+
+Re-ran the full read-only pass above on PHP 8.4 and 8.2 after the step 3 fixes. With the portal responding normally, `debug.log` stays empty on every page and action. `npm run lint:php` passes (21 files).
+
+| Item | Status |
+|---|---|
+| Dynamic properties `$user_token`, `$api_key` | Fixed: declared in `Clone_Guard_Security_Scanning`. No other undeclared runtime properties in any class. |
+| F1 fatal (`count(null)` after a failed/slow call) | Fixed as a PHP 8 TypeError: all 17 `count($data[...])` checks in the API client are `!empty(...)`. Pages no longer crash; they render with empty lists. Proper error handling (notice, 30 s timeout) is step 4. |
+| F3 fatal (`json_decode()` on an array) | Fixed: all 17 getters accept an already-decoded 404/422 body (`is_array($response) ? $response : json_decode((string) $response, true)`). The dead clock-icon link now points to `cgss_options` (`views/admin_scans.php:182`). |
+| F4 target create shows an error | Fixed: `main.php` no longer indexes `true['status']`; the undefined `$target_id` line is removed (no JavaScript reads `targetId`). |
+| `admin_scans.php:209` strtotime(null) | Fixed: skipped when `next_time` is empty, so the 1970 date is gone. |
+| `admin_options.php:254` undefined key 2 | Fixed: first three hosts joined with `, ` and escaped. |
+| `admin_vulnerability_view.php:21` undefined `text` | Fixed with `?? ''`. |
+| `main.php:357` `count($scan['notifications'])` | Guarded with `!empty()` (same PHP 8 TypeError risk). |
+| PHP 8 grep (each, create_function, FILTER_SANITIZE_STRING, money_format, strftime, utf8_encode, `${}` interpolation, optional-before-required params) | None found. `array_key_first` needs PHP 7.3, fine with the 7.4 minimum. |
+| Failure paths: unreachable portal, slow `/my_details`, unknown IDs in detail URLs | No fatals any more, but they still log warnings (`getUserDetails()` returning `null`, 4 per page; 215 to 253 undefined keys on a scan edit with an unknown ID) and show no error message. Moved to step 4, action 5. |
+| F2 (`/results` slowness) | Unchanged on the portal side: measured up to 28.8 s uncached. With the 10 s timeout the Vulnerabilities page now shows an empty list instead of crashing; step 4 raises the timeout to 30 s. |
