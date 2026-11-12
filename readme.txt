@@ -65,6 +65,16 @@ Clone Systems [Subscription Agreement](https://www.clone-systems.com/legal/subsc
 
 == Changelog ==
 
+= 2.6 =
+* Tested up to WordPress 7.1.
+* Compatibility fixes for PHP 8.2 to 8.4.
+* Security hardening: output escaping, input sanitizing, and nonce and capability checks on all admin actions.
+* The Security Seal widget now shows the current Clone Systems Trust Seal, with seal, size and position options. Existing widgets keep their size.
+* New [cloneguard_seal] shortcode to place the seal in posts and pages.
+* Faster admin pages, and a clear message when the scanning portal cannot be reached.
+* Updated purchase link, Settings page text and screenshots.
+* Minimum requirements raised to WordPress 5.9 and PHP 7.4.
+
 = 2.5 =
 * Uploaded new Validation Report screenshot
 * Tested plugin up to 6.5.2 Wordpress version
@@ -128,3 +138,7 @@ Clone Systems [Subscription Agreement](https://www.clone-systems.com/legal/subsc
 = 1.0.0 =
 * Initial release
 
+== Upgrade Notice ==
+
+= 2.6 =
+Tested with WordPress 7.1 and PHP 8.4. Security fixes, and the seal widget now shows the current Clone Systems Trust Seal. Requires WordPress 5.9 and PHP 7.4.

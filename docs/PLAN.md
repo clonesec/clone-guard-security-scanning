@@ -166,7 +166,7 @@ Actions:
 
 Acceptance: Plugin Check reports zero errors; warnings justified; click-through still clean.
 
-### - [ ] Step 7: Version bump, readme, changelog
+### - [x] Step 7: Version bump, readme, changelog
 
 Actions:
 1. Set `Version: 2.6` in the `main.php` header and `public $version = '2.6';`. Grep for any other `2.5`/`2.0.0` version literals.
@@ -174,6 +174,8 @@ Actions:
 3. Bump `.wp-env.json` nothing; verify the plugin still activates cleanly on a fresh site and on a site that already had 2.5 options stored (set the three options with WP-CLI before activating).
 
 Acceptance: header, property and readme agree on `2.6`; activation and upgrade paths clean.
+
+Done 2026-11-12. Only `main.php` had version literals (header and `$version`). Changelog also lists the step 5b seal change and shortcode and the step 4/4b speed and error-message work, which the plan's list left out. Activation and upgrade tested on a throwaway wp-env site (WordPress 7.1, PHP 8.4, port 8896, destroyed afterwards) with the shipped build (repo minus `.distignore`): fresh activation clean; 2.5 from the WordPress.org zip with dummy options and two legacy widgets (106x42 and empty size) in Twenty Twenty-One, then the folder replaced by 2.6 as an update does: still active, options and widget instances unchanged, widgets render the new seal (md and lg), admin pages and deactivate/activate clean, no PHP notices. Plugin Check: 0 errors, 0 warnings.
 
 ### - [ ] Step 8: Release 2.6 to WordPress.org SVN
 

@@ -1,6 +1,7 @@
 Plugin Check 2.2.0 on the shipped files after step 6 (uncommitted working copy, 2026-11-12).
 Method: scripts/plugin-check-dist.sh (repo minus .distignore, checked by path with --slug=clone-guard-security-scanning).
 Before: 322 errors, 383 warnings (docs/PLUGIN-CHECK-BEFORE.txt). After: 1 error, 0 warnings.
+After step 7 (Version 2.6 in main.php): "Success: Checks complete. No errors found." (0 errors, 0 warnings).
 
 Remaining item:
 - ERROR stable_tag_mismatch (1): readme says Stable tag 2.6 (step 6), main.php still says Version 2.5; step 7 sets Version 2.6 and closes it.
