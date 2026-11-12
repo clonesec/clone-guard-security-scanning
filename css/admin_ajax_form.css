@@ -1,0 +1,209 @@
+.cloneguard-security_page_cgss_settings #wpcontent,
+.cloneguard-security_page_cgss_options #wpcontent {
+	padding-left: 0;
+}
+
+.cgss-settings-page {
+
+}
+
+
+
+/**
+ *  Settings Head
+ */
+.cgss-head {
+    background-color: #fff;
+    box-shadow: 0 1px 0 rgba(200,215,225,0.5), 0 1px 2px #e9eff3;
+    /* box-shadow: 0px 0px 15px 7px #00000030; */
+}
+
+     .cgss-head-inside {
+        display: flex;
+        padding: 10px 10px 10px 20px;
+    }
+
+        .cgss-head-logo {
+            width: 58px;
+            height: 58px;
+        }
+
+        .cgss-head-text {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+        }
+            
+            .cgss-head-title {
+                padding: 0;
+                margin: 0;
+                font-weight: 500;
+            }
+
+            .cgss-head-subtitle {
+                margin: 0;
+                margin-top: 5px;
+                padding: 0;
+                font-size: 1.1em;
+            }
+
+
+.cgss-settings-title {
+    padding: 0;
+    margin: 0;
+    padding-left: 20px;
+    margin-top: 24px;
+}
+
+
+
+/**
+ *  Settings Main
+ */
+
+.cgss_main {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 20px;
+}
+
+@media(max-width: 960px) {
+    .cgss_main {
+        flex-direction: column-reverse;
+    }
+}
+
+    .main-inside {
+        background: #ffffff;
+        border-radius: 6px;
+        padding: 40px;
+        /* max-width: 760px; */
+    }
+
+
+
+
+/**
+ *  Step 1: Purchase box
+ */
+
+.cgss-purchase {
+    /* max-width: 575px;
+    background: #ffffff;
+    box-shadow: 0px 0px 6px 4px rgba(0,0,0,.3);
+    padding: 24px 16px; */
+    border-bottom: 1px solid #f1f1f1;
+    padding-top: 10px;
+    padding-bottom: 40px;
+}
+
+    .cgss-purchase-title {
+        margin-top: 0;
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    .cgss-purchase-list {
+
+    }
+
+        .cgss-purchase-list-item {
+        }
+
+        .cgss-purchase-list-item:before {
+            content: '+';
+            margin-right: 4px;
+        }
+
+    .cgss-purchase-link {
+        display: inline-block;
+        padding: 10px 16px;
+        font-size: 14px;
+        border-radius: 5px;
+        background: #fec228;
+        border-bottom: 2px solid #cb9b20;
+        color: #000000;
+        text-decoration: none;
+    }
+
+
+
+/**
+ *  Step 2
+ */
+.cgss-settings-token {
+    border-bottom: 1px solid #f1f1f1;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    padding-top: 10px;
+}
+    .cgss-settings-token-title {
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    .cgss-settings-token-img {
+        width: 600px;
+    }
+
+
+
+
+/**
+ *  Step 3: Ajax Form
+ */
+ .cgss-settings-form {
+    /* max-width: 575px;
+    padding: 10px 16px;
+    margin-top: 25px;
+    background-color: #fff;
+    box-shadow: 0px 0px 6px 4px rgba(0,0,0,.3); */
+    padding-top: 10px;
+}
+
+.cgss-settings-form-title {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.ajax_form .form-table input[type=text],
+.settings-form-input {
+	width: 100%;
+	max-width: 500px;
+    margin-bottom: 6px;
+    height: 40px;
+    font-size: 15px;
+}
+
+.ajax_form .form-table textarea {
+	width: 100%;
+	max-width: 500px;
+	height: 150px;
+	margin-bottom: 6px;
+}
+
+.ajax_form .spinner {
+	float: none;
+}
+
+.form-table th {
+    width: 80px;
+}
+
+.form-table .description {
+    margin-top: 0;
+}
+
+p.submit {
+    /* text-align: center; */
+}
+
+    p.submit #submit-btn {
+        font-size: 1.2em;
+        padding: 0px 30px;
+    }
+
+#ajax_message {
+    margin-top: 15px;
+}

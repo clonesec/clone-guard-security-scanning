@@ -1,3 +1,4 @@
+<?php defined('ABSPATH') || exit; ?>
 <div class="cgss-target-create-page">
 
     <div class="cgss-head">
@@ -30,17 +31,17 @@
                                 <table class="form-table editcomment" role="presentation">
                                     <tbody>
                                         <tr>
-                                            <td class="first"><label for="name"><?php esc_html_e('* Name', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="name"><?php esc_html_e('* Name', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input type="text" name="name" size="30" value="<?php echo esc_attr($target['name']); ?>"></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('* Hostnames or IP addresses', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php esc_html_e('* Hostnames or IP addresses', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><textarea name="hosts" size="30"><?php echo esc_html($target['hosts']); ?></textarea></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('Comment', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php esc_html_e('Comment', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><textarea name="comment" size="30"><?php echo esc_html($target['comment']); ?></textarea></td>
                                         </tr>
 
@@ -48,7 +49,7 @@
                                             <td colspan="2">
                                             <label>
                                                 <input type="checkbox" name="attest" value="yes" checked />
-                                                <?php _e('By selecting this checkbox you attest that this target includes all components which should be in scope for PCI DSS and any component considered out-of-scope for this target is properly segmented from your cardholder data environment. You also acknowledge that the proper scoping of this external target is your responsibility.', 'cgss'); ?>
+                                                <?php esc_html_e('By selecting this checkbox you attest that this target includes all components which should be in scope for PCI DSS and any component considered out-of-scope for this target is properly segmented from your cardholder data environment. You also acknowledge that the proper scoping of this external target is your responsibility.', 'clone-guard-security-scanning'); ?>
                                             </label></td>
                                         </tr>
                                         <tr>

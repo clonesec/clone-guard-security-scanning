@@ -1,0 +1,6 @@
+.env
+.wp-env.override.json
+node_modules/
+.DS_Store
+*.zip
+.wp-env.php82.override.json

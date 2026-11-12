@@ -1,0 +1,19 @@
+{
+  "name": "clone-guard-security-scanning",
+  "private": true,
+  "description": "Dev tooling for the CloneGuard Security Scanning WordPress plugin (not shipped).",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "env:cli": "wp-env run cli wp",
+    "lint:php": "docker run --rm -v \"$PWD\":/app -w /app php:8.4-cli sh -c 'find . -name \"*.php\" -not -path \"./node_modules/*\" -print0 | xargs -0 -n1 php -l'",
+    "plugin-check": "wp-env run cli wp plugin check clone-guard-security-scanning --format=table",
+    "env:start:php82": "wp-env --config=.wp-env.php82.json start",
+    "env:stop:php82": "wp-env --config=.wp-env.php82.json stop",
+    "env:cli:php82": "wp-env --config=.wp-env.php82.json run cli wp"
+  },
+  "devDependencies": {
+    "@wordpress/env": "12.1.0"
+  }
+}

@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- this view is included from a class method, so its variables are local to that method, not global. ?>
 <div class="cgss-schedule-create-page">
 
     <div class="cgss-head">
@@ -30,12 +32,12 @@
                                 <table class="form-table editcomment" role="presentation">
                                     <tbody>
                                         <tr>
-                                            <td class="first"><label for="name"><?php esc_html_e('* Name', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="name"><?php esc_html_e('* Name', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input type="text" name="name" size="30" value=""></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php esc_html_e('Frequency', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php esc_html_e('Frequency', 'clone-guard-security-scanning'); ?></label></td>
                                             <td class="schedule-frequency">
                                                 <label><input type="radio" name="frequency" size="30" value="one_time" checked> One Time</label>
                                                 <label><input type="radio" name="frequency" size="30" value="daily"> Daily</label>
@@ -45,18 +47,18 @@
                                         </tr>
 
                                         <tr class="schedule-repeat-input">
-                                            <td class="first"><label for="period"><?php esc_html_e('* Repeat every', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="period"><?php esc_html_e('* Repeat every', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input type="text" name="period" size="30" value=""></td>
                                         </tr>
 
 
                                         <tr>
-                                            <td class="first"><label for="first_time"><?php esc_html_e('* First Time', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="first_time"><?php esc_html_e('* First Time', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input class="datetimepicker" type="text" name="first_time" size="30" value=""></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label for="timezone"><?php esc_html_e('* Timezone', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="timezone"><?php esc_html_e('* Timezone', 'clone-guard-security-scanning'); ?></label></td>
                                             <td>
                                                 <select name="timezone" class="select2">
                                                     <option value="">Please select...</option>
@@ -68,7 +70,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('Comment', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php esc_html_e('Comment', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><textarea name="comment" size="30"></textarea></td>
                                         </tr>
 

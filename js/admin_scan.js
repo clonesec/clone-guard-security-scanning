@@ -454,6 +454,7 @@ jQuery(document).ready(function($) {
 
     }
 
+    // https://wpmudev.com/blog/using-ajax-with-wordpress/
     function clickUpdateAppType() {
         var action = $(this).attr('data-action');
         var appType = $(this).attr('data-apptype');
@@ -480,6 +481,79 @@ jQuery(document).ready(function($) {
                 if(data.status && data.status == 'success' && data.reload) {
                     window.location.href = window.location.href;
                     console.log(data.appType);
+                } else {
+                    if(data.messages) {
+                        $('#ajax_message').addClass('notice');
+                        $('#ajax_message').addClass('notice-error');
+                        $('#ajax_message').removeClass('notice-success');
+                        for(i = 0; i < data.messages.length; i++) {
+                            if(i > 0) {
+                                msg += '<br>';
+                            }
+                            msg += data.messages[i];
+                        }
+                        $('#ajax_message').html('<p>' + msg + '</p>');
+                    } else {
+                        $('#ajax_message').addClass('error');
+                        $('#ajax_message').removeClass('success');
+                        $('#ajax_message').html('<p>There was a problem with the submission.</p>');
+                    }
+                    $spinner.removeClass('is-active');
+
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 300);
+                }
+            },
+			error: function(jqXHR, textStatus, error) {
+                $spinner.removeClass('is-active');
+
+                var data = jqXHR.responseJSON;  
+                if(data && data.message) {      
+                    $('#ajax_message').addClass('notice');
+                    $('#ajax_message').addClass('notice-error');
+                    $('#ajax_message').removeClass('notice-success');
+                    $('#ajax_message').html('<p>' + data.message + '</p>');
+                } else {
+                    $('#ajax_message').addClass('notice');
+                    $('#ajax_message').addClass('notice-error');
+                    $('#ajax_message').removeClass('notice-success');
+                    $('#ajax_message').html('<p>There was a problem with the submission.</p>');
+                }
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 300);
+            }
+		});
+        return false;
+    }
+
+    function changeTypeScanOrHost() {
+        var action = $(this).attr('data-action');
+        var addExceptionType = $(this).attr('data-addexceptiontype');
+        var data = {};
+        var nonce = $(this).attr('data-nonce');
+        var $form = $(this).closest('form');
+
+        var msg = '';
+
+        // Show the spinner.
+        var $spinner = $(this).parent().children().last();
+        $spinner.addClass('is-active');
+
+        data._wpnonce = nonce;
+        data.action = action;
+        data.addexceptiontype = addExceptionType;
+
+		$.ajax({
+			data: data,
+			dataType: 'json',
+			method: 'POST',
+			url: ajaxurl,
+			success: function(data) {
+                if(data.status && data.status == 'success' && data.reload) {
+                    window.location.href = window.location.href;
+                    console.log(data);
                 } else {
                     if(data.messages) {
                         $('#ajax_message').addClass('notice');
@@ -556,6 +630,8 @@ jQuery(document).ready(function($) {
         $(document).on('click', '.scheduled_processing .action_stop', clickStopScheduled);
 
         $(document).on('click', '.update-app-type', clickUpdateAppType);
+        
+        $(document).on('click', '.addException-change-type-btn', changeTypeScanOrHost);
 
 
         if($('.scans_wrap').length) {

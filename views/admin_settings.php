@@ -1,4 +1,6 @@
-<div class="cgss-settings-page" id="<?php echo $action; ?>_page">
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.Security.NonceVerification.Recommended -- $_GET['msg'] only picks which notice to show after a redirect. ?>
+<div class="cgss-settings-page" id="<?php echo esc_attr($action); ?>_page">
 
     <div class="cgss-head">
 
@@ -30,24 +32,27 @@
                 <ul class="cgss-purchase-list">
                     <li class="cgss-purchase-list-item">PCI ASV Compliant Scanning</li>
                     <li class="cgss-purchase-list-item">Certified ASV Reports</li>
-                    <li class="cgss-purchase-list-item">Online SAQ v3.2 Wizard</li>
+                    <li class="cgss-purchase-list-item">Online SAQ Wizard</li>
                     <li class="cgss-purchase-list-item">Nothing to install</li>
                     <li class="cgss-purchase-list-item">24/7 email support</li>
-                    <li class="cgss-purchase-list-item">IPv4, and IPv6</li>
+                    <li class="cgss-purchase-list-item">IPv4 and IPv6 targets</li>
                 </ul>
-                <a class="cgss-purchase-link" href="https://www.clone-systems.com/purchase-pci-compliance-scanning/" target="_blank">Purchase a License</a>
+                <a class="cgss-purchase-link" href="https://www.clone-systems.com/pricing?mode=pci" target="_blank" rel="noopener">Purchase a License</a>
             </div>
 
             <div class="cgss-settings-token">
                 <h2 class="cgss-settings-token-title">Step 2: Gather your Token & Key</h2>
-                <img class="cgss-settings-token-img" src="<?php echo esc_url( plugins_url( '../img/settings-step-2.png', __FILE__ ) ); ?>" alt="Logo" />
+                <p class="cgss-settings-token-text">a) Copy your User Token from the scanning portal.</p>
+                <img class="cgss-settings-step2-img" src="<?php echo esc_url( plugins_url( '../img/settings-step-2-token.png', __FILE__ ) ); ?>" width="875" height="299" alt="The User token section in the scanning portal, with the Copy token button" />
+                <p class="cgss-settings-token-text">b) Copy the API Key.</p>
+                <img class="cgss-settings-step2-img" src="<?php echo esc_url( plugins_url( '../img/settings-step-2-key.png', __FILE__ ) ); ?>" width="703" height="262" alt="The API Key field in the scanning portal, with the Copy token button" />
             </div>
 
             <form class="cgss-settings-form ajax_form" action="admin-ajax.php" method="post">
                 <h2 class="cgss-settings-form-title">Step 3: Input Token & Key below</h2>
 
                 <?php wp_nonce_field( $action ); ?>
-                <input name="action" type="hidden" value="<?php echo $action; ?>" />
+                <input name="action" type="hidden" value="<?php echo esc_attr($action); ?>" />
 
                 <table class="form-table">
                     <tbody>

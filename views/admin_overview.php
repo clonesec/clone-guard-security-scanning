@@ -1,4 +1,6 @@
-<div class="cgss-overview-page" id="<?php echo $action; ?>_page">
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- this view is included from a class method, so its variables are local to that method, not global. ?>
+<div class="cgss-overview-page" id="<?php echo esc_attr($action); ?>_page">
 
     <div class="cgss-head">
 
@@ -109,8 +111,8 @@
                             <?php endif; ?>
                         </span>
 
-                        <span class="general-btn-container">
-                            <a class="button btn-overview" href="<?php echo $this->adminLink('scans'); ?>">Scan Now</a>
+                        <span class="reports-btn-container">
+                            <a class="button btn-overview" href="<?php echo esc_url($this->adminLink('scans')); ?>">Scan Now</a>
                         </span>
 
                     <?php else: ?>
@@ -132,7 +134,11 @@
                         </span>
 
                         <span class="reports-btn-container" style="margin-top:10px;">
-                            <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo $this->adminLink('vulnerabilities'); ?>">View Vulnerabilities</a>
+                            <?php if ($app_type == 'pci' || $app_type == 'vrms'): ?>
+                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Vulnerabilities</a>
+                            <?php else: ?>
+                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Findings</a>
+                            <?php endif; ?>
                         </span>
                     <?php endif; ?>
                     </div>
@@ -144,8 +150,8 @@
                         <div class="report">
                             <span class="report-date">
                                 <span class="dashicons dashicons-format-aside" style="margin:0 5px;"></span>
-                                <a href="<?php echo $this->adminLink('reports', 'report-view', $key, $reports['current_page']); ?>">
-                                    <?php echo esc_html(date('D M j Y G:i:s', strtotime($report['name']))); ?>
+                                <a href="<?php echo esc_url($this->adminLink('reports', 'report-view', $key, $reports['current_page'])); ?>">
+                                    <?php echo esc_html(gmdate('D M j Y G:i:s', strtotime($report['name']))); ?>
                                 </a>
                             </span>
                             <span class="report-name">
@@ -177,7 +183,7 @@
                     <h1>Let's get started</h1>
                     <img style="width:300px;" src="<?php echo esc_url( plugins_url( '../img/security-engineers.png', __FILE__ ) ); ?>" />
                     <span class="reports-btn-container">
-                        <a style="font-size:1.2em!important; padding: 0 60px !important;" class="button button-primary" href="<?php echo $this->adminLink('scans', 'scan-create'); ?>">
+                        <a style="font-size:1.2em!important; padding: 0 60px !important;" class="button button-primary" href="<?php echo esc_url($this->adminLink('scans', 'scan-create')); ?>">
                             Add Scan
                         </a>
                     </span>
@@ -264,13 +270,13 @@
                         $protocols = array('http://', 'https://');
                     ?>  
                         <?php if(!empty($reports['reports'])): ?>
-                            <a class="button btn-overview" href=https://seals.clone-systems.com/report?dn=<?php echo str_replace($protocols, '', get_bloginfo('wpurl')); ?> target="_blank" style="font-size:1.2em!important;padding:0 20px!important;">View Validation Report</a>
+                            <a class="button btn-overview p-0-35" href="<?php echo esc_url('https://www.clone-systems.com/report?dn=' . str_replace($protocols, '', get_bloginfo('wpurl'))); ?>" target="_blank">View Validation Report</a>
                         <?php else: ?>
-                            <button class="button btn-overview" style="font-size:1.2em!important;padding:0 20px!important;" disabled>View Validation Report</a>
+                            <button class="button btn-overview p-0-35" disabled>View Validation Report</a>
                         <?php endif; ?>
                     </span>
                 </div>
-                <img class="section-product-img" src="<?php echo esc_url( plugins_url( '../img/seals-product3.png', __FILE__ ) ); ?>" style="width:494px; box-shadow:0px 0px 10px 10px #00000030;" />
+                <img class="section-product-img img-report" src="<?php echo esc_url( plugins_url( '../img/report-screenshot4.png', __FILE__ ) ); ?>" />
             </div>
 
         </div>
@@ -278,12 +284,12 @@
         <div class="overview-row" style="margin-top:10px;">
 
             <div class="section-product overview-row-box">
-                <img class="section-product-img" src="<?php echo esc_url( plugins_url( '../img/generate-seals-product4.png', __FILE__ ) ); ?>" style="width:469px; box-shadow:0px 0px 10px 10px #00000030;" />
+                <img class="section-product-img img-generate" src="<?php echo esc_url( plugins_url( '../img/generate-seal-screenshot4.png', __FILE__ ) ); ?>" />
                 <div class="section-product-text" style="margin-left:30px;">
                      <h1>Implement Seal</h2>
                     <p>The CloneGuard security seal is a web site emblem which indicates the site has been scanned utilizing hundreds of thousands of security checks. Customers and users visiting your site will know their purchases, and personal data are securely stored and protected against internet based threats.</p>            
                     <span class="general-btn-container">
-                        <a class="button btn-overview" href="<?php echo esc_url(admin_url('widgets.php')); ?>" style="font-size:1.2em!important;padding:0 20px!important;">Add Seal</a>
+                        <a class="button btn-overview p-0-35" href="<?php echo esc_url(admin_url('widgets.php')); ?>">Add Seal</a>
                     </span>
                 </div>
             </div>

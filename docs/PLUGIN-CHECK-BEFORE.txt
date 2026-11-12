@@ -1,0 +1,797 @@
+Plugin Check 2.2.0 on the shipped files of commit ddac310 (2.5 code plus Phase 1 steps 1-5b), before step 6.
+Method: scripts/plugin-check-dist.sh (repo minus .distignore, checked by path with --slug=clone-guard-security-scanning).
+A check of the whole repo folder additionally reports 8 rows for files that never ship (.env, .env.example, .wp-env*.json, .gitignore, .distignore, CONTEXT.md, CLAUDE.md, scripts/api-probe.sh).
+
+FILE: views/admin_schedule_edit.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+34	108	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+39	100	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+49	118	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+54	120	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+55	146	ERROR	WordPress.DateTime.RestrictedFunctions.date_date	date() is affected by runtime timezone changes which can cause date/time to be incorrectly displayed. Use gmdate() instead.	
+59	116	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+63	92	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$timezone&quot;.	
+71	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+71	90	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_scan_edit.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+34	107	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+39	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+39	91	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+42	112	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+43	94	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$schedule&quot;.	
+54	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+54	115	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scan['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+57	59	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+57	78	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+64	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+64	90	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+67	112	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+68	90	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$target&quot;.	
+76	91	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+76	134	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scan['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+76	351	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+76	368	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+82	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+82	96	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+85	118	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+86	102	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$notification&quot;.	
+96	69	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+96	118	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scan['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+100	59	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+100	82	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+108	80	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+108	95	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+111	116	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+112	96	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$scanner&quot;.	
+126	80	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+126	102	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+129	116	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+130	94	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$config&quot;.	
+147	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+147	90	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_vulnerability_add_exception.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+33	147	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+41	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+41	96	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+54	103	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_target_create.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+32	108	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+37	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+37	110	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+49	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+49	90	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+54	133	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+54	467	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_vulnerability_view.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+38	95	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+53	94	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+68	96	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+83	95	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+97	96	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+120	93	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+138	91	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+145	105	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$link'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: views/admin_target_edit.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+33	108	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+38	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+38	110	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+43	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+43	90	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+51	55	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+51	389	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_report_view.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+34	106	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+39	112	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+43	116	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+47	136	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+51	126	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+52	40	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$report['display_compliance']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+56	125	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+57	67	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$report['attestation_status']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+66	121	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+67	67	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$report['executive_status']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+76	119	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+77	67	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$report['detailed_status']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+86	125	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+87	67	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$report['remediation_status']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+96	119	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+97	67	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$report['feedback_status']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: views/admin_schedule_create.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+33	108	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+38	100	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+48	118	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+54	120	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+59	116	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+63	92	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$timezone&quot;.	
+71	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+71	90	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_vulnerability_edit_exception.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+36	143	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+44	72	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+44	92	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_vulnerabilities.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+123	57	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+128	71	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+134	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+134	106	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+139	127	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+140	105	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+146	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+146	106	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+152	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+152	106	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+172	66	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$key&quot;.	
+172	74	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$vulnerability&quot;.	
+187	61	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+187	119	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+187	125	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+209	72	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+209	130	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+209	136	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+214	62	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+214	129	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+216	51	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+216	71	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+220	62	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+220	130	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+222	51	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+222	72	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+260	61	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+265	71	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+271	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+271	106	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+276	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+276	152	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+282	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+282	106	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+288	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+288	106	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$vulnerabilities['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: views/admin_notification_create.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+31	108	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+36	122	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+47	126	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_notification_edit.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+32	108	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+37	125	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+41	29	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$statuses&quot;.	
+42	51	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$key&quot;.	
+42	59	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$value&quot;.	
+44	64	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+44	83	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$value'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+46	64	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+46	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$value'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+54	126	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: views/admin_scan_create.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+32	106	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+37	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+37	91	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+40	112	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+41	94	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$schedule&quot;.	
+50	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+50	115	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scan['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+54	59	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+54	78	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+61	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+61	90	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+64	112	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+65	90	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$target&quot;.	
+74	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+74	113	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scan['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+79	59	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+79	76	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+86	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+86	96	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+89	118	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+90	102	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$notification&quot;.	
+100	69	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+100	118	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scan['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+104	59	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+104	82	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+111	80	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+111	95	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+114	116	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+115	96	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$scanner&quot;.	
+129	80	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+129	102	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+132	116	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+133	94	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$config&quot;.	
+148	76	ERROR	WordPress.Security.EscapeOutput.UnsafePrintingFunction	All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.	https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization
+148	90	ERROR	WordPress.WP.I18n.TextDomainMismatch	Mismatched text domain. Expected 'clone-guard-security-scanning' but got 'cgss'.	https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/
+
+
+FILE: main.php
+line	column	type	code	message	docs
+0	0	ERROR	plugin_header_no_license	Missing "License" in Plugin Header. Please update your Plugin Header with a valid GPLv2 (or later) compatible license.	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#no-gpl-compatible-license-declared
+52	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+55	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+58	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+62	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+65	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+68	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+69	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+75	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+78	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+81	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+87	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+90	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+93	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+95	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+102	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+105	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+108	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+110	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+117	13	WARNING	WordPress.WP.EnqueuedResourceParameters.NotInFooter	In footer ($in_footer) is not set explicitly wp_enqueue_script; It is recommended to load scripts in the footer. Please set this value to `true` to load it in the footer, or explicitly `false` if it should be loaded in the header.	
+173	23	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+174	50	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+174	50	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;targetsPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+174	50	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;targetsPaged&#039;]	
+176	23	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+177	56	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+177	56	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;notificationsPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+177	56	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;notificationsPaged&#039;]	
+181	23	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+182	52	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+182	52	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;schedulesPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+182	52	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;schedulesPaged&#039;]	
+184	23	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+185	56	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+185	56	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;notificationsPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+185	56	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;notificationsPaged&#039;]	
+189	23	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+190	52	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+190	52	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;schedulesPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+190	52	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;schedulesPaged&#039;]	
+192	23	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+193	50	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+193	50	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;targetsPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+193	50	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;targetsPaged&#039;]	
+297	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+298	40	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+298	40	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;key&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+303	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+304	43	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+304	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+337	22	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+337	42	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+369	53	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+371	45	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+371	45	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+377	51	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+379	45	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+379	45	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+385	57	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+387	45	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+387	45	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+417	22	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+417	42	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+456	22	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+456	52	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+457	25	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+457	25	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;paged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+457	25	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;paged&#039;]	
+479	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+480	40	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+480	40	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;key&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+485	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+486	43	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+486	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+491	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+492	42	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+492	42	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;paged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+511	31	ERROR	WordPress.DateTime.RestrictedFunctions.date_date	date() is affected by runtime timezone changes which can cause date/time to be incorrectly displayed. Use gmdate() instead.	
+560	22	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+560	52	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+561	25	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+561	25	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;paged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+561	25	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;paged&#039;]	
+568	53	ERROR	WordPress.DateTime.RestrictedFunctions.date_date	date() is affected by runtime timezone changes which can cause date/time to be incorrectly displayed. Use gmdate() instead.	
+603	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+604	40	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+604	40	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;key&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+609	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+610	43	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+610	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+615	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+616	42	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+616	42	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;paged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+621	50	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+674	63	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+691	64	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+718	22	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+718	52	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+719	25	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+719	25	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;paged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+719	25	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;paged&#039;]	
+757	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+758	40	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+758	40	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;key&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+763	18	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+764	43	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+764	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+775	53	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+802	51	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+820	57	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+839	22	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+840	55	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+840	55	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;schedulesPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+842	28	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+846	22	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+847	53	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+847	53	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;targetsPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+849	28	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+853	22	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+854	59	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+854	59	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;notificationsPaged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+856	28	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+898	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+898	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+898	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+914	68	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+915	74	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;email_address&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+916	78	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;scan_status&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+944	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+944	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+944	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+963	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+966	68	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+967	78	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;status_changed&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+968	74	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;email_address&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+996	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+996	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+996	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1003	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1028	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1028	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1028	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1035	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1060	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_GET[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1060	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1060	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;_wpnonce&#039;]	
+1071	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1072	45	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;type&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1075	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1097	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1097	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1097	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1108	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1109	45	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;type&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1137	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1137	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1137	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1148	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1149	45	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;type&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1179	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1179	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1179	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1201	60	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1202	67	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;schedule&#039;]. Check that the array index exists before using it.	
+1202	67	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;schedule&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1203	65	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;target&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1204	72	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;notifications&#039;]. Check that the array index exists before using it.	
+1204	72	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;notifications&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1206	69	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;scan_config&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1207	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;scanner&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1209	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1209	67	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;comment&#039;]. Check that the array index exists before using it.	
+1209	67	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;comment&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1240	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1240	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1240	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1265	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;key&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1269	29	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;notifications&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1269	29	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;notifications&#039;]	
+1279	60	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1280	67	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;schedule&#039;]. Check that the array index exists before using it.	
+1280	67	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;schedule&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1281	65	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;target&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1284	69	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;scan_config&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1285	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;scanner&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1287	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1287	67	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;comment&#039;]. Check that the array index exists before using it.	
+1287	67	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;comment&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1314	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1314	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1314	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1321	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1346	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1346	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1346	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1353	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1387	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1387	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1387	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1394	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1419	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1419	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1419	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1426	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1450	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1450	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1450	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1452	44	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;key&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1462	77	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1463	85	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;schedule&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1464	81	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;target&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1465	95	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;notifications&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1467	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1467	91	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;scanner&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1468	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1468	94	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;scan_config&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1470	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1470	87	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;comment&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1499	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1499	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1499	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1518	50	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;frequency&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1521	64	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1522	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;first_time&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1523	68	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;timezone&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1525	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;period&#039;]. Check that the array index exists before using it.	
+1525	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;period&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1528	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;period&#039;]. Check that the array index exists before using it.	
+1528	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;period&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1531	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;period&#039;]. Check that the array index exists before using it.	
+1531	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;period&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1534	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;period&#039;]. Check that the array index exists before using it.	
+1534	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;period&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1537	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1537	71	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;comment&#039;]. Check that the array index exists before using it.	
+1537	71	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;comment&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1565	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1565	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1565	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1588	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1590	50	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;frequency&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1593	64	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1594	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;first_time&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1595	68	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;timezone&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1597	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;period&#039;]. Check that the array index exists before using it.	
+1597	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;period&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1600	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;period&#039;]. Check that the array index exists before using it.	
+1600	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;period&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1603	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;period&#039;]. Check that the array index exists before using it.	
+1603	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;period&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1606	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;period&#039;]. Check that the array index exists before using it.	
+1606	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;period&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1609	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1609	71	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;comment&#039;]. Check that the array index exists before using it.	
+1609	71	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;comment&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1637	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1637	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1637	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1644	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1667	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1667	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1667	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1681	55	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;portal_url&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1683	51	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;user_token&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1684	48	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;api_key&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1708	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1708	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1708	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1724	62	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1725	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1725	67	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;hosts&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1726	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1726	69	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;comment&#039;]. Check that the array index exists before using it.	
+1726	69	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;comment&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1756	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1756	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1756	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1771	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;subkey&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1774	62	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;name&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1775	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1775	67	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;hosts&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1776	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "sanitize_textarea_field()" requires WordPress 4.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+1776	69	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;comment&#039;]. Check that the array index exists before using it.	
+1776	69	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;comment&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1804	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+1804	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1804	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+1811	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1845	17	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1849	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1866	17	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1870	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1882	40	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1882	40	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;_wpnonce&#039;]	
+1888	30	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;scans&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1888	30	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;scans&#039;]	
+1900	34	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;paged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1900	34	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;paged&#039;]	
+1902	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1919	17	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1923	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1931	64	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1931	64	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;_wpnonce&#039;]	
+1933	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;vulnerabilities&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1933	43	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;vulnerabilities&#039;]	
+1938	53	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_GET[&#039;modal_justification_text&#039;]. Check that the array index exists before using it.	
+1938	53	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;modal_justification_text&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1938	53	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;modal_justification_text&#039;]	
+1946	34	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;paged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1946	34	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;paged&#039;]	
+1948	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1966	17	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1970	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+1982	40	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1982	40	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;_wpnonce&#039;]	
+1988	32	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;reports&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+1988	32	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;reports&#039;]	
+2000	34	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;paged&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2000	34	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;paged&#039;]	
+2002	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+2014	17	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+2018	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+2028	64	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2028	64	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;_wpnonce&#039;]	
+2031	34	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;schedules&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2031	34	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;schedules&#039;]	
+2040	21	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+2042	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2042	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;_wpnonce&#039;]	
+2045	31	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;targets&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2045	31	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;targets&#039;]	
+2054	20	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+2056	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2056	70	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;_wpnonce&#039;]	
+2059	36	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_GET[&#039;notifications&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2059	36	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_GET[&#039;notifications&#039;]	
+2068	19	WARNING	WordPress.Security.SafeRedirect.wp_redirect_wp_redirect	wp_redirect() found. Using wp_safe_redirect(), along with the &quot;allowed_redirect_hosts&quot; filter if needed, can help avoid any chances of malicious redirects within code. It is also important to remember to call exit() after a redirect so that no other unwanted code is executed.	https://developer.wordpress.org/reference/functions/wp_safe_redirect/
+2081	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+2081	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2081	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+2088	51	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;apptype&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2115	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+2115	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2115	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+2143	65	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;justification_text&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2144	64	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;nvt_oid&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2147	69	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;task_id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2150	70	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;host&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2178	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;_wpnonce&#039;]. Check that the array index exists before using it.	
+2178	28	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;_wpnonce&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2178	28	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotSanitized	Detected usage of a non-sanitized input variable: $_POST[&#039;_wpnonce&#039;]	
+2190	43	WARNING	WordPress.Security.ValidatedSanitizedInput.InputNotValidated	Detected usage of a possibly undefined superglobal array index: $_POST[&#039;exception_id&#039;]. Check that the array index exists before using it.	
+2190	43	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;exception_id&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2192	45	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;justification_text_edit&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2193	48	WARNING	WordPress.Security.ValidatedSanitizedInput.MissingUnslash	$_POST[&#039;nvt_oid&#039;] not unslashed before sanitization. Use wp_unslash() or similar	
+2278	27	ERROR	WordPress.DateTime.RestrictedFunctions.date_date	date() is affected by runtime timezone changes which can cause date/time to be incorrectly displayed. Use gmdate() instead.	
+2279	26	ERROR	WordPress.DateTime.RestrictedFunctions.date_date	date() is affected by runtime timezone changes which can cause date/time to be incorrectly displayed. Use gmdate() instead.	
+2906	1	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$cloneGuardSecurityAPI&quot;.	
+2907	1	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$cloneGuardSecurityScanning&quot;.	
+
+
+FILE: classes/class-clone-guard-api.php
+line	column	type	code	message	docs
+262	18	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$response['status_text']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+276	18	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$response'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: views/admin_reports.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+106	57	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+111	71	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+117	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+117	98	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+122	127	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+123	105	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+129	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+129	98	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+135	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+135	98	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+155	58	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$key&quot;.	
+155	66	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$report&quot;.	
+159	57	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+159	100	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+159	106	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+163	40	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$report['display_compliance']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+165	64	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+165	107	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+165	113	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+204	61	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+209	71	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+215	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+215	98	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+220	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+220	144	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+226	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+226	98	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+232	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+232	98	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: views/admin_settings.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+1	48	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$action'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+17	20	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+17	37	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+19	24	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+19	41	WARNING	WordPress.Security.NonceVerification.Recommended	Processing form data without nonce verification.	
+53	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$action'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: views/admin_scans.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+19	33	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+109	57	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+114	71	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+120	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+120	96	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+125	127	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+126	105	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+132	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+132	96	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+138	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+138	96	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+160	54	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$key&quot;.	
+160	62	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$scan&quot;.	
+167	33	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$scheduled&quot;.	
+169	33	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$scheduled&quot;.	
+182	81	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+182	128	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scan['schedule']['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+190	57	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+190	83	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+201	49	ERROR	WordPress.DateTime.RestrictedFunctions.date_date	date() is affected by runtime timezone changes which can cause date/time to be incorrectly displayed. Use gmdate() instead.	
+206	49	ERROR	WordPress.DateTime.RestrictedFunctions.date_date	date() is affected by runtime timezone changes which can cause date/time to be incorrectly displayed. Use gmdate() instead.	
+210	64	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+210	90	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+255	61	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+260	71	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+266	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+266	96	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+271	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+271	142	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+277	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+277	96	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+283	70	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+283	96	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$scans['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: views/admin_overview.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+1	48	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$action'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+113	77	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+136	124	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+138	124	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+147	58	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$key&quot;.	
+147	66	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$report&quot;.	
+151	53	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+151	96	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$key'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+151	102	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$reports['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+152	57	ERROR	WordPress.DateTime.RestrictedFunctions.date_date	date() is affected by runtime timezone changes which can cause date/time to be incorrectly displayed. Use gmdate() instead.	
+184	138	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+268	25	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$protocols&quot;.	
+271	123	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found 'str_replace'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: views/admin_options.php
+line	column	type	code	message	docs
+0	0	ERROR	missing_direct_file_access_protection	PHP file should prevent direct access. Add a check like: if ( ! defined( 'ABSPATH' ) ) exit;	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#direct-file-access
+1	47	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$action'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+99	45	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+119	62	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$key&quot;.	
+119	70	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$schedule&quot;.	
+124	57	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+124	104	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedule['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+128	59	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedule['period']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+128	87	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedule['period_unit']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+131	72	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+131	119	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedule['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+170	61	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedules['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+175	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+181	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+181	116	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedules['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+186	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedules['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+186	146	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedules['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+192	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+192	116	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedules['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+198	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+198	116	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$schedules['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+217	45	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+238	58	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$key&quot;.	
+238	66	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$target&quot;.	
+243	57	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+243	102	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$target['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+249	37	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$hostsString&quot;.	
+253	41	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$modifiedString&quot;.	
+256	46	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$hostsString'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+263	72	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+263	117	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$target['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+302	61	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$targets['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+307	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+313	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+313	114	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$targets['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+318	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$targets['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+318	144	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$targets['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+324	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+324	114	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$targets['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+330	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+330	114	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$targets['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+349	45	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+369	70	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$key&quot;.	
+369	78	WARNING	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound	Global variables defined by a theme/plugin should start with the theme/plugin prefix. Found: &quot;$notification&quot;.	
+374	57	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+374	108	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notification['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+387	34	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notification["status_changed"]'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+395	72	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+395	123	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notification['id']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+434	61	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notifications['total']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+439	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+445	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+445	120	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notifications['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+450	75	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notifications['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+450	150	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notifications['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+456	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+456	120	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notifications['current_page']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+462	74	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$this'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+462	120	ERROR	WordPress.Security.EscapeOutput.OutputNotEscaped	All output should be run through an escaping function (see the Security sections in the WordPress Developer Handbooks), found '$notifications['total_pages']'.	https://developer.wordpress.org/apis/security/escaping/#escaping-functions
+
+
+FILE: readme.txt
+line	column	type	code	message	docs
+0	0	ERROR	outdated_tested_upto_header	Tested up to: 6.5 < 7.1. The "Tested up to" value in your plugin is not set to the current version of WordPress. This means your plugin will not show up in searches, as we require plugins to be compatible and documented as tested up to the most recent version of WordPress.	https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/#readme-header-information
+0	0	ERROR	trunk_stable_tag	Incorrect Stable Tag. It's recommended not to use "Stable Tag: trunk". Your Stable Tag is meant to be the stable version of your plugin and it needs to be exactly the same with the Version in your main plugin file's header. Any mismatch can prevent users from downloading the correct plugin files from WordPress.org.	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#incorrect-stable-tag
+0	0	WARNING	readme_parser_warnings_too_many_tags	One or more tags were ignored. Please limit your plugin to 5 tags.	
+0	0	WARNING	readme_parser_warnings_trimmed_short_description	The "Short Description" section is too long and was truncated. A maximum of 150 characters is supported.	
+
+
+FILE: classes/class-clone-guard-seal.php
+line	column	type	code	message	docs
+82	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "wp_scripts()" requires WordPress 4.2.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+93	0	ERROR	wp_function_not_compatible_with_requires_wp	Function "wp_get_inline_script_tag()" requires WordPress 5.7.0, but your plugin minimum supported version is WordPress 4.0.0.	https://developer.wordpress.org/reference/
+
+

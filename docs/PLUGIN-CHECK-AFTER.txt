@@ -1,0 +1,16 @@
+Plugin Check 2.2.0 on the shipped files after step 6 (uncommitted working copy, 2026-11-12).
+Method: scripts/plugin-check-dist.sh (repo minus .distignore, checked by path with --slug=clone-guard-security-scanning).
+Before: 322 errors, 383 warnings (docs/PLUGIN-CHECK-BEFORE.txt). After: 1 error, 0 warnings.
+After step 7 (Version 2.6 in main.php): "Success: Checks complete. No errors found." (0 errors, 0 warnings).
+
+Remaining item:
+- ERROR stable_tag_mismatch (1): readme says Stable tag 2.6 (step 6), main.php still says Version 2.5; step 7 sets Version 2.6 and closes it.
+
+How the last 125 warnings were cleared:
+- EnqueuedResourceParameters.NotInFooter (19): fixed. Each admin wp_enqueue_script now passes $in_footer = false explicitly (same header loading as before).
+- NonceVerification.Recommended (70): $_GET reads that only pick which admin page or list page to show (key, subkey, paged, *Paged, return, msg). Plain admin links carry no nonce, so these are marked with a scoped phpcs:disable/enable and a reason around the five page methods in main.php (optionsPaginationLink, adminScans, adminReports, adminVulnerabilities, adminOptions) and at the top of views/admin_settings.php. All are behind manage_options; every action that changes data still verifies a nonce and is not covered by these exceptions.
+- PrefixAllGlobals.NonPrefixedVariableFound (36): 34 in ten views, which are included from class methods, so the variables are local; marked with a phpcs:disable and reason at the top of each view. 2 are $cloneGuardSecurityAPI and $cloneGuardSecurityScanning in main.php, kept for compatibility and marked with phpcs:ignore and a reason.
+
+FILE: readme.txt
+line	column	type	code	message	docs
+0	0	ERROR	stable_tag_mismatch	Mismatched Stable Tag: 2.6 != 2.5. Your Stable Tag is meant to be the stable version of your plugin and it needs to be exactly the same with the Version in your main plugin file's header. Any mismatch can prevent users from downloading the correct plugin files from WordPress.org.	https://developer.wordpress.org/plugins/wordpress-org/common-issues/#incorrect-stable-tag
