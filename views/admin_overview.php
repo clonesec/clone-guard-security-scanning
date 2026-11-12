@@ -274,7 +274,7 @@
                         <?php endif; ?>
                     </span>
                 </div>
-                <img class="section-product-img img-report" src="<?php echo esc_url( plugins_url( '../img/report-screenshot3.png', __FILE__ ) ); ?>" />
+                <img class="section-product-img img-report" src="<?php echo esc_url( plugins_url( '../img/report-screenshot4.png', __FILE__ ) ); ?>" />
             </div>
 
         </div>
