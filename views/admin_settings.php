@@ -41,9 +41,9 @@
             <div class="cgss-settings-token">
                 <h2 class="cgss-settings-token-title">Step 2: Gather your Token & Key</h2>
                 <p class="cgss-settings-token-text">a) Copy your User Token from the scanning portal.</p>
-                <img class="cgss-settings-token-img" src="<?php echo esc_url( plugins_url( '../img/settings-step-2-token.png', __FILE__ ) ); ?>" width="700" height="239" alt="The User token section in the scanning portal, with the Copy token button" />
+                <img class="cgss-settings-step2-img" src="<?php echo esc_url( plugins_url( '../img/settings-step-2-token.png', __FILE__ ) ); ?>" width="875" height="299" alt="The User token section in the scanning portal, with the Copy token button" />
                 <p class="cgss-settings-token-text">b) Copy the API Key.</p>
-                <img class="cgss-settings-token-img" src="<?php echo esc_url( plugins_url( '../img/settings-step-2-key.png', __FILE__ ) ); ?>" width="562" height="210" alt="The API Key field in the scanning portal, with the Copy token button" />
+                <img class="cgss-settings-step2-img" src="<?php echo esc_url( plugins_url( '../img/settings-step-2-key.png', __FILE__ ) ); ?>" width="703" height="262" alt="The API Key field in the scanning portal, with the Copy token button" />
             </div>
 
             <form class="cgss-settings-form ajax_form" action="admin-ajax.php" method="post">
