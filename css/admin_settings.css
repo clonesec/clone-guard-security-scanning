@@ -60,8 +60,14 @@
         font-weight: 500;
     }
 
+    .cgss-settings-token-text {
+        font-size: 14px;
+    }
+
     .cgss-settings-token-img {
-        width: 600px;
+        display: block;
+        max-width: 100%;
+        height: auto;
     }
 
 
