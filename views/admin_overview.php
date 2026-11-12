@@ -282,7 +282,7 @@
         <div class="overview-row" style="margin-top:10px;">
 
             <div class="section-product overview-row-box">
-                <img class="section-product-img img-generate" src="<?php echo esc_url( plugins_url( '../img/generate-seal-screenshot3.png', __FILE__ ) ); ?>" />
+                <img class="section-product-img img-generate" src="<?php echo esc_url( plugins_url( '../img/generate-seal-screenshot4.png', __FILE__ ) ); ?>" />
                 <div class="section-product-text" style="margin-left:30px;">
                      <h1>Implement Seal</h2>
                     <p>The CloneGuard security seal is a web site emblem which indicates the site has been scanned utilizing hundreds of thousands of security checks. Customers and users visiting your site will know their purchases, and personal data are securely stored and protected against internet based threats.</p>            
