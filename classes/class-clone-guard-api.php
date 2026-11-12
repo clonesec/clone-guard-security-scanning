@@ -259,7 +259,7 @@ class Clone_Guard_API {
         $response = $this->api('GET', $url);
 
         if(isset($response['status_text'])) {
-            echo $response['status_text'];
+            echo esc_html($response['status_text']);
         } else {
             // Remediation files are excel files. The portal now sends .xlsx (a ZIP file, starts with "PK").
             if($type == 'remediation' && substr((string) $response, 0, 2) === 'PK') {
@@ -273,7 +273,7 @@ class Clone_Guard_API {
                 header('Content-Disposition: attachment; filename=' . $type . '.pdf');
             }
             header('Pragma: no-cache');
-            echo $response;
+            echo $response; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- raw PDF/XLSX file sent as a download.
         }
 
         exit;
@@ -928,7 +928,7 @@ class Clone_Guard_API {
     public function updateException($id, $text, $nvt_oid) {
         // $url = $this->base_url . '/exceptions/' . $id;
 
-        $url = $this->base_url . '/exceptions/' . $id . '?exceptions[text]=' . $text . '&exceptions[nvt]=' . $nvt_oid;
+        $url = $this->base_url . '/exceptions/' . $id . '?exceptions[text]=' . rawurlencode($text) . '&exceptions[nvt]=' . rawurlencode($nvt_oid);
 
         $response = $this->api('PUT', $url);
 

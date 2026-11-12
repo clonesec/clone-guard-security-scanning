@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- this view is included from a class method, so its variables are local to that method, not global. ?>
 <div class="cgss-vulnerabilities-page">
     <div class="cgss-head">
 
@@ -120,36 +122,36 @@
                 <?php if($vulnerabilities['total_pages'] > 1): ?>
                 <h2 class="screen-reader-text">Pages list navigation</h2>
                 <div class="tablenav-pages">
-                <span class="displaying-num"><?php echo $vulnerabilities['total']; ?> items</span>
+                <span class="displaying-num"><?php echo esc_html($vulnerabilities['total']); ?> items</span>
                     <span class="pagination-links">
                         <?php if($vulnerabilities['current_page'] == 1): ?>
                         <span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>
                         <?php else: ?>
-                        <a class="first-page button" href="<?php echo $this->adminLink('vulnerabilities', 1); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
+                        <a class="first-page button" href="<?php echo esc_url($this->adminLink('vulnerabilities', 1)); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
                         <?php endif; ?>
 
                         <?php if($vulnerabilities['current_page'] == 1): ?>
                         <span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>
                         <?php else: ?>
-                        <a class="prev-page button" href="<?php echo $this->adminLink('vulnerabilities', $vulnerabilities['current_page'] - 1); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
+                        <a class="prev-page button" href="<?php echo esc_url($this->adminLink('vulnerabilities', $vulnerabilities['current_page'] - 1)); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
                         <?php endif; ?>
 
                         <span class="paging-input">
                             <label for="current-page-selector" class="screen-reader-text">Current Page</label>
-                            <input class="current-page" id="current-page-selector" type="text" name="paged" value="<?php echo $vulnerabilities['current_page']; ?>" size="1" aria-describedby="table-paging">
-                            <span class="tablenav-paging-text"> of <span class="total-pages"><?php echo $vulnerabilities['total_pages']; ?></span></span>
+                            <input class="current-page" id="current-page-selector" type="text" name="paged" value="<?php echo esc_attr($vulnerabilities['current_page']); ?>" size="1" aria-describedby="table-paging">
+                            <span class="tablenav-paging-text"> of <span class="total-pages"><?php echo esc_html($vulnerabilities['total_pages']); ?></span></span>
                         </span>
 
                         <?php if($vulnerabilities['current_page'] == $vulnerabilities['total_pages']): ?>
                         <span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>
                         <?php else: ?>
-                        <a class="next-page button" href="<?php echo $this->adminLink('vulnerabilities', $vulnerabilities['current_page'] + 1); ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
+                        <a class="next-page button" href="<?php echo esc_url($this->adminLink('vulnerabilities', $vulnerabilities['current_page'] + 1)); ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
                         <?php endif; ?>
 
                         <?php if($vulnerabilities['current_page'] == $vulnerabilities['total_pages']): ?>
                         <span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>
                         <?php else: ?>
-                        <a class="last-page button" href="<?php echo $this->adminLink('vulnerabilities', $vulnerabilities['total_pages']); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
+                        <a class="last-page button" href="<?php echo esc_url($this->adminLink('vulnerabilities', $vulnerabilities['total_pages'])); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
                         <?php endif; ?>
                     </span>
                 </div>
@@ -184,7 +186,7 @@
                                 </th>
                                 <td>
                                     <strong>
-                                        <a href="<?php echo $this->adminLink('vulnerabilities', 'vulnerability-view', $key, $vulnerabilities['current_page']); ?>">
+                                        <a href="<?php echo esc_url($this->adminLink('vulnerabilities', 'vulnerability-view', $key, $vulnerabilities['current_page'])); ?>">
                                             <?php echo esc_html($vulnerability['name']); ?>
                                         </a>
                                     </strong>
@@ -206,20 +208,20 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <a class="button" href="<?php echo $this->adminLink('vulnerabilities', 'vulnerability-view', $key, $vulnerabilities['current_page']); ?>">
+                                    <a class="button" href="<?php echo esc_url($this->adminLink('vulnerabilities', 'vulnerability-view', $key, $vulnerabilities['current_page'])); ?>">
                                         View
                                     </a>                                    
                                     <?php if (!isset($vulnerability['overrides']['status'])):?>
                                         <a class="button return" 
-                                            href="<?php echo $this->adminLink('vulnerabilities', 'vulnerability-add-exception', $key); ?>"
+                                            href="<?php echo esc_url($this->adminLink('vulnerabilities', 'vulnerability-add-exception', $key)); ?>"
                                             >
-                                            <?php _e('Add Exception', 'cgss'); ?>
+                                            <?php esc_html_e('Add Exception', 'clone-guard-security-scanning'); ?>
                                         </a>
                                     <?php else: ?>
                                         <a class="button return" 
-                                            href="<?php echo $this->adminLink('vulnerabilities', 'vulnerability-edit-exception', $key); ?>"
+                                            href="<?php echo esc_url($this->adminLink('vulnerabilities', 'vulnerability-edit-exception', $key)); ?>"
                                             >
-                                            <?php _e('Edit Exception', 'cgss'); ?>
+                                            <?php esc_html_e('Edit Exception', 'clone-guard-security-scanning'); ?>
                                         </a>
                                     <?php endif; ?>
 
@@ -257,35 +259,35 @@
                 </div>
 
                 <div class="tablenav-pages">
-                    <span class="displaying-num"><?php echo $vulnerabilities['total']; ?> items</span>
+                    <span class="displaying-num"><?php echo esc_html($vulnerabilities['total']); ?> items</span>
                     <span class="pagination-links">
                         <?php if($vulnerabilities['current_page'] == 1): ?>
                         <span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>
                         <?php else: ?>
-                        <a class="first-page button" href="<?php echo $this->adminLink('vulnerabilities', 1); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
+                        <a class="first-page button" href="<?php echo esc_url($this->adminLink('vulnerabilities', 1)); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
                         <?php endif; ?>
 
                         <?php if($vulnerabilities['current_page'] == 1): ?>
                         <span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>
                         <?php else: ?>
-                        <a class="prev-page button" href="<?php echo $this->adminLink('vulnerabilities', $vulnerabilities['current_page'] - 1); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
+                        <a class="prev-page button" href="<?php echo esc_url($this->adminLink('vulnerabilities', $vulnerabilities['current_page'] - 1)); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
                         <?php endif; ?>
 
                         <span class="screen-reader-text">Current Page</span>
                         <span id="table-paging" class="paging-input">
-                            <span class="tablenav-paging-text"><?php echo $vulnerabilities['current_page']; ?> of <span class="total-pages"><?php echo $vulnerabilities['total_pages']; ?></span></span>
+                            <span class="tablenav-paging-text"><?php echo esc_html($vulnerabilities['current_page']); ?> of <span class="total-pages"><?php echo esc_html($vulnerabilities['total_pages']); ?></span></span>
                         </span>
 
                         <?php if($vulnerabilities['current_page'] == $vulnerabilities['total_pages']): ?>
                         <span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>
                         <?php else: ?>
-                        <a class="next-page button" href="<?php echo $this->adminLink('vulnerabilities', $vulnerabilities['current_page'] + 1); ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
+                        <a class="next-page button" href="<?php echo esc_url($this->adminLink('vulnerabilities', $vulnerabilities['current_page'] + 1)); ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
                         <?php endif; ?>
 
                         <?php if($vulnerabilities['current_page'] == $vulnerabilities['total_pages']): ?>
                         <span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>
                         <?php else: ?>
-                        <a class="last-page button" href="<?php echo $this->adminLink('vulnerabilities', $vulnerabilities['total_pages']); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
+                        <a class="last-page button" href="<?php echo esc_url($this->adminLink('vulnerabilities', $vulnerabilities['total_pages'])); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
                         <?php endif; ?>
                     </span>
                 </div>

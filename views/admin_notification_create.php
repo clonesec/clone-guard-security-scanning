@@ -1,3 +1,4 @@
+<?php defined('ABSPATH') || exit; ?>
 <div class="cgss-notification-create-page">
 
     <div class="cgss-head">
@@ -28,12 +29,12 @@
                                 <table class="form-table editcomment" role="presentation">
                                     <tbody>
                                         <tr>
-                                            <td class="first"><label for="name"><?php esc_html_e('* Name', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="name"><?php esc_html_e('* Name', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input type="text" name="name" size="30" value=""></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label for="scan_status"><?php esc_html_e('* Scan Status', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="scan_status"><?php esc_html_e('* Scan Status', 'clone-guard-security-scanning'); ?></label></td>
                                             <td>
                                                 <select name="scan_status">
                                                     <option value="">Please select...</option>
@@ -44,7 +45,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label for="email_address"><?php esc_html_e('* Email Address', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="email_address"><?php esc_html_e('* Email Address', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input type="text" name="email_address" size="30" value=""></td>
                                         </tr>
                                         <tr>

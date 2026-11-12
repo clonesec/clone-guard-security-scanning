@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- this view is included from a class method, so its variables are local to that method, not global. ?>
 <div class="cgss-notification-create-page">
 
     <div class="cgss-head">
@@ -29,21 +31,21 @@
                                 <table class="form-table editcomment" role="presentation">
                                     <tbody>
                                         <tr>
-                                            <td class="first"><label for="name"><?php esc_html_e('* Name', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="name"><?php esc_html_e('* Name', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input type="text" name="name" size="30" value="<?php echo esc_attr($notification['name']); ?>"></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label for="status_changed"><?php esc_html_e('* Scan Status', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="status_changed"><?php esc_html_e('* Scan Status', 'clone-guard-security-scanning'); ?></label></td>
                                             <td>
                                                 <select name="status_changed">
 						<?php
 							$statuses = array("Done" => "Scan Completed", "Running" => "Scan Started");
 							foreach( $statuses as $key => $value ){
 								if($key == $notification['status_changed'])
-								        echo "<option value='".$key."' selected>".$value."</option>";
+								        echo "<option value='" . esc_attr($key) . "' selected>" . esc_html($value) . "</option>";
 								else
-								        echo "<option value='".$key."'>".$value."</option>";
+								        echo "<option value='" . esc_attr($key) . "'>" . esc_html($value) . "</option>";
 							}
 						?>
                                                 </select>
@@ -51,7 +53,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label for="email_address"><?php esc_html_e('* Email Address', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="email_address"><?php esc_html_e('* Email Address', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input type="text" name="email_address" size="30" value="<?php echo esc_attr($notification['email_options']['to_address']); ?>"></td>
 
                                         </tr>

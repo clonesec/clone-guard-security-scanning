@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- this view is included from a class method, so its variables are local to that method, not global. ?>
 <div class="cgss-scan-create-page">
 
     <div class="cgss-head">
@@ -29,15 +31,15 @@
                                 <table class="form-table editcomment" role="presentation">
                                     <tbody>
                                         <tr>
-                                            <td class="first"><label for="name"><?php esc_html_e('Name', 'cgss'); ?></label></td>
+                                            <td class="first"><label for="name"><?php esc_html_e('Name', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><input type="text" name="name" size="30" value="<?php echo esc_attr($scan['name']); ?>"></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('Schedule', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php esc_html_e('Schedule', 'clone-guard-security-scanning'); ?></label></td>
                                             <td>
                                                 <select name="schedule">
-                                                    <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
+                                                    <option value=""><?php echo esc_html_e('Please select...', 'clone-guard-security-scanning'); ?></option>
                                                     <?php foreach($schedules['schedules'] as $schedule): ?>
                                                         <?php if($scan['schedule']['id'] == $schedule['id']): ?>
                                                             <option value="<?php echo esc_attr($schedule['id']); ?>" selected><?php echo esc_html($schedule['name']); ?></option>
@@ -47,21 +49,21 @@
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <a class="button return" 
-                                                    href="<?php echo $this->adminLink('scans', 'schedule-create', $scan['id']); ?>" 
+                                                    href="<?php echo esc_url($this->adminLink('scans', 'schedule-create', $scan['id'])); ?>" 
                                                     data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" 
                                                     data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"
                                                 >
-                                                    <?php _e('New Schedule', 'cgss'); ?>
+                                                    <?php esc_html_e('New Schedule', 'clone-guard-security-scanning'); ?>
                                                 </a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('Target*', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php esc_html_e('Target*', 'clone-guard-security-scanning'); ?></label></td>
                                             <td>
                                                 <select name="target">
-                                                    <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
+                                                    <option value=""><?php echo esc_html_e('Please select...', 'clone-guard-security-scanning'); ?></option>
                                                     <?php foreach($targets['targets'] as $target): ?>
                                                         <?php if($scan['target']['id'] == $target['id']): ?>
                                                             <option value="<?php echo esc_attr($target['id']); ?>" selected><?php echo esc_html($target['name']); ?></option>
@@ -71,22 +73,22 @@
                                                     <?php endforeach; ?>
                                                 </select>
                                                 <a class="button return"
-                                                    href="<?php echo $this->adminLink('scans', 'target-create', $scan['id']); ?>" 
+                                                    href="<?php echo esc_url($this->adminLink('scans', 'target-create', $scan['id'])); ?>" 
                                                     data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" 
                                                     data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" 
                                                     data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"
                                                 >
-                                                    <?php _e('New Target', 'cgss'); ?>
+                                                    <?php esc_html_e('New Target', 'clone-guard-security-scanning'); ?>
                                                  </a>
                                                 <span class="spinner inline"></span>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('Notifications', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php esc_html_e('Notifications', 'clone-guard-security-scanning'); ?></label></td>
                                             <td>
                                                 <select class="select2-multiple" name="notifications" multiple="multiple">
-                                                    <option value=""><?php echo esc_html_e('Select notification...', 'cgss'); ?></option>
+                                                    <option value=""><?php echo esc_html_e('Select notification...', 'clone-guard-security-scanning'); ?></option>
                                                     <?php foreach($notifications['notifications'] as $notification): ?>
                                                         <?php if(in_array($notification['id'], $scan['notification_list'])): ?>
                                                             <option value="<?php echo esc_attr($notification['id']); ?>>" selected><?php echo esc_html($notification['name']); ?></option>
@@ -97,21 +99,21 @@
                                                 </select>
                                                 <a class="button return"
                                                    style="margin-left:8px;"
-                                                   href="<?php echo $this->adminLink('scans', 'notification-create', $scan['id']); ?>" 
+                                                   href="<?php echo esc_url($this->adminLink('scans', 'notification-create', $scan['id'])); ?>" 
                                                    data-action="<?php echo esc_attr($this->key_ . 'scan_temp_save'); ?>" 
                                                    data-nonce="<?php echo esc_attr($nonce_scan_temp_save); ?>"
                                                    >
-                                                    <?php _e('New Notification', 'cgss'); ?>
+                                                    <?php esc_html_e('New Notification', 'clone-guard-security-scanning'); ?>
                                                 </a>
                                             </td>
                                         </tr>
 
                                         <?php if ($app_type == 'vrms' || $app_type == 'penetration'): ?>
                                             <tr>
-                                                <td class="first"><label><?php _e('Scanner*', 'cgss'); ?></label></td>
+                                                <td class="first"><label><?php esc_html_e('Scanner*', 'clone-guard-security-scanning'); ?></label></td>
                                                 <td>
                                                     <select name="scanner">
-                                                        <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
+                                                        <option value=""><?php echo esc_html_e('Please select...', 'clone-guard-security-scanning'); ?></option>
                                                         <?php foreach($scanners['scanners'] as $scanner): ?>
                                                             <?php if($scan['scanner']['id'] == $scanner['id']): ?>
                                                                 <option value="<?php echo esc_attr($scanner['id']); ?>" selected><?php echo esc_html($scanner['name']); ?></option>
@@ -126,10 +128,10 @@
 
                                         <?php if ($app_type == 'vrms' || $app_type == 'penetration'): ?>
                                             <tr>
-                                                <td class="first"><label><?php _e('Scanner Config*', 'cgss'); ?></label></td>
+                                                <td class="first"><label><?php esc_html_e('Scanner Config*', 'clone-guard-security-scanning'); ?></label></td>
                                                 <td>
                                                     <select name="scan_config">
-                                                        <option value=""><?php echo esc_html_e('Please select...', 'cgss'); ?></option>
+                                                        <option value=""><?php echo esc_html_e('Please select...', 'clone-guard-security-scanning'); ?></option>
                                                         <?php foreach($configs['configs'] as $config): ?>
                                                             <?php if($config['app_type'] == $app_type): ?>
                                                                 <?php if($scan['config']['id'] == $config['id']): ?>
@@ -145,7 +147,7 @@
                                         <?php endif; ?>
 
                                         <tr>
-                                            <td class="first"><label><?php _e('Comment', 'cgss'); ?></label></td>
+                                            <td class="first"><label><?php esc_html_e('Comment', 'clone-guard-security-scanning'); ?></label></td>
                                             <td><textarea name="comment" size="30"><?php echo esc_html($scan['comment']); ?></textarea></td>
                                         </tr>
 

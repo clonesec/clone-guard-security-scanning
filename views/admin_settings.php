@@ -1,4 +1,6 @@
-<div class="cgss-settings-page" id="<?php echo $action; ?>_page">
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.Security.NonceVerification.Recommended -- $_GET['msg'] only picks which notice to show after a redirect. ?>
+<div class="cgss-settings-page" id="<?php echo esc_attr($action); ?>_page">
 
     <div class="cgss-head">
 
@@ -50,7 +52,7 @@
                 <h2 class="cgss-settings-form-title">Step 3: Input Token & Key below</h2>
 
                 <?php wp_nonce_field( $action ); ?>
-                <input name="action" type="hidden" value="<?php echo $action; ?>" />
+                <input name="action" type="hidden" value="<?php echo esc_attr($action); ?>" />
 
                 <table class="form-table">
                     <tbody>

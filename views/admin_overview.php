@@ -1,4 +1,6 @@
-<div class="cgss-overview-page" id="<?php echo $action; ?>_page">
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- this view is included from a class method, so its variables are local to that method, not global. ?>
+<div class="cgss-overview-page" id="<?php echo esc_attr($action); ?>_page">
 
     <div class="cgss-head">
 
@@ -110,7 +112,7 @@
                         </span>
 
                         <span class="reports-btn-container">
-                            <a class="button btn-overview" href="<?php echo $this->adminLink('scans'); ?>">Scan Now</a>
+                            <a class="button btn-overview" href="<?php echo esc_url($this->adminLink('scans')); ?>">Scan Now</a>
                         </span>
 
                     <?php else: ?>
@@ -133,9 +135,9 @@
 
                         <span class="reports-btn-container" style="margin-top:10px;">
                             <?php if ($app_type == 'pci' || $app_type == 'vrms'): ?>
-                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo $this->adminLink('vulnerabilities'); ?>">View Vulnerabilities</a>
+                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Vulnerabilities</a>
                             <?php else: ?>
-                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo $this->adminLink('vulnerabilities'); ?>">View Findings</a>
+                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Findings</a>
                             <?php endif; ?>
                         </span>
                     <?php endif; ?>
@@ -148,8 +150,8 @@
                         <div class="report">
                             <span class="report-date">
                                 <span class="dashicons dashicons-format-aside" style="margin:0 5px;"></span>
-                                <a href="<?php echo $this->adminLink('reports', 'report-view', $key, $reports['current_page']); ?>">
-                                    <?php echo esc_html(date('D M j Y G:i:s', strtotime($report['name']))); ?>
+                                <a href="<?php echo esc_url($this->adminLink('reports', 'report-view', $key, $reports['current_page'])); ?>">
+                                    <?php echo esc_html(gmdate('D M j Y G:i:s', strtotime($report['name']))); ?>
                                 </a>
                             </span>
                             <span class="report-name">
@@ -181,7 +183,7 @@
                     <h1>Let's get started</h1>
                     <img style="width:300px;" src="<?php echo esc_url( plugins_url( '../img/security-engineers.png', __FILE__ ) ); ?>" />
                     <span class="reports-btn-container">
-                        <a style="font-size:1.2em!important; padding: 0 60px !important;" class="button button-primary" href="<?php echo $this->adminLink('scans', 'scan-create'); ?>">
+                        <a style="font-size:1.2em!important; padding: 0 60px !important;" class="button button-primary" href="<?php echo esc_url($this->adminLink('scans', 'scan-create')); ?>">
                             Add Scan
                         </a>
                     </span>
@@ -268,7 +270,7 @@
                         $protocols = array('http://', 'https://');
                     ?>  
                         <?php if(!empty($reports['reports'])): ?>
-                            <a class="button btn-overview p-0-35" href=https://www.clone-systems.com/report?dn=<?php echo str_replace($protocols, '', get_bloginfo('wpurl')); ?> target="_blank">View Validation Report</a>
+                            <a class="button btn-overview p-0-35" href="<?php echo esc_url('https://www.clone-systems.com/report?dn=' . str_replace($protocols, '', get_bloginfo('wpurl'))); ?>" target="_blank">View Validation Report</a>
                         <?php else: ?>
                             <button class="button btn-overview p-0-35" disabled>View Validation Report</a>
                         <?php endif; ?>

@@ -148,6 +148,8 @@ Acceptance: exactly one code path renders the seal; no 404 requests in the brows
 
 ### - [ ] Step 6: Plugin Check clean-up (security and WordPress.org requirements)
 
+Status 2026-11-12 (code done, uncommitted; not ticked because one check is open). Plugin Check on the shipped files (`scripts/plugin-check-dist.sh`): 322 errors / 383 warnings before, 1 error / 0 warnings after. The error is `stable_tag_mismatch` (readme 2.6, header 2.5), closed by step 7's version bump; how the last 125 warnings were cleared is in `docs/PLUGIN-CHECK-AFTER.txt`. Click-through (41 pages + 11 failure paths) clean on 8.4 and 8.2, and a visible-text comparison against the pre-step-6 code found two regressions that were fixed (report compliance HTML shown as text; notification options double-escaped). **Open:** the AJAX handlers' new capability/nonce line was verified only through the report download handler (admin passes, bad nonce refused); a direct test of all 24 handlers (admin with empty fields, bad nonce, no capability) was blocked by the session's permission check because it calls write handlers. Owner to decide: allow that test, click through the forms manually, or accept. Deviation: the plan's tag list and short description were applied with the smallest copy change (5 of the existing 10 tags; trailing "..." removed so the description is exactly 150 characters).
+
 Actions:
 1. Run Plugin Check from Tools > Plugin Check with all categories, and also via CLI: `npx wp-env run cli wp plugin check clone-guard-security-scanning --format=table`. Save the raw output to `docs/PLUGIN-CHECK-BEFORE.txt`.
 2. Fix errors first, then warnings, in this order:

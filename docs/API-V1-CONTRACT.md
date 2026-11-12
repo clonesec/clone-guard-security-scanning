@@ -61,6 +61,6 @@ Top-level keys seen on success: lists `status, status_text, pagination, {collect
 | `deleteReport($id)` | `DELETE /reports/{id}` | none | Untested (destructive). |
 | `updateUserAppType($type)` | `PUT /modules/?app_type={type}` | none | Untested through the plugin (not approved). The account's `app_type` did change between step 2 and step 4, outside these tests. Handler now treats only `true` as success (step 4). |
 | `createException($item)` | `POST /exceptions` | `exceptions[text], exceptions[nvt], exceptions[task]` (+ `exceptions[hosts]` from the bulk path) | Untested (changes compliance findings). |
-| `updateException($id, $text, $nvt)` | `PUT /exceptions/{id}?exceptions[text]=…&exceptions[nvt]=…` | values in the query string, not URL-encoded | Untested. Note for step 6: `$text` goes into the URL unencoded. |
+| `updateException($id, $text, $nvt)` | `PUT /exceptions/{id}?exceptions[text]=…&exceptions[nvt]=…` | values in the query string, not URL-encoded | Untested. Since step 6, `$text` and the NVT OID are URL-encoded (`rawurlencode`); before, a space or `&` in the justification broke the request. |
 
 delete/start/stop/generate return `false` on a network or 5xx error since step 4 (they used to report success).

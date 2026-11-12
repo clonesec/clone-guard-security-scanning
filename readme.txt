@@ -1,15 +1,15 @@
 === CloneGuard Security Scanning ===
 
 Contributors: clonesupport
-Tags: pci scan, pci scanning, vulnerability scanning, vulnerability scan, pci compliance, penetration testing, pci asv, web application scanning, web app scan, OWASP
-Requires at least: 4.0
-Tested up to: 6.5.2
-Stable tag: trunk
-Requires PHP: 5.6
+Tags: pci scan, vulnerability scanning, pci compliance, penetration testing, pci asv
+Requires at least: 5.9
+Tested up to: 7.1
+Stable tag: 2.6
+Requires PHP: 7.4
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-Automated Security Scanning plugin: Activate PCI ASV Compliant scans, Vulnerability scans, Penetration tests, Security Trust Seals, and Darkweb probes...
+Automated Security Scanning plugin: Activate PCI ASV Compliant scans, Vulnerability scans, Penetration tests, Security Trust Seals, and Darkweb probes
 
 == Description ==
 AUTOMATED PLUGIN FOR ALL OF YOUR SECURITY SCANNING NEEDS

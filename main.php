@@ -1,10 +1,16 @@
 <?php
 /*
  * Plugin Name: CloneGuard Security Scanning
+ * Plugin URI: https://github.com/clonesec/clone-guard-security-scanning
  * Description: Secure your website with direct access to CloneGuard Security Compliance, Scanning and Verification servers.
  * Author: Clone Systems, Inc.
  * Author URI: https://www.clone-systems.com
  * Version: 2.5
+ * Requires at least: 5.9
+ * Requires PHP: 7.4
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * Text Domain: clone-guard-security-scanning
  */
 
 defined('ABSPATH') || exit;
@@ -49,72 +55,72 @@ class Clone_Guard_Security_Scanning {
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
             wp_enqueue_style($this->key_ . 'admin_overview', plugins_url('css/admin_overview.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
             
-            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
         }
         
         if($this->hook_scans == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
-            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version, false);
+            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
 
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
         }
 
         if($this->hook_reports == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
 
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
         }
 
         if($this->hook_vulnerabilities == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
 
-            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version, false);
 
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
             wp_enqueue_style($this->key_ . 'admin_vulnerability', plugins_url('css/admin_vulnerability.css', __FILE__), [], $this->version);
         }
 
         if($this->hook_options == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
 
-            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version, false);
 
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
             wp_enqueue_style($this->key_ . 'admin_options', plugins_url('css/admin_options.css', __FILE__), [], $this->version);
         }
 
         if($this->hook_settings == $hook) {
-            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version, false);
 
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
             wp_enqueue_style($this->key_ . 'admin_settings', plugins_url('css/admin_settings.css', __FILE__), [], $this->version);
@@ -156,6 +162,7 @@ class Clone_Guard_Security_Scanning {
         echo '<p><a href="' . esc_url($url_back) . '">&larr; Back</a></p>';
     }
 
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only $_GET values that pick which admin page or list page to show (key, subkey, paged); behind manage_options, and every action that changes data checks a nonce.
     /**
      * Creates the multipagination url params in the options page.
      *
@@ -171,26 +178,26 @@ class Clone_Guard_Security_Scanning {
         if ($type == 'schedules') { 
             $url = admin_url('admin.php?page=cgss_options&' . $type . 'Paged=' . $page); // Value of string: '&schedulesPaged=X'
             if (isset($_GET['targetsPaged'])) {
-                $url = $url . '&targetsPaged=' . $_GET['targetsPaged'];
+                $url = $url . '&targetsPaged=' . absint($_GET['targetsPaged']);
             }
             if (isset($_GET['notificationsPaged'])) {
-                $url = $url . '&notificationsPaged=' . $_GET['notificationsPaged'];
+                $url = $url . '&notificationsPaged=' . absint($_GET['notificationsPaged']);
             }
         } elseif ($type == 'targets') {
             $url = admin_url('admin.php?page=cgss_options&' . $type . 'Paged=' . $page); // Value of string: '&targetsPaged=X'
             if (isset($_GET['schedulesPaged'])) {
-                $url = $url . '&schedulesPaged=' . $_GET['schedulesPaged'];
+                $url = $url . '&schedulesPaged=' . absint($_GET['schedulesPaged']);
             }
             if (isset($_GET['notificationsPaged'])) {
-                $url = $url . '&notificationsPaged=' . $_GET['notificationsPaged'];
+                $url = $url . '&notificationsPaged=' . absint($_GET['notificationsPaged']);
             }
         } elseif ($type == 'notifications') {
             $url = admin_url('admin.php?page=cgss_options&' . $type . 'Paged=' . $page); // Value of string: '&notificationsPaged=X'
             if (isset($_GET['schedulesPaged'])) {
-                $url = $url . '&schedulesPaged=' . $_GET['schedulesPaged'];
+                $url = $url . '&schedulesPaged=' . absint($_GET['schedulesPaged']);
             }
             if (isset($_GET['targetsPaged'])) {
-                $url = $url . '&targetsPaged=' . $_GET['targetsPaged'];
+                $url = $url . '&targetsPaged=' . absint($_GET['targetsPaged']);
             }
         } else {
             $url = admin_url('admin.php?page=cgss_options');
@@ -198,6 +205,7 @@ class Clone_Guard_Security_Scanning {
         $url = esc_url($url);
         return $url;
     }
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
     // Create the pages for the admin menu.
     public function adminMenu() {
@@ -212,6 +220,9 @@ class Clone_Guard_Security_Scanning {
 
     // Output the admin Overview page.
     public function adminOverview() {
+        if(!current_user_can('manage_options')) {
+            return;
+        }
         global $cloneGuardSecurityAPI;
 
         $action = $this->key_ . 'overview';
@@ -288,20 +299,24 @@ class Clone_Guard_Security_Scanning {
         include 'views/admin_overview.php';
     }
 
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only $_GET values that pick which admin page or list page to show (key, subkey, paged); behind manage_options, and every action that changes data checks a nonce.
     // Output the admin scans page.
     public function adminScans() {
+        if(!current_user_can('manage_options')) {
+            return;
+        }
         global $cloneGuardSecurityAPI;
         $action = $this->key_ . 'scans';
         $title = 'Scans';
 
         if(isset($_GET['key'])) {
-            $key = sanitize_text_field($_GET['key']);
+            $key = sanitize_text_field(wp_unslash($_GET['key']));
         } else {
             $key = '';
         }
 
         if(isset($_GET['subkey'])) {
-            $subkey = sanitize_text_field($_GET['subkey']);
+            $subkey = sanitize_text_field(wp_unslash($_GET['subkey']));
         } else {
             $subkey = '';
         }
@@ -368,7 +383,7 @@ class Clone_Guard_Security_Scanning {
             include 'views/admin_scan_create.php';
         } elseif($key == 'schedule-create' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'schedule_create';
-            $last_key = sanitize_text_field($_GET['subkey']);
+            $last_key = sanitize_text_field(wp_unslash($_GET['subkey']));
             $url_back = $this->adminLink('scans', $last_key);
             $url_back .= '&return=yes';
 
@@ -376,7 +391,7 @@ class Clone_Guard_Security_Scanning {
             include 'views/admin_schedule_create.php';
         } elseif($key == 'target-create' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'target_create';
-            $last_key = sanitize_text_field($_GET['subkey']);
+            $last_key = sanitize_text_field(wp_unslash($_GET['subkey']));
             $url_back = $this->adminLink('scans', $last_key);
             $url_back .= '&return=yes';
 
@@ -384,7 +399,7 @@ class Clone_Guard_Security_Scanning {
             include 'views/admin_target_create.php';
         } elseif($key == 'notification-create' && isset($_GET['subkey'])) {
             $action = $this->key_ . 'notification_create';
-            $last_key = sanitize_text_field($_GET['subkey']);
+            $last_key = sanitize_text_field(wp_unslash($_GET['subkey']));
             $url_back = $this->adminLink('scans', $last_key);
             $url_back .= '&return=yes';
 
@@ -454,7 +469,7 @@ class Clone_Guard_Security_Scanning {
             $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');
 
             if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
-                $page = $_GET['paged'];
+                $page = absint($_GET['paged']);
             } else {
                 $page = 1;
             }
@@ -469,27 +484,32 @@ class Clone_Guard_Security_Scanning {
             include 'views/admin_scans.php';
         }
     }
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only $_GET values that pick which admin page or list page to show (key, subkey, paged); behind manage_options, and every action that changes data checks a nonce.
     // Output the admin reports page.
     public function adminReports() {
+        if(!current_user_can('manage_options')) {
+            return;
+        }
         global $cloneGuardSecurityAPI;
         $action = $this->key_ . 'reports';
         $title = 'Reports';
 
         if(isset($_GET['key'])) {
-            $key = sanitize_text_field($_GET['key']);
+            $key = sanitize_text_field(wp_unslash($_GET['key']));
         } else {
             $key = '';
         }
 
         if(isset($_GET['subkey'])) {
-            $subkey = sanitize_text_field($_GET['subkey']);
+            $subkey = sanitize_text_field(wp_unslash($_GET['subkey']));
         } else {
             $subkey = '';
         }
 
         if(isset($_GET['paged'])) {
-            $paged = sanitize_text_field($_GET['paged']);
+            $paged = sanitize_text_field(wp_unslash($_GET['paged']));
         } else {
             $paged = 1;
         }
@@ -508,7 +528,7 @@ class Clone_Guard_Security_Scanning {
                 return;
             }
 
-            $report['date'] = date('D M j Y G:i:s', strtotime($report['name']));
+            $report['date'] = gmdate('D M j Y G:i:s', strtotime($report['name']));
             $report['quarter'] = $this->getQuarter($report['name']);
             if(isset($report['task']) && isset($report['task']['name'])) {
                 $report['scan_name'] = $report['task']['name'];
@@ -558,14 +578,14 @@ class Clone_Guard_Security_Scanning {
             $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');
 
             if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
-                $page = $_GET['paged'];
+                $page = absint($_GET['paged']);
             } else {
                 $page = 1;
             }
             $reports = $cloneGuardSecurityAPI->getReports($page);
 
             foreach($reports['reports'] as $key => $report) {
-                $reports['reports'][$key]['date'] = date('D M j Y G:i:s', strtotime($report['name']));
+                $reports['reports'][$key]['date'] = gmdate('D M j Y G:i:s', strtotime($report['name']));
                 $reports['reports'][$key]['quarter'] = $this->getQuarter($report['name']);
                 if(isset($report['task']) && isset($report['task']['name'])) {
                     $reports['reports'][$key]['scan_name'] = $report['task']['name'];
@@ -593,27 +613,32 @@ class Clone_Guard_Security_Scanning {
             include 'views/admin_reports.php';
         }
     }
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only $_GET values that pick which admin page or list page to show (key, subkey, paged); behind manage_options, and every action that changes data checks a nonce.
     // Output the vulnerabilities page.
     public function adminVulnerabilities() {
+        if(!current_user_can('manage_options')) {
+            return;
+        }
         global $cloneGuardSecurityAPI;
         $action = $this->key_ . 'vulnerabilities';
         $title = 'Vulnerabilities';
 
         if(isset($_GET['key'])) {
-            $key = sanitize_text_field($_GET['key']);
+            $key = sanitize_text_field(wp_unslash($_GET['key']));
         } else {
             $key = '';
         }
 
         if(isset($_GET['subkey'])) {
-            $subkey = sanitize_text_field($_GET['subkey']);
+            $subkey = sanitize_text_field(wp_unslash($_GET['subkey']));
         } else {
             $subkey = '';
         }
 
         if(isset($_GET['paged'])) {
-            $paged = sanitize_text_field($_GET['paged']);
+            $paged = sanitize_text_field(wp_unslash($_GET['paged']));
         } else {
             $paged = 1;
         }
@@ -716,7 +741,7 @@ class Clone_Guard_Security_Scanning {
             $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');
 
             if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
-                $page = $_GET['paged'];
+                $page = absint($_GET['paged']);
             } else {
                 $page = 1;
             }
@@ -747,21 +772,26 @@ class Clone_Guard_Security_Scanning {
             include 'views/admin_vulnerabilities.php';
         }
     }
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only $_GET values that pick which admin page or list page to show (key, subkey, paged); behind manage_options, and every action that changes data checks a nonce.
     // Output the admin options page.
     public function adminOptions() {
+        if(!current_user_can('manage_options')) {
+            return;
+        }
         global $cloneGuardSecurityAPI;
         $action = $this ->key_ . 'options';
         $title = 'Options';
 
         if(isset($_GET['key'])) {
-            $key = sanitize_text_field($_GET['key']);
+            $key = sanitize_text_field(wp_unslash($_GET['key']));
         } else {
             $key = '';
         }
 
         if(isset($_GET['subkey'])) {
-            $subkey = sanitize_text_field($_GET['subkey']);
+            $subkey = sanitize_text_field(wp_unslash($_GET['subkey']));
         } else {
             $subkey = '';
         }
@@ -837,21 +867,21 @@ class Clone_Guard_Security_Scanning {
             $nonce_update_app_type = wp_create_nonce($this->key_ . 'update_user_app_type');     
 
             if(isset($_GET['schedulesPaged'])) {
-                $schedulesPaged = sanitize_text_field($_GET['schedulesPaged']);
+                $schedulesPaged = sanitize_text_field(wp_unslash($_GET['schedulesPaged']));
                 $schedules = $cloneGuardSecurityAPI->getAllSchedules($schedulesPaged);
             } elseif(isset($_GET['schedulesPaged']) == NULL) {
                 $schedules = $cloneGuardSecurityAPI->getAllSchedules(1);
             }
 
             if(isset($_GET['targetsPaged'])) { 
-                $targetsPaged = sanitize_text_field($_GET['targetsPaged']);
+                $targetsPaged = sanitize_text_field(wp_unslash($_GET['targetsPaged']));
                 $targets = $cloneGuardSecurityAPI->getAllTargets($targetsPaged);
             } elseif(isset($_GET['targetsPaged']) == NULL) {
                 $targets = $cloneGuardSecurityAPI->getAllTargets(1);
             }
             
             if(isset($_GET['notificationsPaged'])) { 
-                $notificationsPaged = sanitize_text_field($_GET['notificationsPaged']);
+                $notificationsPaged = sanitize_text_field(wp_unslash($_GET['notificationsPaged']));
                 $notifications = $cloneGuardSecurityAPI->getAllNotifications($notificationsPaged);
             } elseif(isset($_GET['notificationsPaged']) == NULL) {
                 $notifications = $cloneGuardSecurityAPI->getAllNotifications(1);
@@ -866,9 +896,13 @@ class Clone_Guard_Security_Scanning {
             include 'views/admin_options.php';
         }
     }
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
     // Output the admin settings page.
     public function adminSettings() {
+        if(!current_user_can('manage_options')) {
+            return;
+        }
         global $cloneGuardSecurityAPI;
 
         $action = $this->key_ . 'settings';
@@ -895,7 +929,7 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'notification_create')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'notification_create')) {
             if(!isset($_POST['name']) || $_POST['name'] == '') {
                 $pass = false;
                 $output['messages'][] = 'Please enter a Name.';
@@ -911,9 +945,9 @@ class Clone_Guard_Security_Scanning {
 
             if($pass) {
                 $item = [];
-                $item['notifications[name]'] = sanitize_text_field($_POST['name']);
-                $item['notifications[to_address]'] = sanitize_text_field($_POST['email_address']);
-                $item['notifications[status_changed]'] = sanitize_text_field($_POST['scan_status']);
+                $item['notifications[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
+                $item['notifications[to_address]'] = sanitize_text_field(wp_unslash($_POST['email_address']));
+                $item['notifications[status_changed]'] = sanitize_text_field(wp_unslash($_POST['scan_status']));
 
                 $success = $cloneGuardSecurityAPI->createNotification($item);
 
@@ -941,7 +975,7 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'notification_update')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'notification_update')) {
             if(!isset($_POST['subkey']) || $_POST['subkey'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem with the ID.';
@@ -960,12 +994,12 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['subkey']);
+                $id = sanitize_text_field(wp_unslash($_POST['subkey']));
 
                 $item = [];
-                $item['notifications[name]'] = sanitize_text_field($_POST['name']);
-                $item['notifications[status_changed]'] = sanitize_text_field($_POST['status_changed']);
-                $item['notifications[to_address]'] = sanitize_text_field($_POST['email_address']);
+                $item['notifications[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
+                $item['notifications[status_changed]'] = sanitize_text_field(wp_unslash($_POST['status_changed']));
+                $item['notifications[to_address]'] = sanitize_text_field(wp_unslash($_POST['email_address']));
 
                 $success = $cloneGuardSecurityAPI->updateNotification($id, $item);
 
@@ -993,14 +1027,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'notification_delete')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'notification_delete')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
 
                 $success = $cloneGuardSecurityAPI->deleteNotification($id);
 
@@ -1025,14 +1059,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'report_delete')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'report_delete')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
 
                 $success = $cloneGuardSecurityAPI->deleteReport($id);
 
@@ -1057,7 +1091,7 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'report_download')) {
+        if(current_user_can('manage_options') && isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), $this->key_ . 'report_download')) {
             if(!isset($_GET['id']) || $_GET['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
@@ -1068,11 +1102,11 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
-                $id = sanitize_text_field($_GET['id']);
-                $type = sanitize_text_field($_GET['type']);
+                $id = sanitize_text_field(wp_unslash($_GET['id']));
+                $type = sanitize_text_field(wp_unslash($_GET['type']));
 
                 if($type == 'feedback') {
-                    wp_redirect($this->feedback_url);
+                    wp_redirect($this->feedback_url); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- fixed URL of the ASV feedback PDF on the portal (external host).
                     exit;
                 } else {
                     $cloneGuardSecurityAPI->downloadReport($id, $type);
@@ -1094,7 +1128,7 @@ class Clone_Guard_Security_Scanning {
         $output['messages'] = [];
         $pass = true;
         // Use the nonce for download
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'report_download')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'report_download')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
@@ -1105,8 +1139,8 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
-                $type = sanitize_text_field($_POST['type']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
+                $type = sanitize_text_field(wp_unslash($_POST['type']));
 
                 $success = $cloneGuardSecurityAPI->generateReport($id, $type);
 
@@ -1134,7 +1168,7 @@ class Clone_Guard_Security_Scanning {
         $output['messages'] = [];
         $pass = true;
         // Use the nonce for download
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'report_download')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'report_download')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
@@ -1145,8 +1179,8 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
-                $type = sanitize_text_field($_POST['type']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
+                $type = sanitize_text_field(wp_unslash($_POST['type']));
 
                 $success = $cloneGuardSecurityAPI->generateReportCheck($id, $type);
 
@@ -1176,7 +1210,7 @@ class Clone_Guard_Security_Scanning {
 
         $app_type = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
 
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'scan_create')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'scan_create')) {
             if(!isset($_POST['name']) || $_POST['name'] == '') {
                 $pass = false;
                 $output['messages'][] = 'Please enter a Name.';
@@ -1198,15 +1232,15 @@ class Clone_Guard_Security_Scanning {
 
             if($pass) {
                 $item = [];
-                $item['scans[name]'] = sanitize_text_field($_POST['name']);
-                $item['scans[schedule_id]'] = sanitize_text_field($_POST['schedule']);
-                $item['scans[target_id]'] = sanitize_text_field($_POST['target']);
-                $item['scans[notification_ids]'] = sanitize_text_field($_POST['notifications']);
+                $item['scans[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
+                $item['scans[schedule_id]'] = isset($_POST['schedule']) ? sanitize_text_field(wp_unslash($_POST['schedule'])) : '';
+                $item['scans[target_id]'] = sanitize_text_field(wp_unslash($_POST['target']));
+                $item['scans[notification_ids]'] = isset($_POST['notifications']) ? sanitize_text_field(wp_unslash($_POST['notifications'])) : '';
                 if ($app_type == 'vrms' || $app_type == 'penetration') {
-                    $item['scans[config_id]'] = sanitize_text_field($_POST['scan_config']);
-                    $item['scans[scanner_id]'] = sanitize_text_field($_POST['scanner']);
+                    $item['scans[config_id]'] = sanitize_text_field(wp_unslash($_POST['scan_config']));
+                    $item['scans[scanner_id]'] = sanitize_text_field(wp_unslash($_POST['scanner']));
                 }
-                $item['scans[comment]'] = sanitize_textarea_field($_POST['comment']);
+                $item['scans[comment]'] = isset($_POST['comment']) ? sanitize_textarea_field(wp_unslash($_POST['comment'])) : '';
 
                 $success = $cloneGuardSecurityAPI->createScan($item);
 
@@ -1237,7 +1271,7 @@ class Clone_Guard_Security_Scanning {
 
         $app_type = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
 
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'scan_update')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'scan_update')) {
             if(!isset($_POST['key']) || $_POST['key'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem with the ID.';
@@ -1262,11 +1296,11 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['key']);
+                $id = sanitize_text_field(wp_unslash($_POST['key']));
 
                 $notification_ids = '';
                 if(isset($_POST['notifications']) && is_array($_POST['notifications'])) {
-                    foreach($_POST['notifications'] as $notification) {
+                    foreach(array_map('sanitize_text_field', wp_unslash($_POST['notifications'])) as $notification) {
                         if($notification_ids) {
                             $notification_ids .= ',' . $notification;
                         } else {
@@ -1276,15 +1310,15 @@ class Clone_Guard_Security_Scanning {
                 }
 
                 $item = [];
-                $item['scans[name]'] = sanitize_text_field($_POST['name']);
-                $item['scans[schedule_id]'] = sanitize_text_field($_POST['schedule']);
-                $item['scans[target_id]'] = sanitize_text_field($_POST['target']);
+                $item['scans[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
+                $item['scans[schedule_id]'] = isset($_POST['schedule']) ? sanitize_text_field(wp_unslash($_POST['schedule'])) : '';
+                $item['scans[target_id]'] = sanitize_text_field(wp_unslash($_POST['target']));
                 $item['scans[notification_ids]'] = $notification_ids;
                 if ($app_type == 'vrms' || $app_type == 'penetration') {
-                    $item['scans[config_id]'] = sanitize_text_field($_POST['scan_config']);
-                    $item['scans[scanner_id]'] = sanitize_text_field($_POST['scanner']);
+                    $item['scans[config_id]'] = sanitize_text_field(wp_unslash($_POST['scan_config']));
+                    $item['scans[scanner_id]'] = sanitize_text_field(wp_unslash($_POST['scanner']));
                 }
-                $item['scans[comment]'] = sanitize_textarea_field($_POST['comment']);
+                $item['scans[comment]'] = isset($_POST['comment']) ? sanitize_textarea_field(wp_unslash($_POST['comment'])) : '';
 
                 $success = $cloneGuardSecurityAPI->updateScan($id, $item);
 
@@ -1311,14 +1345,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'scan_delete')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'scan_delete')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
 
                 $success = $cloneGuardSecurityAPI->deleteScan($id);
 
@@ -1343,14 +1377,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'scan_action')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'scan_action')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
 
                 $success = $cloneGuardSecurityAPI->startScanScheduled($id);
 
@@ -1384,14 +1418,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'scan_action')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'scan_action')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
 
                 $success = $cloneGuardSecurityAPI->startScan($id);
 
@@ -1416,14 +1450,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'scan_action')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'scan_action')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
 
                 $success = $cloneGuardSecurityAPI->stopScan($id);
 
@@ -1447,9 +1481,9 @@ class Clone_Guard_Security_Scanning {
         $output = [];
         $output['status'] = 'error';
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'scan_temp_save')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'scan_temp_save')) {
             if(isset($_POST['key'])) {
-                $key = sanitize_text_field($_POST['key']);
+                $key = sanitize_text_field(wp_unslash($_POST['key']));
             } else {
                 $key = '';
                 $pass = false;
@@ -1459,15 +1493,15 @@ class Clone_Guard_Security_Scanning {
                 $user_id = get_current_user_id();
 
                 $scan = [];
-                $scan['name'] = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
-                $scan['schedule'] = isset($_POST['schedule']) ? sanitize_text_field($_POST['schedule']) : '';
-                $scan['target'] = isset($_POST['target']) ? sanitize_text_field($_POST['target']) : '';
-                $scan['notifications'] = isset($_POST['notifications']) ? sanitize_text_field($_POST['notifications']) : '';
+                $scan['name'] = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
+                $scan['schedule'] = isset($_POST['schedule']) ? sanitize_text_field(wp_unslash($_POST['schedule'])) : '';
+                $scan['target'] = isset($_POST['target']) ? sanitize_text_field(wp_unslash($_POST['target'])) : '';
+                $scan['notifications'] = isset($_POST['notifications']) ? sanitize_text_field(wp_unslash($_POST['notifications'])) : '';
                 if ($app_type == 'vrms' || $app_type == 'penetration') {
-                    $scan['scanner'] = isset($_POST['scanner']) ? sanitize_textarea_field($_POST['scanner']) : '';
-                    $scan['config'] = isset($_POST['scan_config']) ? sanitize_textarea_field($_POST['scan_config']) : '';
+                    $scan['scanner'] = isset($_POST['scanner']) ? sanitize_textarea_field(wp_unslash($_POST['scanner'])) : '';
+                    $scan['config'] = isset($_POST['scan_config']) ? sanitize_textarea_field(wp_unslash($_POST['scan_config'])) : '';
                 }
-                $scan['comment'] = isset($_POST['comment']) ? sanitize_textarea_field($_POST['comment']) : '';
+                $scan['comment'] = isset($_POST['comment']) ? sanitize_textarea_field(wp_unslash($_POST['comment'])) : '';
 
                 $scans = get_user_meta($user_id, $this->key_ . 'scans_temp_save', true);
 
@@ -1496,7 +1530,7 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'schedule_create')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'schedule_create')) {
             if(!isset($_POST['name']) || $_POST['name'] == '') {
                 $pass = false;
                 $output['messages'][] = 'Please enter a Name.';
@@ -1515,26 +1549,26 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
-                $frequency = sanitize_text_field($_POST['frequency']);
+                $frequency = sanitize_text_field(wp_unslash($_POST['frequency']));
 
                 $item = [];
-                $item['schedules[name]'] = sanitize_text_field($_POST['name']);
-                $item['schedules[first_time]'] = sanitize_text_field($_POST['first_time']);
-                $item['schedules[timezone]'] = sanitize_text_field($_POST['timezone']);
+                $item['schedules[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
+                $item['schedules[first_time]'] = sanitize_text_field(wp_unslash($_POST['first_time']));
+                $item['schedules[timezone]'] = sanitize_text_field(wp_unslash($_POST['timezone']));
                 if($frequency == 'one_time') {
-                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
+                    $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
                     $item['schedules[period_unit]'] = 'once';
                 } elseif($frequency == 'daily') {
-                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
+                    $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
                     $item['schedules[period_unit]'] = 'day';
                 } elseif($frequency == 'weekly') {
-                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
+                    $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
                     $item['schedules[period_unit]'] = 'week';
                 } elseif($frequency == 'monthly') {
-                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
+                    $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
                     $item['schedules[period_unit]'] = 'month';
                 }
-                $item['schedules[comment]'] = sanitize_textarea_field($_POST['comment']);
+                $item['schedules[comment]'] = isset($_POST['comment']) ? sanitize_textarea_field(wp_unslash($_POST['comment'])) : '';
 
                 $success = $cloneGuardSecurityAPI->createSchedule($item);
 
@@ -1562,7 +1596,7 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'schedule_update')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'schedule_update')) {
             if(!isset($_POST['subkey']) || $_POST['subkey'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem with the ID.';
@@ -1585,28 +1619,28 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['subkey']);
+                $id = sanitize_text_field(wp_unslash($_POST['subkey']));
 
-                $frequency = sanitize_text_field($_POST['frequency']);
+                $frequency = sanitize_text_field(wp_unslash($_POST['frequency']));
 
                 $item = [];
-                $item['schedules[name]'] = sanitize_text_field($_POST['name']);
-                $item['schedules[first_time]'] = sanitize_text_field($_POST['first_time']);
-                $item['schedules[timezone]'] = sanitize_text_field($_POST['timezone']);
+                $item['schedules[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
+                $item['schedules[first_time]'] = sanitize_text_field(wp_unslash($_POST['first_time']));
+                $item['schedules[timezone]'] = sanitize_text_field(wp_unslash($_POST['timezone']));
                 if($frequency == 'one_time') {
-                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
+                    $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
                     $item['schedules[period_unit]'] = 'once';
                 } elseif($frequency == 'daily') {
-                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
+                    $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
                     $item['schedules[period_unit]'] = 'day';
                 } elseif($frequency == 'weekly') {
-                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
+                    $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
                     $item['schedules[period_unit]'] = 'week';
                 } elseif($frequency == 'monthly') {
-                    $item['schedules[period]'] = sanitize_text_field($_POST['period']);
+                    $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
                     $item['schedules[period_unit]'] = 'month';
                 }
-                $item['schedules[comment]'] = sanitize_textarea_field($_POST['comment']);
+                $item['schedules[comment]'] = isset($_POST['comment']) ? sanitize_textarea_field(wp_unslash($_POST['comment'])) : '';
 
                 $success = $cloneGuardSecurityAPI->updateSchedule($id, $item);
 
@@ -1634,14 +1668,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'schedule_delete')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'schedule_delete')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
 
                 $success = $cloneGuardSecurityAPI->deleteSchedule($id);
 
@@ -1664,7 +1698,7 @@ class Clone_Guard_Security_Scanning {
         $output = [];
         $output['status'] = 'error';
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'settings')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'settings')) {
             if(!isset($_POST['user_token']) || $_POST['user_token'] == '') {
                 $pass = false;
                 $output['messages'] = ['Please enter your User Token.'];
@@ -1678,10 +1712,10 @@ class Clone_Guard_Security_Scanning {
                 if(!isset($_POST['portal_url']) || $_POST['portal_url'] == '') {
                     $portal_url = 'pciscan.clone-systems.com';
                 } else {
-                    $portal_url = sanitize_text_field($_POST['portal_url']);
+                    $portal_url = sanitize_text_field(wp_unslash($_POST['portal_url']));
                 }
-                $user_token = sanitize_text_field($_POST['user_token']);
-                $api_key = sanitize_text_field($_POST['api_key']);
+                $user_token = sanitize_text_field(wp_unslash($_POST['user_token']));
+                $api_key = sanitize_text_field(wp_unslash($_POST['api_key']));
 
                 update_option($this->key_ . 'portal_url', $portal_url);
                 update_option($this->key_ . 'user_token', $user_token);
@@ -1705,7 +1739,7 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'target_create')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'target_create')) {
             if(!isset($_POST['name']) || $_POST['name'] == '') {
                 $pass = false;
                 $output['messages'][] = 'Please enter a Name.';
@@ -1721,9 +1755,9 @@ class Clone_Guard_Security_Scanning {
 
             if($pass) {
                 $item = [];
-                $item['targets[name]'] = sanitize_text_field($_POST['name']);
-                $item['targets[hosts]'] = sanitize_textarea_field($_POST['hosts']);
-                $item['targets[comment]'] = sanitize_textarea_field($_POST['comment']);
+                $item['targets[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
+                $item['targets[hosts]'] = sanitize_textarea_field(wp_unslash($_POST['hosts']));
+                $item['targets[comment]'] = isset($_POST['comment']) ? sanitize_textarea_field(wp_unslash($_POST['comment'])) : '';
 
                 $success = $cloneGuardSecurityAPI->createTarget($item);
                 // TODO
@@ -1753,7 +1787,7 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'target_update')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'target_update')) {
             if(!isset($_POST['subkey']) || $_POST['subkey'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem with the ID.';
@@ -1768,12 +1802,12 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['subkey']);
+                $id = sanitize_text_field(wp_unslash($_POST['subkey']));
 
                 $item = [];
-                $item['targets[name]'] = sanitize_text_field($_POST['name']);
-                $item['targets[hosts]'] = sanitize_textarea_field($_POST['hosts']);
-                $item['targets[comment]'] = sanitize_textarea_field($_POST['comment']);
+                $item['targets[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
+                $item['targets[hosts]'] = sanitize_textarea_field(wp_unslash($_POST['hosts']));
+                $item['targets[comment]'] = isset($_POST['comment']) ? sanitize_textarea_field(wp_unslash($_POST['comment'])) : '';
 
                 $success = $cloneGuardSecurityAPI->updateTarget($id, $item);
 
@@ -1801,14 +1835,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'target_delete')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'target_delete')) {
             if(!isset($_POST['id']) || $_POST['id'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the ID.';
             }
 
             if($pass) {
-                $id = sanitize_text_field($_POST['id']);
+                $id = sanitize_text_field(wp_unslash($_POST['id']));
 
                 $success = $cloneGuardSecurityAPI->deleteTarget($id);
 
@@ -1831,6 +1865,11 @@ class Clone_Guard_Security_Scanning {
     public function adminTemplateRedirect() {
         global $pagenow, $cloneGuardSecurityAPI;
 
+        // Runs on admin_init for every logged-in user, before WordPress checks the menu capability.
+        if(!current_user_can('manage_options')) {
+            return;
+        }
+
         if($pagenow == 'admin.php' && isset($_GET['page']) && $_GET['page'] == $this->key_ . 'overview') {
             $this->user_token = get_option($this->key_ . 'user_token');
             $this->api_key = get_option($this->key_ . 'api_key');
@@ -1842,11 +1881,11 @@ class Clone_Guard_Security_Scanning {
                 || !isset($this->api_key) 
                 || empty($this->api_key)
             ) {
-                wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
                 if(!$cloneGuardSecurityAPI->hasAccess()) {
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
             }
@@ -1863,11 +1902,11 @@ class Clone_Guard_Security_Scanning {
                 || !isset($this->api_key) 
                 || empty($this->api_key)
             ) {
-                wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
                 if(!$cloneGuardSecurityAPI->hasAccess()) {
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
             }
@@ -1879,13 +1918,13 @@ class Clone_Guard_Security_Scanning {
             ) {
                 if(
                     isset($_GET['_wpnonce'])
-                    && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'scans')
+                    && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), $this->key_ . 'scans')
                     && isset($_GET['scans']) 
                     && is_array($_GET['scans'])
                 ) {
                     // $_GET['scans'] must be an array to reach this point.
                     // Sanitized below.
-                    $scans = $_GET['scans'];
+                    $scans = array_map('sanitize_text_field', wp_unslash($_GET['scans']));
 
                     // Sanitize each element in array.
                     foreach($scans as $key => $scan) {
@@ -1897,9 +1936,9 @@ class Clone_Guard_Security_Scanning {
                     }
                     $paged = 1;
                     if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
-                        $paged = $_GET['paged'];
+                        $paged = absint($_GET['paged']);
                     }
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'scans' . '&paged=' . $paged));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'scans' . '&paged=' . $paged));
                     exit;
                 }
             }
@@ -1916,11 +1955,11 @@ class Clone_Guard_Security_Scanning {
                 || !isset($this->api_key) 
                 || empty($this->api_key)
             ) {
-                wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
                 if(!$cloneGuardSecurityAPI->hasAccess()) {
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
             }
@@ -1928,14 +1967,14 @@ class Clone_Guard_Security_Scanning {
             // Handle vulnerabilities exceptions.
             if((isset($_GET['action']) && $_GET['action'] == 'add-exception') || (isset($_GET['action2']) && $_GET['action2'] == 'add-exception')) 
             {
-                if(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'vulnerabilities') && isset($_GET['vulnerabilities']) && is_array($_GET['vulnerabilities'])) {
+                if(isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), $this->key_ . 'vulnerabilities') && isset($_GET['vulnerabilities']) && is_array($_GET['vulnerabilities'])) {
 
-                    $vulnerabilitiesIds = $_GET['vulnerabilities'];
+                    $vulnerabilitiesIds = array_map('sanitize_text_field', wp_unslash($_GET['vulnerabilities']));
 
                     foreach($vulnerabilitiesIds as $key => $vul) {
                         $current_vul = $cloneGuardSecurityAPI->getResult($vul);
                         $item = [];
-                        $item['exceptions[text]'] = $_GET['modal_justification_text'];
+                        $item['exceptions[text]'] = isset($_GET['modal_justification_text']) ? sanitize_textarea_field(wp_unslash($_GET['modal_justification_text'])) : '';
                         $item['exceptions[nvt]'] = sanitize_text_field($current_vul['nvt']['oid']);
                         $item['exceptions[task]'] = sanitize_text_field($current_vul['task']['id']);
                         $cloneGuardSecurityAPI->createException($item);
@@ -1943,9 +1982,9 @@ class Clone_Guard_Security_Scanning {
 
                     $paged = 1;
                     if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
-                        $paged = $_GET['paged'];
+                        $paged = absint($_GET['paged']);
                     }
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'vulnerabilities' . '&paged=' . $paged));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'vulnerabilities' . '&paged=' . $paged));
                     exit;
                 }
             }
@@ -1963,11 +2002,11 @@ class Clone_Guard_Security_Scanning {
                 || !isset($this->api_key) 
                 || empty($this->api_key)
             ) {
-                wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
                 if(!$cloneGuardSecurityAPI->hasAccess()) {
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
             }
@@ -1979,13 +2018,13 @@ class Clone_Guard_Security_Scanning {
             ) {
                 if(
                     isset($_GET['_wpnonce'])
-                    && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'reports')
+                    && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), $this->key_ . 'reports')
                     && isset($_GET['reports']) 
                     && is_array($_GET['reports'])
                 ) {
                     // $_GET['reports'] must be an array to reach this point.
                     // Sanitized below.
-                    $reports = $_GET['reports'];
+                    $reports = array_map('sanitize_text_field', wp_unslash($_GET['reports']));
 
                     // Sanitize each element in array.
                     foreach($reports as $key => $report) {
@@ -1997,9 +2036,9 @@ class Clone_Guard_Security_Scanning {
                     }
                     $paged = 1;
                     if(isset($_GET['paged']) && is_numeric($_GET['paged'])) {
-                        $paged = $_GET['paged'];
+                        $paged = absint($_GET['paged']);
                     }
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'reports' . '&paged=' . $paged));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'reports' . '&paged=' . $paged));
                     exit;
                 }
             }
@@ -2011,11 +2050,11 @@ class Clone_Guard_Security_Scanning {
 
             // Make sure the API keys are valid.
             if(!isset($this->user_token) || empty($this->user_token) || !isset($this->api_key) || empty($this->api_key)) {
-                wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                 exit;
             } else {
                 if(!$cloneGuardSecurityAPI->hasAccess()) {
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'settings' . '&msg=access'));
                     exit;
                 }
             }
@@ -2025,10 +2064,10 @@ class Clone_Guard_Security_Scanning {
                  (isset($_GET['action2']) && $_GET['action2'] == 'delete') || 
                  (isset($_GET['action3']) && $_GET['action3'] == 'delete') ||
                  (isset($_GET['action4']) && $_GET['action4'] == 'delete')) {
-                if(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'options') &&
+                if(isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), $this->key_ . 'options') &&
                    isset($_GET['schedules']) && is_array($_GET['schedules']))
                 {
-                    $schedules = $_GET['schedules'];
+                    $schedules = array_map('sanitize_text_field', wp_unslash($_GET['schedules']));
 
                     foreach($schedules as $key => $schedule) {
                         $schedules[$key] = sanitize_text_field($schedule);
@@ -2037,12 +2076,12 @@ class Clone_Guard_Security_Scanning {
                     foreach($schedules as $schedule) {
                         $success = $cloneGuardSecurityAPI->deleteSchedule($schedule);
                     }
-                    wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
+                    wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
                     exit;
-                } elseif(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'options') &&
+                } elseif(isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), $this->key_ . 'options') &&
                          isset($_GET['targets']) && is_array($_GET['targets'])) 
                 {
-                   $targets = $_GET['targets'];
+                   $targets = array_map('sanitize_text_field', wp_unslash($_GET['targets']));
 
                    foreach($targets as $key => $target) {
                        $targets[$key] = sanitize_text_field($target);
@@ -2051,12 +2090,12 @@ class Clone_Guard_Security_Scanning {
                    foreach($targets as $target) {
                        $success = $cloneGuardSecurityAPI->deleteTarget($target);
                    }
-                   wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
+                   wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
                    exit;
-                } elseif(isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], $this->key_ . 'options') &&
+                } elseif(isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), $this->key_ . 'options') &&
                         isset($_GET['notifications']) && is_array($_GET['notifications'])) 
                 {
-                  $notifications = $_GET['notifications'];
+                  $notifications = array_map('sanitize_text_field', wp_unslash($_GET['notifications']));
 
                   foreach($notifications as $key => $notification) {
                       $notifications[$key] = sanitize_text_field($notification);
@@ -2065,7 +2104,7 @@ class Clone_Guard_Security_Scanning {
                   foreach($notifications as $notification) {
                       $success = $cloneGuardSecurityAPI->deleteNotification($notification);
                   }
-                  wp_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
+                  wp_safe_redirect(admin_url('/admin.php?page=' . $this->key_ . 'options'));
                   exit;
                 }
             }
@@ -2078,14 +2117,14 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'update_user_app_type')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'update_user_app_type')) {
             if(!isset($_POST['apptype']) || $_POST['apptype'] == '') {
                 $pass = false;
                 $output['messages'][] = 'There was a problem getting the app type.';
             }
 
             if($pass) {
-                $theAppType = sanitize_text_field($_POST['apptype']);
+                $theAppType = sanitize_text_field(wp_unslash($_POST['apptype']));
 
                 $success = $cloneGuardSecurityAPI->updateUserAppType($theAppType);
 
@@ -2112,7 +2151,7 @@ class Clone_Guard_Security_Scanning {
         $output['messages'] = [];
         $pass = true;
 
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'exception_create')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'exception_create')) {
             if(!isset($_POST['justification_text']) || $_POST['justification_text'] == '') {
                 $pass = false;
                 $output['messages'][] = 'Please enter a Justification.';
@@ -2140,14 +2179,14 @@ class Clone_Guard_Security_Scanning {
 
             if($pass) {
                 $item = [];
-                $item['exceptions[text]'] = sanitize_text_field($_POST['justification_text']);
-                $item['exceptions[nvt]'] = sanitize_text_field($_POST['nvt_oid']);
+                $item['exceptions[text]'] = sanitize_text_field(wp_unslash($_POST['justification_text']));
+                $item['exceptions[nvt]'] = sanitize_text_field(wp_unslash($_POST['nvt_oid']));
 
                 if ($_POST['scanOrHost'] == 'scan') {
-                    $item['exceptions[task]'] = sanitize_text_field($_POST['task_id']);
+                    $item['exceptions[task]'] = sanitize_text_field(wp_unslash($_POST['task_id']));
                 } 
                 elseif ($_POST['scanOrHost'] == 'host') {
-                    $item['exceptions[hosts]'] = sanitize_text_field($_POST['host']);
+                    $item['exceptions[hosts]'] = sanitize_text_field(wp_unslash($_POST['host']));
                 }
 
                 $success = $cloneGuardSecurityAPI->createException($item);
@@ -2175,7 +2214,7 @@ class Clone_Guard_Security_Scanning {
         $output['status'] = 'error';
         $output['messages'] = [];
         $pass = true;
-        if(wp_verify_nonce($_POST['_wpnonce'], $this->key_ . 'exception_update')) {
+        if(current_user_can('manage_options') && isset($_POST['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'exception_update')) {
             if(!isset($_POST['justification_text_edit']) || $_POST['justification_text_edit'] == '') {
                 $pass = false;
                 $output['messages'][] = 'Please enter a Justification.';
@@ -2187,10 +2226,10 @@ class Clone_Guard_Security_Scanning {
 
 
             if($pass) {
-                $id = sanitize_text_field($_POST['exception_id']);
+                $id = isset($_POST['exception_id']) ? sanitize_text_field(wp_unslash($_POST['exception_id'])) : '';
 
-                $text = sanitize_text_field($_POST['justification_text_edit']);
-                $nvt_oid = sanitize_text_field($_POST['nvt_oid']);
+                $text = sanitize_text_field(wp_unslash($_POST['justification_text_edit']));
+                $nvt_oid = sanitize_text_field(wp_unslash($_POST['nvt_oid']));
 
                 $success = $cloneGuardSecurityAPI->updateException($id, $text, $nvt_oid);
 
@@ -2275,8 +2314,8 @@ class Clone_Guard_Security_Scanning {
         $months['October'] = 'Q4';
         $months['November'] = 'Q4';
         $months['December'] = 'Q4';
-        $output = $months[date('F', $time)];
-        $output .= ' ' . date('Y', $time);
+        $output = $months[gmdate('F', $time)];
+        $output .= ' ' . gmdate('Y', $time);
 
         return $output;
     }
@@ -2903,5 +2942,5 @@ class Clone_Guard_Security_Scanning {
 }
 
 // Creates instances of the API class and the main plugin class.
-$cloneGuardSecurityAPI = new Clone_Guard_API();
-$cloneGuardSecurityScanning = new Clone_Guard_Security_Scanning();
+$cloneGuardSecurityAPI = new Clone_Guard_API(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- name kept from earlier versions; other code may use this global.
+$cloneGuardSecurityScanning = new Clone_Guard_Security_Scanning(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- name kept from earlier versions; other code may use this global.

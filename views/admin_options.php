@@ -1,4 +1,6 @@
-<div class="cgss-options-page" id="<?php echo $action; ?>_page">
+<?php defined('ABSPATH') || exit; ?>
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- this view is included from a class method, so its variables are local to that method, not global. ?>
+<div class="cgss-options-page" id="<?php echo esc_attr($action); ?>_page">
 
     <div class="cgss-head">
 
@@ -96,7 +98,7 @@
                     <span class="table-top-section">
                         <h2 class="cgss-sub-title">Schedules</h2>
 
-                        <a href="<?php echo $this->adminLink('options', 'schedule-create'); ?>" 
+                        <a href="<?php echo esc_url($this->adminLink('options', 'schedule-create')); ?>" 
                         class="table-top-add-btn button action page-title-action">
                         Add Schedule
                         </a>
@@ -121,14 +123,14 @@
                             <?php if(isset($schedule['name'])): ?>
                                 <th scope="row" class="check-column"><input type="checkbox" name="schedules[]" value="<?php echo esc_attr($schedule['id']); ?>"></th>
                                 <td><strong>
-                                    <a href="<?php echo $this->adminLink('options', 'schedule-update', $schedule['id']); ?>">
+                                    <a href="<?php echo esc_url($this->adminLink('options', 'schedule-update', $schedule['id'])); ?>">
                                         <?php echo esc_html($schedule['name']); ?>
                                     </a></strong>
                                 </td>
-                                <td><?php echo "Every " . $schedule['period'] . " " . $schedule['period_unit']; ?></td>
+                                <td><?php echo esc_html("Every " . $schedule['period'] . " " . $schedule['period_unit']); ?></td>
                                 <td><?php echo esc_html($schedule['comment']); ?></td>
                                 <td class="table-min-col">
-                                    <a class="button" href="<?php echo $this->adminLink('options', 'schedule-update', $schedule['id']); ?>">
+                                    <a class="button" href="<?php echo esc_url($this->adminLink('options', 'schedule-update', $schedule['id'])); ?>">
                                         Edit
                                     </a>
                                     <a  class="button delete" href="#" 
@@ -167,35 +169,35 @@
                 </div>
 
                 <div class="tablenav-pages">
-                    <span class="displaying-num"><?php echo $schedules['total']; ?> items</span>
+                    <span class="displaying-num"><?php echo esc_html($schedules['total']); ?> items</span>
                     <span class="pagination-links">
                         <?php if($schedules['current_page'] == 1): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>
                         <?php else: ?>
-                            <a class="first-page button" href="<?php echo $this->optionsPaginationLink('schedules', 1); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
+                            <a class="first-page button" href="<?php echo esc_url($this->optionsPaginationLink('schedules', 1)); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
                         <?php endif; ?>
 
                         <?php if($schedules['current_page'] == 1): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>
                         <?php else: ?>
-                            <a class="prev-page button" href="<?php echo $this->optionsPaginationLink('schedules', $schedules['current_page'] - 1); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
+                            <a class="prev-page button" href="<?php echo esc_url($this->optionsPaginationLink('schedules', $schedules['current_page'] - 1)); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
                         <?php endif; ?>
 
                         <span class="screen-reader-text">Current Page</span>
                         <span id="table-paging" class="paging-input">
-                            <span class="tablenav-paging-text"><?php echo $schedules['current_page']; ?> of <span class="total-pages"><?php echo $schedules['total_pages']; ?></span></span>
+                            <span class="tablenav-paging-text"><?php echo esc_html($schedules['current_page']); ?> of <span class="total-pages"><?php echo esc_html($schedules['total_pages']); ?></span></span>
                         </span>
 
                         <?php if($schedules['current_page'] == $schedules['total_pages']): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>
                         <?php else: ?>
-                            <a class="next-page button" href="<?php echo $this->optionsPaginationLink('schedules', $schedules['current_page'] + 1) ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
+                            <a class="next-page button" href="<?php echo esc_url($this->optionsPaginationLink('schedules', $schedules['current_page'] + 1)) ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
                         <?php endif; ?>
 
                         <?php if($schedules['current_page'] == $schedules['total_pages']): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>
                         <?php else: ?>
-                            <a class="last-page button" href="<?php echo $this->optionsPaginationLink('schedules', $schedules['total_pages']); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
+                            <a class="last-page button" href="<?php echo esc_url($this->optionsPaginationLink('schedules', $schedules['total_pages'])); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
                         <?php endif; ?>
                     </span>
                 </div>
@@ -214,7 +216,7 @@
                     <span class="table-top-section">
                         <h2 class="cgss-sub-title">Targets</h2>
 
-                        <a href="<?php echo $this->adminLink('options', 'target-create'); ?>" 
+                        <a href="<?php echo esc_url($this->adminLink('options', 'target-create')); ?>" 
                             class="table-top-add-btn button action page-title-action">
                             Add Target
                         </a>
@@ -240,7 +242,7 @@
                             <?php if(isset($target['name'])): ?>
                                 <th scope="row" class="check-column"><input type="checkbox" name="targets[]" value="<?php echo esc_attr($target['id']); ?>"></th>
                                 <td><strong>
-                                    <a href="<?php echo $this->adminLink('options', 'target-update', $target['id']); ?>">
+                                    <a href="<?php echo esc_url($this->adminLink('options', 'target-update', $target['id'])); ?>">
                                         <?php echo esc_html($target['name']); ?>
                                     </a></strong>
                                 </td>
@@ -253,14 +255,14 @@
                                         $modifiedString = explode(",", $hostsString);
                                         echo esc_html(implode(', ', array_slice(array_map('trim', $modifiedString), 0, 3)));
                                     } else {
-                                        echo $hostsString;
+                                        echo esc_html($hostsString);
                                     }
                                 ?>
                                 </td>
                                 <td><?php echo esc_html($target['max_hosts']); ?></td>
                                 <td><?php echo esc_html($target['comment']); ?></td>
                                 <td class="table-min-col">
-                                    <a class="button" href="<?php echo $this->adminLink('options', 'target-update', $target['id']); ?>">
+                                    <a class="button" href="<?php echo esc_url($this->adminLink('options', 'target-update', $target['id'])); ?>">
                                         Edit
                                     </a>
                                     <a  class="button delete" href="#" 
@@ -299,35 +301,35 @@
                         <input type="submit" id="doaction" class="button action" value="Apply">
                 </div>
                 <div class="tablenav-pages">
-                    <span class="displaying-num"><?php echo $targets['total']; ?> items</span>
+                    <span class="displaying-num"><?php echo esc_html($targets['total']); ?> items</span>
                     <span class="pagination-links">
                         <?php if($targets['current_page'] == 1): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>
                         <?php else: ?>
-                            <a class="first-page button" href="<?php echo $this->optionsPaginationLink('targets', 1); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
+                            <a class="first-page button" href="<?php echo esc_url($this->optionsPaginationLink('targets', 1)); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
                         <?php endif; ?>
 
                         <?php if($targets['current_page'] == 1): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>
                         <?php else: ?>
-                            <a class="prev-page button" href="<?php echo $this->optionsPaginationLink('targets', $targets['current_page'] - 1); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
+                            <a class="prev-page button" href="<?php echo esc_url($this->optionsPaginationLink('targets', $targets['current_page'] - 1)); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
                         <?php endif; ?>
 
                         <span class="screen-reader-text">Current Page</span>
                         <span id="table-paging" class="paging-input">
-                            <span class="tablenav-paging-text"><?php echo $targets['current_page']; ?> of <span class="total-pages"><?php echo $targets['total_pages']; ?></span></span>
+                            <span class="tablenav-paging-text"><?php echo esc_html($targets['current_page']); ?> of <span class="total-pages"><?php echo esc_html($targets['total_pages']); ?></span></span>
                         </span>
 
                         <?php if($targets['current_page'] == $targets['total_pages']): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>
                         <?php else: ?>
-                            <a class="next-page button" href="<?php echo $this->optionsPaginationLink('targets', $targets['current_page'] + 1); ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
+                            <a class="next-page button" href="<?php echo esc_url($this->optionsPaginationLink('targets', $targets['current_page'] + 1)); ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
                         <?php endif; ?>
 
                         <?php if($targets['current_page'] == $targets['total_pages']): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>
                         <?php else: ?>
-                            <a class="last-page button" href="<?php echo $this->optionsPaginationLink('targets', $targets['total_pages']); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
+                            <a class="last-page button" href="<?php echo esc_url($this->optionsPaginationLink('targets', $targets['total_pages'])); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
                         <?php endif; ?>
                     </span>
                 </div>
@@ -346,7 +348,7 @@
                     <span class="table-top-section">
                         <h2 class="cgss-sub-title">Notifications</h2>
 
-                        <a href="<?php echo $this->adminLink('options', 'notification-create'); ?>" 
+                        <a href="<?php echo esc_url($this->adminLink('options', 'notification-create')); ?>" 
                             class="table-top-add-btn button action page-title-action">
                             Add Notification
                         </a>
@@ -371,7 +373,7 @@
                             <?php if(isset($notification['name'])): ?>
                                 <th scope="row" class="check-column"><input type="checkbox" name="notifications[]" value="<?php echo esc_attr($notification['id']); ?>"></th>
                                 <td><strong>
-                                    <a href="<?php echo $this->adminLink('options', 'notification-update', $notification['id']); ?>">
+                                    <a href="<?php echo esc_url($this->adminLink('options', 'notification-update', $notification['id'])); ?>">
                                         <?php echo esc_html($notification['name']); ?>
                                     </a></strong>
                                 </td>
@@ -384,7 +386,7 @@
 						echo "Scan Started";
 						break;
 					    default:
-					        echo $notification["status_changed"];
+					        echo esc_html($notification["status_changed"]);
 					}
 				    ?>
 
@@ -392,7 +394,7 @@
 				</td>
                                 <td><?php echo esc_html($notification['email_options']['to_address']); ?></td>
                                 <td>
-                                    <a class="button" href="<?php echo $this->adminLink('options', 'notification-update', $notification['id']); ?>">
+                                    <a class="button" href="<?php echo esc_url($this->adminLink('options', 'notification-update', $notification['id'])); ?>">
                                         Edit
                                     </a>
                                     <a class="button delete" href="#" 
@@ -431,35 +433,35 @@
                 </div>
 
                 <div class="tablenav-pages">
-                    <span class="displaying-num"><?php echo $notifications['total']; ?> items</span>
+                    <span class="displaying-num"><?php echo esc_html($notifications['total']); ?> items</span>
                     <span class="pagination-links">
                         <?php if($notifications['current_page'] == 1): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>
                         <?php else: ?>
-                            <a class="first-page button" href="<?php echo $this->optionsPaginationLink('notifications', 1); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
+                            <a class="first-page button" href="<?php echo esc_url($this->optionsPaginationLink('notifications', 1)); ?>"><span class="screen-reader-text">First page</span><span aria-hidden="true">«</span></a>
                         <?php endif; ?>
 
                         <?php if($notifications['current_page'] == 1): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>
                         <?php else: ?>
-                            <a class="prev-page button" href="<?php echo $this->optionsPaginationLink('notifications', $notifications['current_page'] - 1); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
+                            <a class="prev-page button" href="<?php echo esc_url($this->optionsPaginationLink('notifications', $notifications['current_page'] - 1)); ?>"><span class="screen-reader-text">Previous page</span><span aria-hidden="true">‹</span></a>
                         <?php endif; ?>
 
                         <span class="screen-reader-text">Current Page</span>
                         <span id="table-paging" class="paging-input">
-                            <span class="tablenav-paging-text"><?php echo $notifications['current_page']; ?> of <span class="total-pages"><?php echo $notifications['total_pages']; ?></span></span>
+                            <span class="tablenav-paging-text"><?php echo esc_html($notifications['current_page']); ?> of <span class="total-pages"><?php echo esc_html($notifications['total_pages']); ?></span></span>
                         </span>
 
                         <?php if($notifications['current_page'] == $notifications['total_pages']): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>
                         <?php else: ?>
-                            <a class="next-page button" href="<?php echo $this->optionsPaginationLink('notifications', $notifications['current_page'] + 1); ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
+                            <a class="next-page button" href="<?php echo esc_url($this->optionsPaginationLink('notifications', $notifications['current_page'] + 1)); ?>"><span class="screen-reader-text">Next page</span><span aria-hidden="true">›</span></a>
                         <?php endif; ?>
 
                         <?php if($notifications['current_page'] == $notifications['total_pages']): ?>
                             <span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>
                         <?php else: ?>
-                            <a class="last-page button" href="<?php echo $this->optionsPaginationLink('notifications', $notifications['total_pages']); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
+                            <a class="last-page button" href="<?php echo esc_url($this->optionsPaginationLink('notifications', $notifications['total_pages'])); ?>"><span class="screen-reader-text">Last page</span><span aria-hidden="true">»</span></a>
                         <?php endif; ?>
                     </span>
                 </div>
