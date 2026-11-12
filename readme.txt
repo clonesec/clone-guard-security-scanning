@@ -29,7 +29,7 @@ Start your website's easy certification process today:
    5. Place the Security Seal widget anywhere on your website
 
 = YOUR DISCOUNT =
-WordPress users can get a discount by using a first-time order code: **WORDPRESSNEW**
+WordPress users can get a discount by using a first-time order code: **WORDPRESSNEW8**
 
 == Support ==
 

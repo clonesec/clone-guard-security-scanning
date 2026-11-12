@@ -1490,6 +1490,8 @@ class Clone_Guard_Security_Scanning {
             }
 
             if($pass) {
+                global $cloneGuardSecurityAPI;
+                $app_type = $cloneGuardSecurityAPI->getUserDetails()['app_type'];
                 $user_id = get_current_user_id();
 
                 $scan = [];
@@ -2164,13 +2166,13 @@ class Clone_Guard_Security_Scanning {
                 $pass = false;
                 $output['messages'][] = 'Scan or Host radio button has no value.';
             }
-            if ($_POST['scanOrHost'] == 'scan') {
+            if (isset($_POST['scanOrHost']) && $_POST['scanOrHost'] == 'scan') {
                 if(!isset($_POST['task_id']) || $_POST['task_id'] == '') {
                     $pass = false;
                     $output['messages'][] = 'Task id is missing';
                 }
             }
-            if ($_POST['scanOrHost'] == 'host') {
+            if (isset($_POST['scanOrHost']) && $_POST['scanOrHost'] == 'host') {
                 if(!isset($_POST['host']) || $_POST['host'] == '') {
                     $pass = false;
                     $output['messages'][] = 'Host IP address is missing.';

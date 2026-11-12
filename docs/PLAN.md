@@ -146,9 +146,9 @@ Actions:
 
 Acceptance: exactly one code path renders the seal; no 404 requests in the browser network panel; old widget instances render the new seal without being re-saved.
 
-### - [ ] Step 6: Plugin Check clean-up (security and WordPress.org requirements)
+### - [x] Step 6: Plugin Check clean-up (security and WordPress.org requirements)
 
-Status 2026-11-12 (code done, uncommitted; not ticked because one check is open). Plugin Check on the shipped files (`scripts/plugin-check-dist.sh`): 322 errors / 383 warnings before, 1 error / 0 warnings after. The error is `stable_tag_mismatch` (readme 2.6, header 2.5), closed by step 7's version bump; how the last 125 warnings were cleared is in `docs/PLUGIN-CHECK-AFTER.txt`. Click-through (41 pages + 11 failure paths) clean on 8.4 and 8.2, and a visible-text comparison against the pre-step-6 code found two regressions that were fixed (report compliance HTML shown as text; notification options double-escaped). **Open:** the AJAX handlers' new capability/nonce line was verified only through the report download handler (admin passes, bad nonce refused); a direct test of all 24 handlers (admin with empty fields, bad nonce, no capability) was blocked by the session's permission check because it calls write handlers. Owner to decide: allow that test, click through the forms manually, or accept. Deviation: the plan's tag list and short description were applied with the smallest copy change (5 of the existing 10 tags; trailing "..." removed so the description is exactly 150 characters).
+Done 2026-11-12 (committed as c0aac33; handler-test fixes in a follow-up commit). Plugin Check on the shipped files (`scripts/plugin-check-dist.sh`): 322 errors / 383 warnings before, 1 error / 0 warnings after. The error is `stable_tag_mismatch` (readme 2.6, header 2.5), closed by step 7's version bump; how the last 125 warnings were cleared is in `docs/PLUGIN-CHECK-AFTER.txt`. Click-through (41 pages + 11 failure paths) clean on 8.4 and 8.2, and a visible-text comparison against the pre-step-6 code found two regressions that were fixed (report compliance HTML shown as text; notification options double-escaped). Handler test (owner allowed it): all 25 AJAX handlers called in-process on 8.4 and 8.2 as no-capability user, admin with a bad nonce, and admin with empty fields, with all outgoing HTTP blocked and logged. All refuse or stop at validation; only portal reads were attempted (my_details, scans); options and draft data unchanged. It found two PHP warnings already in 2.5 (exception create read `scanOrHost` without isset; scan draft save used an undefined `$app_type`, so drafts also dropped Scanner/Config for VRMS/penetration accounts), both fixed. Deviation: the plan's tag list and short description were applied with the smallest copy change (5 of the existing 10 tags; trailing "..." removed so the description is exactly 150 characters).
 
 Actions:
 1. Run Plugin Check from Tools > Plugin Check with all categories, and also via CLI: `npx wp-env run cli wp plugin check clone-guard-security-scanning --format=table`. Save the raw output to `docs/PLUGIN-CHECK-BEFORE.txt`.
@@ -237,7 +237,7 @@ Retake every page against the refreshed portal; banner 772x250 and 1544x500, ico
 Rewrite the WordPress.org description and the Settings page copy from Elyse's text; no dollar amounts in the opening lines; product names matching the pricing page.
 
 ### - [ ] Step 15: Discount code and backlinks
-Confirm with sales that `WORDPRESSNEW` works in the cart (decision: keep). Add a page or section on clone-systems.com linking to the plugin; set that URL as `Plugin URI`, or keep GitHub, as Elyse prefers.
+Marketing gave the new code `WORDPRESSNEW8` on 2026-11-12 (already in `readme.txt`); confirm it works in the cart. Add a page or section on clone-systems.com linking to the plugin; set that URL as `Plugin URI`, or keep GitHub, as Elyse prefers.
 
 ---
 
