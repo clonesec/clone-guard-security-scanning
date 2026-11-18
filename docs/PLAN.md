@@ -211,7 +211,7 @@ Actions:
 
 Acceptance: block insertable in the Site Editor on Twenty Twenty-Five, renders the seal on the front end.
 
-### - [ ] Step 11: Front-end library updates
+### - [x] Step 11: Front-end library updates
 
 Actions:
 1. Replace jQuery datetimepicker with native `<input type="datetime-local">` in the schedule/scan forms; convert the value format server-side to what the API expects (document the format in `docs/API-V1-CONTRACT.md`).

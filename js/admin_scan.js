@@ -603,10 +603,6 @@ jQuery(document).ready(function($) {
 
     // Initialize listeners and set up page. 
 	function init() {
-        $('.datetimepicker').datetimepicker({
-            format: 'Y-m-d H:i:s'
-        });
-
         $('.select2').select2();
 
         $('.select2-multiple').select2({
