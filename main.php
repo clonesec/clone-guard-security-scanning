@@ -55,21 +55,15 @@ class Clone_Guard_Security_Scanning {
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
             wp_enqueue_style($this->key_ . 'admin_overview', plugins_url('css/admin_overview.css', __FILE__), [], $this->version);
 
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
-
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.1.0.min.js', __FILE__), ['jquery'], $this->version, false);
+            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.1.0.min.css', __FILE__), [], $this->version);
             
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
         }
         
         if($this->hook_scans == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
-
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.1.0.min.js', __FILE__), ['jquery'], $this->version, false);
+            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.1.0.min.css', __FILE__), [], $this->version);
 
             wp_enqueue_script($this->key_ . 'admin_ajax_form', plugins_url('js/admin_ajax_form.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
@@ -78,11 +72,8 @@ class Clone_Guard_Security_Scanning {
         }
 
         if($this->hook_reports == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
-
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.1.0.min.js', __FILE__), ['jquery'], $this->version, false);
+            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.1.0.min.css', __FILE__), [], $this->version);
 
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
 
@@ -90,11 +81,8 @@ class Clone_Guard_Security_Scanning {
         }
 
         if($this->hook_vulnerabilities == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
-
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.1.0.min.js', __FILE__), ['jquery'], $this->version, false);
+            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.1.0.min.css', __FILE__), [], $this->version);
 
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
 
@@ -105,11 +93,8 @@ class Clone_Guard_Security_Scanning {
         }
 
         if($this->hook_options == $hook) {
-            wp_enqueue_script($this->key_ . 'datetimepicker', plugins_url('js/jquery.datetimepicker.full.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'datetimepicker', plugins_url('css/jquery.datetimepicker.min.css', __FILE__), [], $this->version);
-
-            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.0.13.min.js', __FILE__), ['jquery'], $this->version, false);
-            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.0.13.min.css', __FILE__), [], $this->version);
+            wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.1.0.min.js', __FILE__), ['jquery'], $this->version, false);
+            wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.1.0.min.css', __FILE__), [], $this->version);
 
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
 
@@ -1541,7 +1526,8 @@ class Clone_Guard_Security_Scanning {
                 $pass = false;
                 $output['messages'][] = 'Please select a Frequency.';
             }
-            if(!isset($_POST['first_time']) || $_POST['first_time'] == '') {
+            $first_time = isset($_POST['first_time']) ? $this->firstTimeForApi(sanitize_text_field(wp_unslash($_POST['first_time']))) : '';
+            if($first_time === '') {
                 $pass = false;
                 $output['messages'][] = 'Please enter a First Time.';
             }
@@ -1555,7 +1541,7 @@ class Clone_Guard_Security_Scanning {
 
                 $item = [];
                 $item['schedules[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
-                $item['schedules[first_time]'] = sanitize_text_field(wp_unslash($_POST['first_time']));
+                $item['schedules[first_time]'] = $first_time;
                 $item['schedules[timezone]'] = sanitize_text_field(wp_unslash($_POST['timezone']));
                 if($frequency == 'one_time') {
                     $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
@@ -1591,6 +1577,28 @@ class Clone_Guard_Security_Scanning {
         exit;
     }
 
+    // The First Time field is a datetime-local input (2026-11-18T14:30, or with seconds); the API expects Y-m-d H:i:s.
+    // Returns '' when the value is not a valid date and time.
+    private function firstTimeForApi($value) {
+        foreach(['Y-m-d\\TH:i', 'Y-m-d\\TH:i:s', 'Y-m-d H:i:s'] as $format) {
+            $date = DateTime::createFromFormat('!' . $format, $value);
+            if($date && $date->format($format) === $value) {
+                return $date->format('Y-m-d H:i:s');
+            }
+        }
+        return '';
+    }
+
+    // Value for the datetime-local First Time field. The API returns first_time with the schedule's own offset
+    // (2027-02-15T01:00:00.000-08:00), so the local time is kept as is; converting it to UTC would shift the schedule on save.
+    public function firstTimeForInput($value) {
+        try {
+            return $value ? (new DateTime((string) $value))->format('Y-m-d\\TH:i') : '';
+        } catch(Exception $e) {
+            return '';
+        }
+    }
+
     // AJAX to update a schedule.
     public function ajaxScheduleUpdate() {
         global $cloneGuardSecurityAPI;
@@ -1611,7 +1619,8 @@ class Clone_Guard_Security_Scanning {
                 $pass = false;
                 $output['messages'][] = 'Please select a Frequency.';
             }
-            if(!isset($_POST['first_time']) || $_POST['first_time'] == '') {
+            $first_time = isset($_POST['first_time']) ? $this->firstTimeForApi(sanitize_text_field(wp_unslash($_POST['first_time']))) : '';
+            if($first_time === '') {
                 $pass = false;
                 $output['messages'][] = 'Please enter a First Time.';
             }
@@ -1627,7 +1636,7 @@ class Clone_Guard_Security_Scanning {
 
                 $item = [];
                 $item['schedules[name]'] = sanitize_text_field(wp_unslash($_POST['name']));
-                $item['schedules[first_time]'] = sanitize_text_field(wp_unslash($_POST['first_time']));
+                $item['schedules[first_time]'] = $first_time;
                 $item['schedules[timezone]'] = sanitize_text_field(wp_unslash($_POST['timezone']));
                 if($frequency == 'one_time') {
                     $item['schedules[period]'] = isset($_POST['period']) ? sanitize_text_field(wp_unslash($_POST['period'])) : '';
