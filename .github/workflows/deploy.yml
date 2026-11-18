@@ -62,8 +62,10 @@ jobs:
           dry-run: ${{ env.DRY_RUN }}
           generate-zip: true
         env:
-          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          # Action 2.3.0 requires credentials even for a dry run (checked before dry-run). A dry run only checks
+          # out SVN anonymously and never commits, so it gets placeholders and the real secrets stay out of PR runs.
+          SVN_USERNAME: ${{ env.DRY_RUN == 'true' && 'dry-run' || secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ env.DRY_RUN == 'true' && 'dry-run' || secrets.SVN_PASSWORD }}
           SLUG: clone-guard-security-scanning
           VERSION: ${{ steps.version.outputs.version }}
 
