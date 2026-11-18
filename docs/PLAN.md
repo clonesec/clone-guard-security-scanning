@@ -202,7 +202,7 @@ Done 2026-11-12. Owner chose a local merge instead of a GitHub PR: `release/2.6`
 
 If the owner answers "no" to open question 7, move step 5b back here unchanged and ship 2.6 with the old widget, noting "seal update coming in 2.7" in the changelog.
 
-### - [ ] Step 10: Gutenberg block for the seal
+### - [x] Step 10: Gutenberg block for the seal
 
 Actions:
 1. Scaffold `blocks/seal/` with `block.json` (`apiVersion: 3`, name `cloneguard/seal`, category `widgets`, `render` pointing to a PHP render callback that calls `Clone_Guard_Seal::render()`). Use `@wordpress/scripts` for the build; commit the built `build/` output so the WordPress.org zip needs no build step, and keep `src/` out of the dist via `.distignore` if desired.
