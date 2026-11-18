@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cloneguard/seal",
+	"title": "CloneGuard Seal",
+	"category": "widgets",
+	"icon": "shield",
+	"description": "Shows the Clone Systems Trust Seal. It only appears on domains with an active Clone Systems account and current scans.",
+	"keywords": [ "trust seal", "security", "clone systems" ],
+	"textdomain": "clone-guard-security-scanning",
+	"attributes": {
+		"icon": {
+			"type": "string",
+			"enum": [
+				"cs-secure-dark",
+				"cs-secure-light",
+				"cs-certified-dark",
+				"cs-certified-light",
+				"cs-compliant-dark",
+				"cs-compliant-light",
+				"cs-pci-asv-dark",
+				"cs-pci-asv-light",
+				"cs-scanned-dark",
+				"cs-scanned-light"
+			],
+			"default": "cs-secure-dark"
+		},
+		"size": {
+			"type": "string",
+			"enum": [ "lg", "md", "sm" ],
+			"default": "md"
+		},
+		"position": {
+			"type": "string",
+			"enum": [ "relative", "left", "right" ],
+			"default": "relative"
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "left", "center", "right" ]
+	},
+	"editorScript": "file:./index.js"
+}

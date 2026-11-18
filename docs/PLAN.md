@@ -177,7 +177,7 @@ Acceptance: header, property and readme agree on `2.6`; activation and upgrade p
 
 Done 2026-11-12. Only `main.php` had version literals (header and `$version`). Changelog also lists the step 5b seal change and shortcode and the step 4/4b speed and error-message work, which the plan's list left out. Activation and upgrade tested on a throwaway wp-env site (WordPress 7.1, PHP 8.4, port 8896, destroyed afterwards) with the shipped build (repo minus `.distignore`): fresh activation clean; 2.5 from the WordPress.org zip with dummy options and two legacy widgets (106x42 and empty size) in Twenty Twenty-One, then the folder replaced by 2.6 as an update does: still active, options and widget instances unchanged, widgets render the new seal (md and lg), admin pages and deactivate/activate clean, no PHP notices. Plugin Check: 0 errors, 0 warnings.
 
-### - [ ] Step 8: Release 2.6 to WordPress.org SVN
+### - [x] Step 8: Release 2.6 to WordPress.org SVN
 
 Prerequisite: `clonesupport` password (owner has it). Do this step only when the owner says go.
 
@@ -192,6 +192,8 @@ Actions:
 
 Acceptance: listing shows 2.6 without the compatibility warning.
 
+Done 2026-11-12. Owner chose a local merge instead of a GitHub PR: `release/2.6` merged into `main` with `--no-ff` (d766dec), annotated tag `v2.6`, both pushed. Build from `git archive v2.6` minus `.distignore` (67 files). SVN (Homebrew subversion 1.15.0) checked out in the session scratchpad; trunk synced (23 modified, 5 added, 5 deleted) and `svn cp trunk tags/2.6`, committed by the owner in one commit (trunk and tag together, so one password entry, `--no-auth-cache`): **r3798512** (base r3798498). WordPress.org shows Version 2.6, Tested up to 7.1.4, WordPress 5.9+, PHP 7.4+, no untested warning; the served 2.6 zip and the latest zip are identical to the build. GitHub CLI installed but not logged in.
+
 ---
 
 ## Phase 2: modernize
@@ -200,7 +202,7 @@ Acceptance: listing shows 2.6 without the compatibility warning.
 
 If the owner answers "no" to open question 7, move step 5b back here unchanged and ship 2.6 with the old widget, noting "seal update coming in 2.7" in the changelog.
 
-### - [ ] Step 10: Gutenberg block for the seal
+### - [x] Step 10: Gutenberg block for the seal
 
 Actions:
 1. Scaffold `blocks/seal/` with `block.json` (`apiVersion: 3`, name `cloneguard/seal`, category `widgets`, `render` pointing to a PHP render callback that calls `Clone_Guard_Seal::render()`). Use `@wordpress/scripts` for the build; commit the built `build/` output so the WordPress.org zip needs no build step, and keep `src/` out of the dist via `.distignore` if desired.

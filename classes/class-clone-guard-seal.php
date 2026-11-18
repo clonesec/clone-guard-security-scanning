@@ -2,7 +2,7 @@
 defined('ABSPATH') || exit;
 
 // Renders the Clone Systems Trust Seal with the same script the seal generator on
-// clone-systems.com/trust-seal gives to website owners. Used by the widget and the shortcode.
+// clone-systems.com/trust-seal gives to website owners. Used by the widget, the shortcode and the block.
 class Clone_Guard_Seal {
     const SCRIPT_HANDLE = 'cgss-get-seal';
     const SCRIPT_URL = 'https://www.clone-systems.com/generate-seal/get-seal.js';
@@ -27,6 +27,16 @@ class Clone_Guard_Seal {
         'sm' => 'Small (125 x 45)',
     ];
 
+    // Width and height for each size, used by the block editor preview.
+    const PIXELS = [
+        'lg' => [175, 63],
+        'md' => [150, 54],
+        'sm' => [125, 45],
+    ];
+
+    // Static seal image shown in the block editor ({icon} is replaced by the icon key).
+    const PREVIEW_URL = 'https://www.clone-systems.com/generate-seal/images/svg/modified/{icon}_modified.svg';
+
     const POSITIONS = [
         'relative' => 'Inline, where it is placed',
         'left' => 'Fixed to the bottom left corner',
@@ -45,6 +55,34 @@ class Clone_Guard_Seal {
         wp_register_script(self::SCRIPT_HANDLE, self::SCRIPT_URL, [], null, false); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- served and versioned by clone-systems.com.
 
         add_shortcode('cloneguard_seal', [__CLASS__, 'shortcode']);
+
+        self::register_block();
+    }
+
+    // Registers the cloneguard/seal block (built files in blocks/seal/build). The classic widget stays for legacy sites.
+    private static function register_block() {
+        $block = register_block_type(dirname(__DIR__) . '/blocks/seal/build', [
+            'render_callback' => [__CLASS__, 'render_block'],
+        ]);
+        if(!$block) {
+            return;
+        }
+
+        // The editor script reads the labels from here, so the lists above stay the only copy.
+        $handle = generate_block_asset_handle('cloneguard/seal', 'editorScript');
+        wp_add_inline_script($handle, 'window.cgssSeal = ' . wp_json_encode([
+            'icons' => self::ICONS,
+            'sizes' => self::SIZES,
+            'positions' => self::POSITIONS,
+            'pixels' => self::PIXELS,
+            'imageUrl' => self::PREVIEW_URL,
+        ]) . ';', 'before');
+        wp_set_script_translations($handle, 'clone-guard-security-scanning');
+    }
+
+    // Front-end output of the block: the seal inside the block wrapper (alignment classes).
+    public static function render_block($attributes) {
+        return '<div ' . get_block_wrapper_attributes() . '>' . self::render((array) $attributes) . '</div>';
     }
 
     // [cloneguard_seal icon="cs-secure-dark" size="md" position="relative"]
