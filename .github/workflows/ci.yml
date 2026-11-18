@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'release/**']
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php-lint:
+    name: PHP ${{ matrix.php }} lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 7.4 is the plugin's minimum (Requires PHP), 8.4 what wp-env runs.
+        php: ['7.4', '8.2', '8.4']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: none
+      - name: php -l on every PHP file
+        run: |
+          find . -name '*.php' -not -path './node_modules/*' -not -path './.git/*' -print0 \
+            | xargs -0 -n1 php -l > lint.log 2>&1 || { grep -v '^No syntax errors' lint.log; exit 1; }
+          echo "$(grep -c '^No syntax errors' lint.log) files OK"
+
+  block-build:
+    name: Seal block build is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:blocks
+      # The built files are committed (WordPress.org gets no build step), so they must match src/.
+      - name: Compare with the committed build
+        run: |
+          git status --porcelain blocks/seal/build
+          git diff --exit-code blocks/seal/build \
+            || { echo '::error::blocks/seal/build is stale. Run npm run build:blocks and commit the result.'; exit 1; }
+          test -z "$(git status --porcelain blocks/seal/build)"
+
+  plugin-check:
+    name: Plugin Check (shipped files)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Start wp-env
+        run: npx wp-env start
+      # wp plugin check exits 0 even when it reports errors, so look for ERROR rows.
+      - name: Run Plugin Check on the files in .distignore's dist
+        run: |
+          scripts/plugin-check-dist.sh --format=csv --fields=type,code,message | tee plugin-check.csv
+          if grep -q '^ERROR,' plugin-check.csv; then
+            echo '::error::Plugin Check reported errors (see above).'
+            exit 1
+          fi
