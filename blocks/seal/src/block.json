@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "cloneguard/seal",
-	"title": "CloneGuard Seal",
+	"title": "Trust Seal",
 	"category": "widgets",
 	"icon": "shield",
 	"description": "Shows the Clone Systems Trust Seal. It only appears on domains with an active Clone Systems account and current scans.",
