@@ -107,6 +107,23 @@ body.cgss-admin #wpbody-content .cgss-head-subtitle a {
     font-weight: 500;
 }
 
+body.cgss-admin #wpbody-content .cgss-head-portal {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+}
+body.cgss-admin #wpbody-content .cgss-head-portal .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+@media screen and (max-width: 600px) {
+    body.cgss-admin .cgss-head-inside {
+        flex-wrap: wrap;
+    }
+}
+
 /* ---------- Page title and the "Add …" button next to it ---------- */
 
 body.cgss-admin #wpbody-content .cgss-title,

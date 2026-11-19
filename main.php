@@ -137,6 +137,76 @@ class Clone_Guard_Security_Scanning {
         return $classes;
     }
 
+    // URL on the scanning portal that matches the plugin page being viewed (the portal's own pages need its login).
+    // Only routes that exist on the portal are used; a single report has no portal URL, so reports go to the list.
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only $_GET values that pick the matching portal page.
+    public function portalPageUrl() {
+        $host = $this->portalHost((string) get_option($this->key_ . 'portal_url'));
+        if($host === false) {
+            return '';
+        }
+        $page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+        $key = isset($_GET['key']) ? sanitize_text_field(wp_unslash($_GET['key'])) : '';
+        $path = '/';
+        if($page == $this->key_ . 'scans') {
+            $path = '/scans';
+            // The scan edit page uses the scan id as its key.
+            if(preg_match('/^[0-9a-f-]{36}$/i', $key)) {
+                $path = '/scans/' . strtolower($key);
+            }
+        } elseif($page == $this->key_ . 'reports') {
+            $path = '/reports';
+        } elseif($page == $this->key_ . 'vulnerabilities') {
+            $path = in_array($key, ['vulnerability-add-exception', 'vulnerability-edit-exception'], true) ? '/exceptions' : '/results';
+        } elseif($page == $this->key_ . 'options') {
+            if(strpos($key, 'target-') === 0) {
+                $path = '/targets';
+            } elseif(strpos($key, 'notification-') === 0) {
+                $path = '/notifications';
+            } else {
+                $path = '/schedules';
+            }
+        }
+        return 'https://' . $host . $path;
+    }
+    // phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+    // "Open in portal" button in the header of the plugin pages.
+    public function portalButton() {
+        $url = $this->portalPageUrl();
+        if($url === '') {
+            return;
+        }
+        echo '<a class="button cgss-head-portal" href="' . esc_url($url) . '" target="_blank" rel="noopener">Open in portal<span class="screen-reader-text"> (opens in a new tab)</span><span class="dashicons dashicons-external" aria-hidden="true"></span></a>';
+    }
+
+    // Help tab (top right "Help" button) on the plugin pages: training videos and support.
+    public function helpTabs($screen) {
+        if(!$screen || !in_array($screen->id, $this->pluginHooks(), true)) {
+            return;
+        }
+        $portal = $this->portalHost((string) get_option($this->key_ . 'portal_url'));
+        $screen->add_help_tab([
+            'id' => $this->key_ . 'help_training',
+            'title' => 'Training videos',
+            'content' => '<p>The Clone Systems Portal Training videos show how to run scans, read reports, handle findings and complete the SAQ on the scanning portal.</p>'
+                . '<p><a href="https://www.youtube.com/playlist?list=PLCpZGMS7CdHc" target="_blank" rel="noopener">Watch the training videos on YouTube</a></p>',
+        ]);
+        $screen->add_help_tab([
+            'id' => $this->key_ . 'help_support',
+            'title' => 'Support',
+            'content' => '<p>Questions about your scans, reports or license? The Clone Systems team can help.</p>'
+                . '<p><a href="https://www.clone-systems.com/contact" target="_blank" rel="noopener">Contact Clone Systems</a></p>'
+                . '<p>The plugin needs the Portal URL, User Token and Key from your portal account. Enter them on the <a href="' . esc_url($this->adminLink('settings')) . '">Settings</a> page and use Test connection to check them.</p>',
+        ]);
+        $screen->set_help_sidebar(
+            '<p><strong>Links</strong></p>'
+            . ($portal ? '<p><a href="' . esc_url('https://' . $portal . '/') . '" target="_blank" rel="noopener">Scanning portal</a></p>' : '')
+            . '<p><a href="https://www.clone-systems.com/pricing?mode=pci" target="_blank" rel="noopener">Plans and pricing</a></p>'
+            . '<p><a href="https://www.clone-systems.com/" target="_blank" rel="noopener">clone-systems.com</a></p>'
+        );
+    }
+
     // Create a link to one of the plugin admin pages.
     public function adminLink($page = 'scans', $key = '', $subkey = '', $paged = 1) {
         if(is_numeric($key)) {
@@ -2472,6 +2542,7 @@ class Clone_Guard_Security_Scanning {
     public function init() {
         add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
         add_filter('admin_body_class', [$this, 'adminBodyClass']);
+        add_action('current_screen', [$this, 'helpTabs']);
         add_action('admin_menu', [$this, 'adminMenu']);
 
         add_action('wp_ajax_' . $this->key_ . 'settings', [$this, 'ajaxSettings']);

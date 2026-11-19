@@ -10,6 +10,7 @@
                 <h1 class="cgss-head-title"><?php echo esc_html($title); ?></h1>
                 <span class="cgss-head-subtitle">By <a href="https://www.clone-systems.com/" target="_blank">Clone Systems, Inc.</a></span>
             </span>
+            <?php $this->portalButton(); ?>
         </div>
 
     </div>

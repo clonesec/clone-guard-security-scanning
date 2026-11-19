@@ -135,3 +135,8 @@
     border-color: #1b3159;
     background: #1b3159;
 }
+
+#cgss_dashboard .cgss-dw-sep {
+    margin: 0 6px;
+    color: #c3c4c7;
+}

@@ -75,5 +75,11 @@
         </li>
     </ul>
 
-    <p class="cgss-dw-footer"><a href="<?php echo esc_url($this->adminLink('overview')); ?>">Open CloneGuard Security</a></p>
+    <p class="cgss-dw-footer">
+        <a href="<?php echo esc_url($this->adminLink('overview')); ?>">Open CloneGuard Security</a>
+        <?php $cgss_portal = $this->portalPageUrl(); if($cgss_portal): ?>
+            <span class="cgss-dw-sep" aria-hidden="true">|</span>
+            <a href="<?php echo esc_url($cgss_portal); ?>" target="_blank" rel="noopener">Open the portal<span class="screen-reader-text"> (opens in a new tab)</span></a>
+        <?php endif; ?>
+    </p>
 <?php endif; ?>

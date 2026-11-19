@@ -9,6 +9,7 @@
                 <h1 class="cgss-head-title">CloneGuard Security Scanning</h1>
                 <a href="https://www.clone-systems.com/" target="_blank" class="cgss-head-subtitle">By Clone Systems, Inc.</a>
             </span>
+            <?php $this->portalButton(); ?>
         </div>
 
     </div>
