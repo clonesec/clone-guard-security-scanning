@@ -1,0 +1,948 @@
+/**
+ * CloneGuard admin brand layer (Phase 3).
+ *
+ * Matches the look of www.clone-systems.com: Inter, navy text, orange accent, white cards with
+ * hairline borders and soft shadows, small uppercase labels. Loaded last on the plugin's own pages
+ * only, and every rule is scoped to body.cgss-admin, so the rest of wp-admin is unchanged.
+ * Colour values are the website's design tokens converted to hex.
+ */
+
+@font-face {
+    font-family: "CloneGuard Inter";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("../fonts/inter-latin-variable.woff2") format("woff2");
+}
+
+body.cgss-admin {
+    --cgss-navy: #0d1e3b;
+    --cgss-navy-hover: #1b3159;
+    --cgss-orange: #e1791b;
+    --cgss-orange-hover: #c9650c;
+    --cgss-orange-text: #b15300;
+    --cgss-orange-tint: #fdf1e6;
+    --cgss-text: #0d1e3b;
+    --cgss-muted: #4b5567;
+    --cgss-subtle: #64748b;
+    --cgss-bg: #f6f8fb;
+    --cgss-surface: #ffffff;
+    --cgss-surface-2: #f0f4f7;
+    --cgss-border: #e1e6ed;
+    --cgss-border-strong: #cfd6e0;
+    --cgss-green: #15803d;
+    --cgss-green-tint: #e7f6ec;
+    --cgss-red: #b91c1c;
+    --cgss-red-tint: #fdecec;
+    --cgss-amber: #a16207;
+    --cgss-amber-tint: #fef6d8;
+    --cgss-radius: 12px;
+    --cgss-radius-sm: 8px;
+    --cgss-shadow: 0 1px 2px rgba(13, 30, 59, 0.05), 0 1px 3px rgba(13, 30, 59, 0.06);
+    --cgss-shadow-lift: 0 8px 20px -6px rgba(13, 30, 59, 0.18);
+    --cgss-font: "CloneGuard Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--cgss-bg);
+}
+
+body.cgss-admin #wpbody-content {
+    font-family: var(--cgss-font);
+    color: var(--cgss-text);
+}
+
+body.cgss-admin #wpbody-content h1,
+body.cgss-admin #wpbody-content h2,
+body.cgss-admin #wpbody-content h3 {
+    font-family: var(--cgss-font);
+    color: var(--cgss-text);
+    letter-spacing: -0.01em;
+}
+
+body.cgss-admin #wpbody-content a {
+    color: var(--cgss-navy);
+}
+body.cgss-admin #wpbody-content a:hover,
+body.cgss-admin #wpbody-content a:focus {
+    color: var(--cgss-orange-text);
+}
+
+/* ---------- Header ---------- */
+
+body.cgss-admin .cgss-head {
+    background: var(--cgss-surface);
+    box-shadow: none;
+    border-bottom: 1px solid var(--cgss-border);
+}
+body.cgss-admin .cgss-head-inside {
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+}
+body.cgss-admin .cgss-head-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+}
+body.cgss-admin .cgss-head-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+body.cgss-admin #wpbody-content .cgss-head-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+body.cgss-admin .cgss-head-subtitle {
+    margin: 0;
+    font-size: 13px;
+    color: var(--cgss-subtle);
+}
+body.cgss-admin #wpbody-content a.cgss-head-subtitle {
+    color: var(--cgss-subtle);
+    text-decoration: none;
+}
+body.cgss-admin #wpbody-content .cgss-head-subtitle a {
+    color: var(--cgss-orange-text);
+    font-weight: 500;
+}
+
+body.cgss-admin #wpbody-content .cgss-head-portal {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+}
+body.cgss-admin #wpbody-content .cgss-head-portal .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+@media screen and (max-width: 600px) {
+    body.cgss-admin .cgss-head-inside {
+        flex-wrap: wrap;
+    }
+}
+
+/* ---------- Page title and the "Add …" button next to it ---------- */
+
+body.cgss-admin #wpbody-content .cgss-title,
+body.cgss-admin #wpbody-content .table-top-section h1,
+body.cgss-admin #wpbody-content .table-top-section h2 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+body.cgss-admin #wpbody-content .table-top-section {
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0 4px;
+}
+body.cgss-admin #wpbody-content .table-top-add-btn {
+    margin-left: 0 !important;
+}
+
+body.cgss-admin .cgss_main {
+    padding: 12px 20px 0 20px;
+}
+
+/* ---------- Product tabs: segmented control like the website's nav ---------- */
+
+body.cgss-admin #wpbody-content .nav-tab-wrapper {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: flex-start;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 4px;
+    margin: 4px 0 20px;
+    border: 1px solid var(--cgss-border);
+    border-radius: 10px;
+    background: var(--cgss-surface);
+    box-shadow: var(--cgss-shadow);
+}
+body.cgss-admin #wpbody-content .nav-tab {
+    float: none;
+    margin: 0;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: var(--cgss-radius-sm);
+    background: transparent;
+    color: var(--cgss-muted);
+    font-size: 13px !important;
+    font-weight: 500;
+    line-height: 1.4;
+}
+body.cgss-admin #wpbody-content .nav-tab:hover {
+    background: var(--cgss-surface-2);
+    color: var(--cgss-text);
+}
+body.cgss-admin #wpbody-content .nav-tab-active,
+body.cgss-admin #wpbody-content .nav-tab-active:hover,
+body.cgss-admin #wpbody-content .nav-tab-active:focus {
+    background: var(--cgss-navy);
+    color: #fff;
+}
+body.cgss-admin #wpbody-content .nav-tab.disabled-state {
+    background: transparent !important;
+    color: #9aa3b2 !important;
+    cursor: not-allowed;
+}
+body.cgss-admin #wpbody-content .nav-tab-wrapper .spinner {
+    margin: 0 6px;
+}
+
+/* ---------- Cards ---------- */
+
+body.cgss-admin .overview-row {
+    gap: 16px;
+}
+body.cgss-admin .overview-row-box,
+body.cgss-admin .main-inside,
+body.cgss-admin #poststuff .stuffbox {
+    background: var(--cgss-surface);
+    border: 1px solid var(--cgss-border);
+    border-radius: var(--cgss-radius);
+    box-shadow: var(--cgss-shadow);
+}
+body.cgss-admin .overview-row-box {
+    padding: 28px;
+}
+body.cgss-admin .section-reports {
+    margin-left: 0;
+}
+body.cgss-admin .overview-row[style*="margin-top"] {
+    margin-top: 16px !important;
+}
+
+/* ---------- Buttons ---------- */
+
+/* No display value here: the plugin shows and hides buttons with state classes (.generated .generate and so on). */
+body.cgss-admin #wpbody-content .button {
+    min-height: 34px;
+    padding: 0 14px;
+    border: 1px solid var(--cgss-border-strong);
+    border-radius: var(--cgss-radius-sm);
+    background: var(--cgss-surface);
+    color: var(--cgss-text);
+    font-family: var(--cgss-font);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 32px;
+    box-shadow: 0 1px 2px rgba(13, 30, 59, 0.05);
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+body.cgss-admin #wpbody-content .button:hover {
+    border-color: var(--cgss-navy);
+    background: var(--cgss-surface);
+    color: var(--cgss-navy);
+}
+body.cgss-admin #wpbody-content .button:focus {
+    border-color: var(--cgss-orange);
+    box-shadow: 0 0 0 3px rgba(225, 121, 27, 0.35);
+    outline: none;
+}
+body.cgss-admin #wpbody-content .button.delete,
+body.cgss-admin #wpbody-content .button.delete:hover {
+    color: var(--cgss-red);
+}
+body.cgss-admin #wpbody-content .button.delete:hover {
+    border-color: var(--cgss-red);
+}
+
+/* Primary actions: navy, like "Add to Cart" on the website. */
+body.cgss-admin #wpbody-content .button-primary,
+body.cgss-admin #wpbody-content .page-title-action {
+    border-color: var(--cgss-navy);
+    background: var(--cgss-navy);
+    color: #fff;
+}
+body.cgss-admin #wpbody-content .button-primary:hover,
+body.cgss-admin #wpbody-content .page-title-action:hover {
+    border-color: var(--cgss-navy-hover);
+    background: var(--cgss-navy-hover);
+    color: #fff;
+}
+body.cgss-admin #wpbody-content .page-title-action {
+    top: 0;
+    min-height: 32px;
+    padding: 0 14px !important;
+    line-height: 30px;
+    font-size: 13px !important;
+}
+body.cgss-admin #wpbody-content .page-title-action::before {
+    content: "+";
+    margin-right: 6px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* Call to action: brand orange, like "Schedule a Demo". Text is 19px bold, large enough for AA contrast on this orange. */
+body.cgss-admin #wpbody-content .btn-overview,
+body.cgss-admin #wpbody-content .cgss-btn-cta,
+body.cgss-admin #wpbody-content .cgss-purchase-link {
+    min-height: 48px;
+    padding: 0 28px !important;
+    line-height: 48px;
+    border: 0 !important;
+    border-radius: 10px;
+    background: var(--cgss-orange) !important;
+    color: #fff !important;
+    font-size: 19px !important;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 6px 16px -6px rgba(225, 121, 27, 0.55);
+}
+body.cgss-admin #wpbody-content .btn-overview:hover,
+body.cgss-admin #wpbody-content .cgss-btn-cta:hover,
+body.cgss-admin #wpbody-content .cgss-purchase-link:hover {
+    background: var(--cgss-orange-hover) !important;
+    color: #fff !important;
+}
+body.cgss-admin #wpbody-content .btn-overview[disabled] {
+    background: var(--cgss-surface-2) !important;
+    color: #8a94a6 !important;
+    box-shadow: none;
+}
+body.cgss-admin #wpbody-content .reports-btn-container a {
+    padding: 0 28px !important;
+    font-size: 19px !important;
+}
+
+/* ---------- Overview ---------- */
+
+body.cgss-admin .general-icon {
+    width: 96px;
+    height: 96px;
+}
+body.cgss-admin #wpbody-content .general-h1 {
+    font-size: 28px;
+    font-weight: 700;
+}
+body.cgss-admin #wpbody-content .success-pci-color {
+    color: var(--cgss-green);
+}
+body.cgss-admin #wpbody-content .warning-pci-color {
+    color: var(--cgss-orange-text);
+}
+body.cgss-admin .general-text p,
+body.cgss-admin .section-product-text p,
+body.cgss-admin .feature-description {
+    color: var(--cgss-muted);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+body.cgss-admin #wpbody-content .reports-h2 {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cgss-subtle);
+}
+body.cgss-admin .report {
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--cgss-border);
+    font-size: 14px;
+}
+body.cgss-admin .report:last-child {
+    border-bottom: 0;
+}
+body.cgss-admin .report-date a {
+    font-weight: 600;
+    text-decoration: none;
+}
+body.cgss-admin .report-date .dashicons {
+    color: var(--cgss-subtle);
+}
+body.cgss-admin .report-name {
+    color: var(--cgss-muted);
+}
+body.cgss-admin .report-vulnerabilities {
+    display: flex;
+    gap: 4px;
+}
+body.cgss-admin .report-vulnerabilities small {
+    min-width: 14px;
+    margin: 0;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+body.cgss-admin .report-high,
+body.cgss-admin .priority-red {
+    background: var(--cgss-red-tint);
+    color: var(--cgss-red);
+}
+body.cgss-admin .report-medium,
+body.cgss-admin .priority-orange {
+    background: var(--cgss-orange-tint);
+    color: var(--cgss-orange-text);
+}
+body.cgss-admin .report-low,
+body.cgss-admin .priority-yellow {
+    background: var(--cgss-amber-tint);
+    color: var(--cgss-amber);
+}
+
+/* Pass / Fail pills (Overview, Reports, report detail). */
+body.cgss-admin .cgss-pill,
+body.cgss-admin .icon_pass,
+body.cgss-admin .icon_fail {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 10px 2px 6px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+}
+body.cgss-admin .icon_pass,
+body.cgss-admin .icon_fail {
+    padding-left: 10px;
+}
+body.cgss-admin .cgss-pill .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+body.cgss-admin .cgss-pill-pass,
+body.cgss-admin .icon_pass {
+    background: var(--cgss-green-tint);
+    color: var(--cgss-green);
+}
+body.cgss-admin .cgss-pill-fail,
+body.cgss-admin .icon_fail {
+    background: var(--cgss-red-tint);
+    color: var(--cgss-red);
+}
+
+body.cgss-admin .section-product {
+    align-items: center;
+    gap: 32px;
+    padding: 32px;
+}
+body.cgss-admin #wpbody-content .section-product-text h1 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+body.cgss-admin .section-product-img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Empty state: product list with icon tiles. */
+body.cgss-admin .feature {
+    align-items: center;
+    border-bottom: 1px solid var(--cgss-border);
+}
+body.cgss-admin .cgss-feature-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--cgss-orange-tint);
+    color: var(--cgss-orange-text);
+}
+body.cgss-admin .cgss-feature-icon .dashicons {
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
+}
+body.cgss-admin #wpbody-content .feature-heading {
+    font-size: 16px;
+    font-weight: 600;
+}
+body.cgss-admin .checkbox-switch input.input-checkbox:checked + .checkbox-animate {
+    background-color: var(--cgss-orange);
+}
+
+/* ---------- List tables ---------- */
+
+body.cgss-admin #wpbody-content .wp-list-table {
+    border: 1px solid var(--cgss-border);
+    border-radius: var(--cgss-radius);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    background: var(--cgss-surface);
+    box-shadow: var(--cgss-shadow);
+}
+body.cgss-admin #wpbody-content .wp-list-table thead th,
+body.cgss-admin #wpbody-content .wp-list-table thead td,
+body.cgss-admin #wpbody-content .wp-list-table tfoot th,
+body.cgss-admin #wpbody-content .wp-list-table tfoot td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-color: var(--cgss-border);
+    background: var(--cgss-bg);
+    color: var(--cgss-subtle);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+body.cgss-admin #wpbody-content .wp-list-table tbody tr,
+body.cgss-admin #wpbody-content .wp-list-table.striped > tbody > :nth-child(odd) {
+    background: var(--cgss-surface);
+}
+body.cgss-admin #wpbody-content .wp-list-table tbody tr:hover {
+    background: #fafbfd;
+}
+body.cgss-admin #wpbody-content .wp-list-table tbody th,
+body.cgss-admin #wpbody-content .wp-list-table tbody td {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--cgss-border);
+    color: var(--cgss-muted);
+    font-size: 13px;
+    vertical-align: middle;
+}
+body.cgss-admin #wpbody-content .wp-list-table tbody tr:last-child th,
+body.cgss-admin #wpbody-content .wp-list-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+body.cgss-admin #wpbody-content .wp-list-table tbody a {
+    font-weight: 600;
+    text-decoration: none;
+}
+/* Edit and Delete side by side instead of stacked. */
+body.cgss-admin #wpbody-content .wp-list-table tbody td:last-child {
+    white-space: nowrap;
+}
+/* The scan action cell has an inline display:flex, which breaks the row's cell borders. */
+body.cgss-admin #wpbody-content .wp-list-table td[data-nonce] {
+    display: table-cell !important;
+    white-space: nowrap;
+}
+body.cgss-admin #wpbody-content .wp-list-table td[data-nonce] > * {
+    vertical-align: middle;
+}
+/* The clock icon has the .show helper (display: block); keep it on the same line as the play button. Only .scheduled rows show it. */
+body.cgss-admin #wpbody-content .wp-list-table td.scheduled .action_schedule {
+    display: inline-block;
+}
+body.cgss-admin #wpbody-content .wp-list-table td .button {
+    min-height: 30px;
+    margin: 2px 4px 2px 0;
+    padding: 0 12px;
+    font-size: 12px;
+    line-height: 28px;
+}
+
+body.cgss-admin #wpbody-content .tablenav {
+    margin: 10px 0;
+}
+body.cgss-admin #wpbody-content .tablenav select {
+    border-color: var(--cgss-border-strong);
+    border-radius: var(--cgss-radius-sm);
+}
+body.cgss-admin #wpbody-content .tablenav .tablenav-pages a,
+body.cgss-admin #wpbody-content .tablenav .tablenav-pages-navspan {
+    min-width: 30px;
+    min-height: 30px;
+    border-color: var(--cgss-border-strong);
+    border-radius: var(--cgss-radius-sm);
+    background: var(--cgss-surface);
+    color: var(--cgss-text);
+}
+body.cgss-admin #wpbody-content .tablenav .displaying-num {
+    color: var(--cgss-subtle);
+}
+
+/* Progress bar: thin track, orange bar, percentage beside it. */
+body.cgss-admin .progress {
+    height: 22px;
+    border-radius: 999px;
+    background: var(--cgss-surface-2);
+    box-shadow: none;
+}
+body.cgss-admin .progress .bar {
+    min-width: 0;
+    border-radius: 999px;
+    background: var(--cgss-orange);
+}
+body.cgss-admin .progress .percent {
+    padding: 0 0 0 9px;
+    color: var(--cgss-navy);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22px;
+}
+
+/* Scan action buttons. */
+/* No display value: the row's state class (.basic, .scheduled_processing, ...) hides the icons that do not apply. */
+body.cgss-admin .action_play {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: var(--cgss-orange);
+    text-align: center;
+}
+body.cgss-admin .action_play .dashicons {
+    line-height: 28px;
+    vertical-align: top;
+}
+body.cgss-admin .action_stop,
+body.cgss-admin .action_stop_disabled {
+    width: 28px;
+    height: 28px;
+    background: var(--cgss-red);
+}
+body.cgss-admin .action_stop_disabled {
+    background: #cbd2dc;
+}
+body.cgss-admin .action_schedule .dashicons-clock {
+    margin-top: 0;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: var(--cgss-navy);
+}
+
+/* ---------- Forms (scan, schedule, target, notification, exceptions, settings) ---------- */
+
+body.cgss-admin #wpbody-content input[type="text"],
+body.cgss-admin #wpbody-content input[type="email"],
+body.cgss-admin #wpbody-content input[type="password"],
+body.cgss-admin #wpbody-content input[type="number"],
+body.cgss-admin #wpbody-content input[type="datetime-local"],
+body.cgss-admin #wpbody-content select,
+body.cgss-admin #wpbody-content textarea:not(.select2-search__field) {
+    border: 1px solid var(--cgss-border-strong);
+    border-radius: var(--cgss-radius-sm);
+    color: var(--cgss-text);
+    font-family: var(--cgss-font);
+    box-shadow: none;
+}
+body.cgss-admin #wpbody-content input[type="text"],
+body.cgss-admin #wpbody-content input[type="email"],
+body.cgss-admin #wpbody-content input[type="password"],
+body.cgss-admin #wpbody-content input[type="number"],
+body.cgss-admin #wpbody-content input[type="datetime-local"] {
+    min-height: 38px;
+    padding: 0 12px;
+}
+body.cgss-admin #wpbody-content input:focus,
+body.cgss-admin #wpbody-content select:focus,
+body.cgss-admin #wpbody-content textarea:focus {
+    border-color: var(--cgss-orange);
+    box-shadow: 0 0 0 3px rgba(225, 121, 27, 0.25);
+    outline: none;
+}
+body.cgss-admin #wpbody-content input[type="checkbox"]:checked::before {
+    filter: none;
+}
+body.cgss-admin #wpbody-content input[type="checkbox"]:checked,
+body.cgss-admin #wpbody-content input[type="radio"]:checked {
+    border-color: var(--cgss-navy);
+}
+body.cgss-admin #wpbody-content .form-table th,
+body.cgss-admin #wpbody-content td.first label {
+    color: var(--cgss-text);
+    font-weight: 600;
+}
+body.cgss-admin #wpbody-content p.description {
+    color: var(--cgss-subtle);
+}
+body.cgss-admin .select2-container--default .select2-selection--single,
+body.cgss-admin .select2-container--default .select2-selection--multiple {
+    min-height: 38px;
+    border-color: var(--cgss-border-strong);
+    border-radius: var(--cgss-radius-sm);
+}
+body.cgss-admin .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 36px;
+}
+body.cgss-admin .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+}
+body.cgss-admin .select2-container--default .select2-results__option--highlighted[aria-selected],
+body.cgss-admin .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background: var(--cgss-navy);
+}
+
+/* ---------- Settings ---------- */
+
+body.cgss-admin .main-inside {
+    padding: 36px 40px;
+}
+body.cgss-admin .cgss-purchase,
+body.cgss-admin .cgss-settings-token {
+    border-bottom: 1px solid var(--cgss-border);
+}
+body.cgss-admin #wpbody-content .cgss-purchase-title,
+body.cgss-admin #wpbody-content .cgss-settings-token-title,
+body.cgss-admin #wpbody-content .cgss-settings-form-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 700;
+}
+body.cgss-admin .cgss-step {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--cgss-orange-tint);
+    color: var(--cgss-orange-text);
+    font-size: 14px;
+    font-weight: 700;
+}
+body.cgss-admin .cgss-purchase-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px 24px;
+    max-width: 760px;
+    margin: 18px 0 24px;
+}
+body.cgss-admin .cgss-purchase-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: var(--cgss-muted);
+    font-size: 14px;
+}
+body.cgss-admin .cgss-purchase-list-item::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border-radius: 50%;
+    background: var(--cgss-orange-tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='m5.5 9.2 2.3 2.3 4.7-5' fill='none' stroke='%23b15300' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
+}
+body.cgss-admin #wpbody-content .cgss-purchase-link {
+    display: inline-flex;
+    align-items: center;
+}
+body.cgss-admin .cgss-discount {
+    margin: 14px 0 0;
+    color: var(--cgss-muted);
+    font-size: 14px;
+}
+body.cgss-admin .cgss-discount code {
+    padding: 3px 8px;
+    border: 1px dashed var(--cgss-orange);
+    border-radius: 6px;
+    background: var(--cgss-orange-tint);
+    color: var(--cgss-orange-text);
+    font-family: var(--cgss-font);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+body.cgss-admin .cgss-settings-token-text {
+    color: var(--cgss-muted);
+}
+body.cgss-admin .cgss-settings-step2-img {
+    margin: 8px 0 20px;
+}
+body.cgss-admin #wpbody-content .cgss-settings-form .form-table th {
+    width: 120px;
+}
+body.cgss-admin #wpbody-content p.submit #submit-btn {
+    min-height: 42px;
+    padding: 0 28px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+body.cgss-admin #wpbody-content p.submit #cgss-test-connection {
+    min-height: 42px;
+    margin-left: 8px;
+    padding: 0 20px;
+    font-size: 15px;
+}
+body.cgss-admin #wpbody-content .cgss-test-result.notice {
+    max-width: 640px;
+    margin: 0 0 8px;
+}
+
+/* ---------- Overview: Trust Seal picker ---------- */
+
+body.cgss-admin #wpbody-content .cgss-seal-box {
+    display: block;
+    flex: 1;
+}
+body.cgss-admin .cgss-seal-intro {
+    max-width: 720px;
+    color: var(--cgss-muted);
+}
+body.cgss-admin .cgss-seal-picker {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 32px;
+    margin-top: 16px;
+}
+body.cgss-admin .cgss-seal-picker fieldset {
+    margin: 0 0 18px;
+}
+body.cgss-admin .cgss-seal-picker legend {
+    margin-bottom: 8px;
+    color: var(--cgss-text);
+    font-weight: 600;
+}
+body.cgss-admin .cgss-seal-icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+body.cgss-admin .cgss-seal-icon {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+body.cgss-admin .cgss-seal-icon input {
+    position: absolute;
+    opacity: 0;
+}
+body.cgss-admin .cgss-seal-icon img {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    border: 2px solid var(--cgss-border);
+    border-radius: var(--cgss-radius-sm);
+    background: var(--cgss-surface-2);
+}
+body.cgss-admin .cgss-seal-icon:hover img {
+    border-color: var(--cgss-border-strong);
+}
+body.cgss-admin .cgss-seal-icon input:checked + img {
+    border-color: var(--cgss-orange);
+    background: var(--cgss-orange-tint);
+}
+body.cgss-admin .cgss-seal-icon input:focus-visible + img {
+    outline: 2px solid var(--cgss-navy);
+    outline-offset: 2px;
+}
+body.cgss-admin .cgss-seal-choice label {
+    display: block;
+    margin: 0 0 6px;
+}
+body.cgss-admin .cgss-seal-preview {
+    position: relative;
+    display: block;
+    height: 220px;
+    overflow: hidden;
+    border: 1px solid var(--cgss-border);
+    border-radius: var(--cgss-radius-sm);
+    background: var(--cgss-surface);
+}
+body.cgss-admin .cgss-seal-preview-bar {
+    display: block;
+    height: 22px;
+    background: var(--cgss-surface-2);
+    border-bottom: 1px solid var(--cgss-border);
+}
+body.cgss-admin .cgss-seal-preview-line {
+    display: block;
+    width: 70%;
+    height: 8px;
+    margin: 16px 16px 0;
+    border-radius: 4px;
+    background: var(--cgss-surface-2);
+}
+body.cgss-admin .cgss-seal-preview-line.is-short {
+    width: 45%;
+    margin-top: 10px;
+}
+body.cgss-admin .cgss-seal-preview-img {
+    position: absolute;
+    bottom: 12px;
+    max-width: none;
+}
+body.cgss-admin .cgss-seal-preview.is-right .cgss-seal-preview-img {
+    right: 12px;
+}
+body.cgss-admin .cgss-seal-preview.is-left .cgss-seal-preview-img {
+    left: 12px;
+}
+body.cgss-admin .cgss-seal-preview.is-relative .cgss-seal-preview-img {
+    position: static;
+    display: block;
+    margin: 18px 16px 0;
+}
+body.cgss-admin .cgss-seal-status {
+    min-height: 20px;
+    margin: 12px 0;
+    color: var(--cgss-green);
+    font-weight: 500;
+}
+body.cgss-admin .cgss-seal-status.is-error {
+    color: var(--cgss-red);
+}
+body.cgss-admin .cgss-seal-corner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    align-items: center;
+}
+body.cgss-admin .cgss-seal-corner-actions[hidden],
+body.cgss-admin .cgss-seal-inline-actions[hidden],
+body.cgss-admin .cgss-seal-picker [hidden] {
+    display: none;
+}
+body.cgss-admin #wpbody-content .cgss-seal-remove {
+    color: var(--cgss-red);
+}
+body.cgss-admin .cgss-seal-code {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+body.cgss-admin .cgss-seal-code code {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 8px;
+    overflow-wrap: anywhere;
+    border-radius: 6px;
+    font-size: 12px;
+}
+@media screen and (max-width: 960px) {
+    body.cgss-admin .cgss-seal-picker {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* ---------- Vulnerability detail ---------- */
+
+body.cgss-admin .details-title .cgss-feature-icon {
+    align-self: center;
+    margin: 0 auto 6px;
+}
+
+body.cgss-admin #wpbody-content .postbox {
+    border: 1px solid var(--cgss-border);
+    border-radius: var(--cgss-radius);
+    box-shadow: var(--cgss-shadow);
+}
+
+@media (max-width: 782px) {
+    body.cgss-admin #wpbody-content .nav-tab-wrapper {
+        display: flex;
+    }
+    body.cgss-admin .main-inside {
+        padding: 24px 20px;
+    }
+}

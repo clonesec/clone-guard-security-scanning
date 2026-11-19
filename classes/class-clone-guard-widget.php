@@ -14,7 +14,7 @@ class Clone_Guard_Widget extends WP_Widget {
 
     // The class constructor.
     public function __construct() {
-        parent::__construct('clone_guard_widget', $name = 'CloneGuard Seal', array('description' => 'Shows the Clone Systems Trust Seal.'));
+        parent::__construct('clone_guard_widget', $name = 'Trust Seal', array('description' => 'Shows the Clone Systems Trust Seal.'));
     }
 
     // Returns the seal settings of a widget instance. Instances saved before 2.6 have no icon

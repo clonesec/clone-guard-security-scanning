@@ -5,11 +5,12 @@
     <div class="cgss-head">
 
         <div class="cgss-head-inside">
-            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
+            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/cloneguard-icon.svg', __FILE__ ) ); ?>" width="40" height="40" alt="" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title">CloneGuard Security Scanning</h1>
                 <span class="cgss-head-subtitle">By <a href="https://www.clone-systems.com/" target="_blank">Clone Systems, Inc.</a></span>
             </span>
+            <?php $this->portalButton(); ?>
         </div>
 
     </div>
@@ -28,17 +29,14 @@
                     data-apptype="<?php echo esc_attr('pci'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>
                 </a>
             <?php elseif (($this->userDetails['pciAvailable']) && ($app_type) == 'pci'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>    
                 </a>
             <?php endif; ?>
@@ -49,17 +47,14 @@
                     data-apptype="<?php echo esc_attr('vrms'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php elseif (($this->userDetails['vrmsAvailable']) && ($app_type) == 'vrms'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php endif; ?>
@@ -70,17 +65,14 @@
                     data-apptype="<?php echo esc_attr('penetration'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span>
                 </a>
             <?php elseif (($this->userDetails['penetrationAvailable']) && ($app_type) == 'penetration'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span>    
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span> 
                 </a>
             <?php endif; ?>
