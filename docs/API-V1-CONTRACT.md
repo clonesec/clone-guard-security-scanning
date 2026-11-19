@@ -64,3 +64,9 @@ Top-level keys seen on success: lists `status, status_text, pagination, {collect
 | `updateException($id, $text, $nvt)` | `PUT /exceptions/{id}?exceptions[text]=…&exceptions[nvt]=…` | values in the query string, not URL-encoded | Untested. Since step 6, `$text` and the NVT OID are URL-encoded (`rawurlencode`); before, a space or `&` in the justification broke the request. |
 
 delete/start/stop/generate return `false` on a network or 5xx error since step 4 (they used to report success).
+
+### Schedule `first_time` format (step 11)
+
+- **Read** (`GET /schedules`, `/schedules/{id}`): ISO 8601 with milliseconds and the schedule's own offset, e.g. `2027-02-15T01:00:00.000-08:00` for `America/Los_Angeles`. The offset matches `timezone`, so the date and time part is the schedule's local time.
+- **Write** (`POST /schedules`, `PUT /schedules/{id}`): `schedules[first_time]` as `Y-m-d H:i:s` in local time, with `schedules[timezone]` sent alongside.
+- **Plugin:** the First Time field is a native `<input type="datetime-local">` (`YYYY-MM-DDTHH:MM`). `firstTimeForInput()` fills it from the read value without converting to UTC (until 2.6 the edit form used `gmdate`, which shifted a schedule by its UTC offset on every unchanged save). `firstTimeForApi()` turns the posted value (with or without seconds, or the old `Y-m-d H:i:s`) into `Y-m-d H:i:s` and rejects invalid dates ("Please enter a First Time.").

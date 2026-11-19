@@ -1,0 +1,76 @@
+name: Deploy to WordPress.org
+
+# Real deploy: publishing a GitHub release whose tag is the plugin version (2.7 or v2.7).
+# Dry run (no SVN commit, no secrets needed): pull requests that change this workflow or .distignore,
+# or a manual run (Actions > Deploy to WordPress.org > Run workflow).
+on:
+  release:
+    types: [published]
+  pull_request:
+    paths:
+      - '.github/workflows/deploy.yml'
+      - '.distignore'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no SVN commit)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DRY_RUN: ${{ github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+    steps:
+      - uses: actions/checkout@v7
+
+      # The tag, the plugin header and readme.txt must agree before anything reaches SVN.
+      - name: Check versions
+        id: version
+        env:
+          EVENT: ${{ github.event_name }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          plugin=$(grep -m1 -E '^\s*\*\s*Version:' main.php | awk '{print $NF}' | tr -d '\r')
+          code=$(grep -m1 -E "^\s*public \\\$version = '" main.php | sed -E "s/.*'([^']+)'.*/\1/")
+          stable=$(grep -m1 -E '^Stable tag:' readme.txt | awk '{print $NF}' | tr -d '\r')
+          echo "main.php Version: $plugin, \$version: $code, readme Stable tag: $stable"
+          [ "$plugin" = "$code" ] || { echo "::error::main.php header Version ($plugin) and \$version ($code) differ."; exit 1; }
+          [ "$plugin" = "$stable" ] || { echo "::error::main.php Version ($plugin) and readme Stable tag ($stable) differ."; exit 1; }
+          if [ "$EVENT" = release ]; then
+            [ "${TAG#v}" = "$plugin" ] || { echo "::error::Release tag ($TAG) does not match the plugin version ($plugin)."; exit 1; }
+          fi
+          if [ "$DRY_RUN" = true ]; then
+            # The deploy action skips versions that already have an SVN tag, so a dry run uses a name that never exists.
+            echo "version=$plugin-dry-run" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=$plugin" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy (trunk + tags/${{ steps.version.outputs.version }} + assets)
+        id: deploy
+        uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0
+        with:
+          dry-run: ${{ env.DRY_RUN }}
+          generate-zip: true
+        env:
+          # Action 2.3.0 requires credentials even for a dry run (checked before dry-run). A dry run only checks
+          # out SVN anonymously and never commits, so it gets placeholders and the real secrets stay out of PR runs.
+          SVN_USERNAME: ${{ env.DRY_RUN == 'true' && 'dry-run' || secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ env.DRY_RUN == 'true' && 'dry-run' || secrets.SVN_PASSWORD }}
+          SLUG: clone-guard-security-scanning
+          VERSION: ${{ steps.version.outputs.version }}
+
+      # The zip is what WordPress.org serves (built from SVN trunk); check its contents here.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: clone-guard-security-scanning-${{ steps.version.outputs.version }}
+          path: ${{ steps.deploy.outputs.zip-path }}

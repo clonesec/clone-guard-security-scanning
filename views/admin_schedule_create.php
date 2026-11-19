@@ -54,7 +54,7 @@
 
                                         <tr>
                                             <td class="first"><label for="first_time"><?php esc_html_e('* First Time', 'clone-guard-security-scanning'); ?></label></td>
-                                            <td><input class="datetimepicker" type="text" name="first_time" size="30" value=""></td>
+                                            <td><input type="datetime-local" id="first_time" name="first_time" value=""></td>
                                         </tr>
 
                                         <tr>

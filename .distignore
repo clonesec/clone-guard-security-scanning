@@ -1,5 +1,6 @@
 .git
 .github
+.wordpress-org
 .vscode
 .gitignore
 .distignore
@@ -18,3 +19,4 @@ scripts
 *.zip
 .wp-env.php82.json
 .wp-env.php82.override.json
+blocks/seal/src

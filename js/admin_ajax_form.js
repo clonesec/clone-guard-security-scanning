@@ -116,11 +116,11 @@ jQuery(document).ready(function($) {
 	function toggleInputPassword() {
 		var settingsInput = $('.settings-input-password');
 
-		settingsInput.focus(function(){
+		settingsInput.on('focus', function(){
 			$(this).prop('type', 'text')
 		  });
 		  
-		settingsInput.blur(function(){
+		settingsInput.on('blur', function(){
 			$(this).prop('type', 'password')
 		});
 	}
@@ -142,7 +142,7 @@ jQuery(document).ready(function($) {
 		var denialTextRadio = $('input[type=radio][name=denialTextIsEnabled]');
 		var scanOrHostRadio = $('input[type=radio][name=scanOrHost]');
 
-		denialTextRadio.change(function() {
+		denialTextRadio.on('change', function() {
 			if (this.value == 'false') {
 				$('#add-exception-justification-text').val('');
 				$('#add-exception-justification-text').prop('readonly', false);
@@ -153,7 +153,7 @@ jQuery(document).ready(function($) {
 			}
 		});
 
-		scanOrHostRadio.change(function() {
+		scanOrHostRadio.on('change', function() {
 			if (this.value == 'scan') {
 				$('.add-exception-scan-tr').removeClass("hide");
 				$('.add-exception-host-tr').addClass("hide");
@@ -182,7 +182,7 @@ jQuery(document).ready(function($) {
 			dosTextradioFalse.prop('checked', true);
 		}
 
-		denialTextRadioEdit.change(function() {
+		denialTextRadioEdit.on('change', function() {
 			if (this.value == 'false') {
 				$('#edit-exception-justification-text').val('');
 				$('#edit-exception-justification-text').prop('readonly', false);
@@ -200,7 +200,7 @@ jQuery(document).ready(function($) {
 		var modal = $('#newExceptionModal');
 		var closeElement = $('.close');	
 
-		$(".select-bulk-add-exception").change(function() {
+		$(".select-bulk-add-exception").on('change', function() {
 			if ($(this).val() === 'add-exception') {
 				modal.css("display", "block");
 				$('#newExceptionModal textarea').css('border','1px solid #8c8f94');
@@ -222,7 +222,7 @@ jQuery(document).ready(function($) {
 			modal.css("display", "none");
 		});
 
-		$('#newExceptionModal textarea').blur(function(){
+		$('#newExceptionModal textarea').on('blur', function(){
 			if($(this).val() == '') {
 				$(this).css('border','1px solid red');
 				$('.modal-validation-text').removeClass('hide');
@@ -233,7 +233,7 @@ jQuery(document).ready(function($) {
 		});
 
 		// Not working.
-		$(window).click(function(e) {
+		$(window).on('click', function(e) {
 			if (e.target === modal) {
 				modal.css("display", "none");
 			}
@@ -252,7 +252,7 @@ jQuery(document).ready(function($) {
 
 		editExceptionFunctionalities();
 		
-		$('.schedule-frequency input[name="frequency"]').change(function() {
+		$('.schedule-frequency input[name="frequency"]').on('change', function() {
 			toggleScheduleRepeatInput()	
 		})
 

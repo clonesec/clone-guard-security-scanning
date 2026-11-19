@@ -202,7 +202,7 @@ Done 2026-11-12. Owner chose a local merge instead of a GitHub PR: `release/2.6`
 
 If the owner answers "no" to open question 7, move step 5b back here unchanged and ship 2.6 with the old widget, noting "seal update coming in 2.7" in the changelog.
 
-### - [ ] Step 10: Gutenberg block for the seal
+### - [x] Step 10: Gutenberg block for the seal
 
 Actions:
 1. Scaffold `blocks/seal/` with `block.json` (`apiVersion: 3`, name `cloneguard/seal`, category `widgets`, `render` pointing to a PHP render callback that calls `Clone_Guard_Seal::render()`). Use `@wordpress/scripts` for the build; commit the built `build/` output so the WordPress.org zip needs no build step, and keep `src/` out of the dist via `.distignore` if desired.
@@ -211,7 +211,7 @@ Actions:
 
 Acceptance: block insertable in the Site Editor on Twenty Twenty-Five, renders the seal on the front end.
 
-### - [ ] Step 11: Front-end library updates
+### - [x] Step 11: Front-end library updates
 
 Actions:
 1. Replace jQuery datetimepicker with native `<input type="datetime-local">` in the schedule/scan forms; convert the value format server-side to what the API expects (document the format in `docs/API-V1-CONTRACT.md`).
@@ -220,7 +220,7 @@ Actions:
 
 Acceptance: all forms work on WordPress 7.1 with `SCRIPT_DEBUG` on and no console errors.
 
-### - [ ] Step 12: CI and automated deploy
+### - [x] Step 12: CI and automated deploy
 
 Actions:
 1. `.github/workflows/ci.yml`: on push and PR, matrix PHP 7.4, 8.2, 8.4 running `php -l` on all files; a job that boots wp-env and runs `wp plugin check` and fails on errors.

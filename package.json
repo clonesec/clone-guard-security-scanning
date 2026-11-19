@@ -11,9 +11,11 @@
     "plugin-check": "wp-env run cli wp plugin check clone-guard-security-scanning --format=table",
     "env:start:php82": "wp-env --config=.wp-env.php82.json start",
     "env:stop:php82": "wp-env --config=.wp-env.php82.json stop",
-    "env:cli:php82": "wp-env --config=.wp-env.php82.json run cli wp"
+    "env:cli:php82": "wp-env --config=.wp-env.php82.json run cli wp",
+    "build:blocks": "wp-scripts build --webpack-src-dir=blocks/seal/src --output-path=blocks/seal/build"
   },
   "devDependencies": {
-    "@wordpress/env": "12.1.0"
+    "@wordpress/env": "12.1.0",
+    "@wordpress/scripts": "37.1.0"
   }
 }
