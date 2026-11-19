@@ -5,11 +5,12 @@
     <div class="cgss-head">
 
         <div class="cgss-head-inside">
-            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
+            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/cloneguard-icon.svg', __FILE__ ) ); ?>" width="40" height="40" alt="" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title"><?php echo esc_html($title); ?></h1>
                 <span class="cgss-head-subtitle">By <a href="https://www.clone-systems.com/" target="_blank">Clone Systems, Inc.</a></span>
             </span>
+            <?php $this->portalButton(); ?>
         </div>
 
     </div>
@@ -27,17 +28,14 @@
                     data-apptype="<?php echo esc_attr('pci'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>
                 </a>
             <?php elseif (($this->userDetails['pciAvailable']) && ($app_type) == 'pci'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>    
                 </a>
             <?php endif; ?>
@@ -48,17 +46,14 @@
                     data-apptype="<?php echo esc_attr('vrms'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php elseif (($this->userDetails['vrmsAvailable']) && ($app_type) == 'vrms'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php endif; ?>
@@ -69,17 +64,14 @@
                     data-apptype="<?php echo esc_attr('penetration'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span>
                 </a>
             <?php elseif (($this->userDetails['penetrationAvailable']) && ($app_type) == 'penetration'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span>    
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span> 
                 </a>
             <?php endif; ?>
@@ -93,16 +85,16 @@
                     <?php if ($compliance_status == 'pass') : ?>
                         <span class="general-icon-container">
                             <?php if ($app_type == 'pci' || $app_type == 'penetration'): ?>
-                                <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/vuln-success.png', __FILE__ ) ); ?>" alt="Success" />
+                                <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/status-pass.svg', __FILE__ ) ); ?>" width="96" height="96" alt="" />
                             <?php elseif ($app_type == 'vrms') : ?>
-                                <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/vrms-success.png', __FILE__ ) ); ?>" alt="Success" style="width: 135px;"/>
+                                <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/status-pass.svg', __FILE__ ) ); ?>" width="96" height="96" alt="" />
                             <?php endif; ?>
                         </span>
 
                         <span class="general-text">
                             <?php if ($app_type == 'pci'): ?>
                                 <h1 class="general-h1 success-pci-color ">Your Website is PCI Compliant</h1>
-                                <p>You are in adherence with the external PCI. DSS ASV Scanning requirement 11.2.2</p>
+                                <p>You are in adherence with the external PCI DSS ASV scanning requirement 11.2.2</p>
                             <?php elseif ($app_type == 'vrms') : ?>
                                 <p>None of the assets scanned pose a risk to your environment.</p>
                             <?php elseif ($app_type == 'penetration') : ?>
@@ -117,7 +109,7 @@
 
                     <?php else: ?>
                         <span class="general-icon-container">
-                            <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/vuln-warning.png', __FILE__ ) ); ?>" alt="Warning" />
+                            <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/status-warning.svg', __FILE__ ) ); ?>" width="96" height="96" alt="" />
                         </span>
 
                         <span class="general-text">
@@ -135,9 +127,9 @@
 
                         <span class="reports-btn-container" style="margin-top:10px;">
                             <?php if ($app_type == 'pci' || $app_type == 'vrms'): ?>
-                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Vulnerabilities</a>
+                                <a class="button cgss-btn-cta" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Vulnerabilities</a>
                             <?php else: ?>
-                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Findings</a>
+                                <a class="button cgss-btn-cta" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Findings</a>
                             <?php endif; ?>
                         </span>
                     <?php endif; ?>
@@ -166,9 +158,9 @@
                             <span class="report-compliance">
                                 <?php 
                                     if(isset($report['compliance']) && $report['compliance']) {
-                                        echo '<span style="color:#64b450;"><span class="dashicons dashicons-yes"></span>Pass</span>';
+                                        echo '<span class="cgss-pill cgss-pill-pass"><span class="dashicons dashicons-yes"></span>Pass</span>';
                                     } else {
-                                        echo '<span style="color:#dc3232;"><span class="dashicons dashicons-no"></span>Fail</span>';
+                                        echo '<span class="cgss-pill cgss-pill-fail"><span class="dashicons dashicons-no"></span>Fail</span>';
                                     }
                                 ?>
                             </span>
@@ -181,9 +173,9 @@
             <div class="overview-row">
                 <div class="overview-row-box" style="display:flex; flex-direction:column; align-items:center; flex:1; padding:50px;">                
                     <h1>Let's get started</h1>
-                    <img style="width:300px;" src="<?php echo esc_url( plugins_url( '../img/security-engineers.png', __FILE__ ) ); ?>" />
+                    <img style="width:96px; margin:8px 0 20px;" src="<?php echo esc_url( plugins_url( '../img/cloneguard-icon.svg', __FILE__ ) ); ?>" width="96" height="96" alt="" />
                     <span class="reports-btn-container">
-                        <a style="font-size:1.2em!important; padding: 0 60px !important;" class="button button-primary" href="<?php echo esc_url($this->adminLink('scans', 'scan-create')); ?>">
+                        <a class="button cgss-btn-cta" href="<?php echo esc_url($this->adminLink('scans', 'scan-create')); ?>">
                             Add Scan
                         </a>
                     </span>
@@ -194,7 +186,7 @@
                         <h1 class="features-heading">Features</h1>
                         <div class="features-list">
                             <div class="feature">
-                                <img class="feature-img" src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
+                                <span class="cgss-feature-icon" aria-hidden="true"><span class="dashicons dashicons-shield"></span></span>
                                 <span class="feature-text">
                                     <h2 class="feature-heading">PCI ASV Scanning</h2>
                                     <p class="feature-description">Comply with the PCI DSS and safeguard your customer’s data</p>
@@ -214,7 +206,7 @@
                                 </div>
                             </div>
                             <div class="feature">
-                                <img class="feature-img" src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
+                                <span class="cgss-feature-icon" aria-hidden="true"><span class="dashicons dashicons-search"></span></span>
                                 <span class="feature-text">
                                     <h2 class="feature-heading">Vulnerability Management</h2>
                                     <p class="feature-description">Assess the security and integrity of your infrastructure to identify vulnerabilities</p>
@@ -234,7 +226,7 @@
                                 </div>
                             </div>
                             <div class="feature">
-                                <img class="feature-img" src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
+                                <span class="cgss-feature-icon" aria-hidden="true"><span class="dashicons dashicons-admin-network"></span></span>
                                 <span class="feature-text">
                                     <h2 class="feature-heading">Penetration Testing</h2>
                                     <p class="feature-description">Perform real world attack simulations on your infrastructure to identify existing exploits</p>
@@ -283,15 +275,66 @@
 
         <div class="overview-row" style="margin-top:10px;">
 
-            <div class="section-product overview-row-box">
-                <img class="section-product-img img-generate" src="<?php echo esc_url( plugins_url( '../img/generate-seal-screenshot4.png', __FILE__ ) ); ?>" />
-                <div class="section-product-text" style="margin-left:30px;">
-                     <h1>Implement Seal</h2>
-                    <p>The CloneGuard security seal is a web site emblem which indicates the site has been scanned utilizing hundreds of thousands of security checks. Customers and users visiting your site will know their purchases, and personal data are securely stored and protected against internet based threats.</p>            
-                    <span class="general-btn-container">
-                        <a class="button btn-overview p-0-35" href="<?php echo esc_url(admin_url('widgets.php')); ?>">Add Seal</a>
-                    </span>
-                </div>
+            <div class="overview-row-box cgss-seal-box">
+                <h1>Add the Trust Seal</h1>
+                <p class="cgss-seal-intro">The Clone Systems Trust Seal shows visitors that your site is scanned regularly. Clicking it opens your public security report.</p>
+
+                <form class="cgss-seal-picker" id="cgss-seal-picker"
+                    data-action="<?php echo esc_attr($this->key_ . 'site_seal'); ?>"
+                    data-nonce="<?php echo esc_attr($nonce_site_seal); ?>"
+                    data-image="<?php echo esc_attr(Clone_Guard_Seal::PREVIEW_URL); ?>"
+                    data-pixels="<?php echo esc_attr(wp_json_encode(Clone_Guard_Seal::PIXELS)); ?>"
+                    data-enabled="<?php echo $site_seal['enabled'] ? '1' : '0'; ?>">
+
+                    <div class="cgss-seal-options">
+                        <fieldset class="cgss-seal-icons">
+                            <legend>Style</legend>
+                            <?php foreach(Clone_Guard_Seal::ICONS as $icon => $label): ?>
+                                <label class="cgss-seal-icon">
+                                    <input type="radio" name="icon" value="<?php echo esc_attr($icon); ?>" <?php checked($site_seal['icon'], $icon); ?> />
+                                    <img src="<?php echo esc_url(str_replace('{icon}', $icon, Clone_Guard_Seal::PREVIEW_URL)); ?>" width="125" height="45" alt="<?php echo esc_attr($label); ?>"/>
+                                </label>
+                            <?php endforeach; ?>
+                        </fieldset>
+
+                        <fieldset class="cgss-seal-choice">
+                            <legend>Size</legend>
+                            <?php foreach(Clone_Guard_Seal::SIZES as $size => $label): ?>
+                                <label><input type="radio" name="size" value="<?php echo esc_attr($size); ?>" <?php checked($site_seal['size'], $size); ?> /> <?php echo esc_html($label); ?></label>
+                            <?php endforeach; ?>
+                        </fieldset>
+
+                        <fieldset class="cgss-seal-choice">
+                            <legend>Placement</legend>
+                            <label><input type="radio" name="position" value="right" <?php checked($site_seal['position'], 'right'); ?> /> Bottom right corner of every page</label>
+                            <label><input type="radio" name="position" value="left" <?php checked($site_seal['position'], 'left'); ?> /> Bottom left corner of every page</label>
+                            <label><input type="radio" name="position" value="relative" /> Inline, where I place it</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="cgss-seal-side">
+                        <div class="cgss-seal-preview" aria-hidden="true">
+                            <span class="cgss-seal-preview-bar"></span>
+                            <span class="cgss-seal-preview-line"></span>
+                            <span class="cgss-seal-preview-line is-short"></span>
+                            <img class="cgss-seal-preview-img" src="" alt="" />
+                        </div>
+
+                        <p class="cgss-seal-status" role="status" aria-live="polite"><?php echo $site_seal['enabled'] ? esc_html('Showing in the bottom ' . $site_seal['position'] . ' corner of your site.') : ''; ?></p>
+
+                        <div class="cgss-seal-corner-actions">
+                            <button type="submit" class="button cgss-btn-cta cgss-seal-save"><?php echo $site_seal['enabled'] ? 'Update the seal' : 'Show on my site'; ?></button>
+                            <button type="button" class="button-link cgss-seal-remove" <?php echo $site_seal['enabled'] ? '' : 'hidden'; ?>>Remove from my site</button>
+                            <a class="cgss-seal-view" href="<?php echo esc_url(home_url('/')); ?>" target="_blank" rel="noopener" <?php echo $site_seal['enabled'] ? '' : 'hidden'; ?>>View your site<span class="screen-reader-text"> (opens in a new tab)</span></a>
+                        </div>
+
+                        <div class="cgss-seal-inline-actions" hidden>
+                            <p>Paste this shortcode where the seal should appear:</p>
+                            <p class="cgss-seal-code"><code class="cgss-seal-shortcode"></code> <button type="button" class="button cgss-seal-copy">Copy</button></p>
+                            <p>Or add the <a href="<?php echo esc_url($seal_editor_url); ?>">CloneGuard Seal block</a> in the editor.</p>
+                        </div>
+                    </div>
+                </form>
             </div>
 
         </div>

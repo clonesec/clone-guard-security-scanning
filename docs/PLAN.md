@@ -234,14 +234,33 @@ Acceptance: a dry-run release of `2.6.1` (or a `-beta` branch test with `dry-run
 
 ## Phase 3: marketing refresh (needs Elyse)
 
-### - [ ] Step 13: Screenshots, banner, icon
-Retake every page against the refreshed portal; banner 772x250 and 1544x500, icon 128 and 256, in the website orange; place in `.wordpress-org/`; update the `== Screenshots ==` captions.
+Owner request 2026-11-19: overall look and feel consistent with www.clone-systems.com, "nothing overly complicated"; portal screenshots may come from the training videos (playlist "Clone Systems Portal Training", customer data already removed). Branch `feature/phase3-branding`. Ships as 2.8 (code changes, so not through the asset-only workflow on `main`).
+
+### - [x] Step 12b: Admin restyle to the website brand (added 2026-11-19, owner request)
+Done 2026-11-19. `css/admin_brand.css` (loaded last on the six plugin pages, scoped to a `cgss-admin` body class): Inter (bundled, `fonts/`), navy text, orange calls to action, white cards with hairline borders, segmented product tabs, uppercase table headers, Pass/Fail pills, severity pills, orange progress bars, numbered Settings steps. Markup: new header icon `img/cloneguard-icon.svg`, tab icon images removed, status icons `img/status-pass.svg`/`status-warning.svg`, icon tiles instead of old PNG icons, inline colour styles replaced by classes. Old images deleted. "Add Seal" opens the Site Editor on block themes (Widgets screen does not exist there). Portal URL field says to leave out `https://` (step 7 finding; stripped in code since step 12c).
+
+### - [x] Step 12c: Settings: Test connection and Portal URL cleanup (added 2026-11-19, owner request)
+Done 2026-11-19. Save now reduces the Portal URL to a bare host name (`portalHost()` in `main.php`: drops scheme, path, query, trailing dot, port 443, user info; lowercases; empty means the default portal; anything that is not a host name is refused with a message). The saved value is written back into the field. New "Test connection" button next to Submit (`wp_ajax_cgss_settings_test`, same nonce and capability as Save) calls `/my_details` with the values in the form, without saving, and reports: connected plus the active products, credentials rejected (401), portal unreachable, or a host that does not answer like the portal. Hint under the field reworded. Existing installs that saved `https://` keep it until Settings is saved once.
+
+### - [x] Step 12d: Dashboard widget (added 2026-11-19, owner request)
+Done 2026-11-19. "CloneGuard Security" widget on the WordPress Dashboard (id `cgss_dashboard`, only for `manage_options`). The Dashboard renders a placeholder and `js/admin_dashboard.js` fills it via `wp_ajax_cgss_dashboard_widget`, so a slow portal never holds up the Dashboard. Shows the active product, the compliance status (pass, or the number of high and medium vulnerabilities with a link), the next scheduled scan and the latest report with its Pass/Fail and a link. Without credentials it shows "Connect your account"; rejected credentials and portal errors get a message. Data: the Overview's summary, moved into `overviewSummary()` and extended with `next_scan` (same 5-minute transient; summaries cached by 2.7 lack the key and are rebuilt), plus `/my_details` and `/reports?per_page=1`. Styles in `css/admin_dashboard.css` (the brand layer is scoped to plugin pages). `scripts/demo-portal.php` returns `next_scan` in its fake summary.
+
+### - [x] Step 12e: Portal links and Help tab (added 2026-11-19, owner request)
+Done 2026-11-19. "Open in portal" button in the header of every plugin page (`portalButton()` / `portalPageUrl()` in `main.php`), opening the matching portal page in a new tab: Overview and Settings the portal home, Scans `/scans`, a scan `/scans/<id>`, Reports and a report `/reports`, Vulnerabilities `/results`, exceptions `/exceptions`, Options `/schedules` / `/targets` / `/notifications`. Routes checked without logging in (existing routes redirect to `/login`, unknown ones return 404); `/reports/<id>` is 404, so a report links to the list. Not checked while logged in to the portal. WordPress Help tab on the plugin pages: Training videos (the YouTube playlist) and Support (clone-systems.com/contact, Settings and Test connection), sidebar with portal, pricing and website. Dashboard widget footer gained "Open the portal".
+
+### - [x] Step 12f: One-click seal picker on the Overview (added 2026-11-19, owner request)
+Done 2026-11-19. The "Implement Seal" screenshot section is now a picker: the 10 seal styles, size, placement, live preview. Corner placements: "Show on my site" saves the new option `cgss_site_seal` (`enabled`, `icon`, `size`, `position` left/right) through `wp_ajax_cgss_site_seal`, and `Clone_Guard_Seal::site_seal()` prints the seal in `wp_footer` with the existing `render()` (script loaded once even with other seals on the page). "Remove from my site" turns it off. Inline placement shows the matching shortcode with a Copy button and a link to the block editor. `img/generate-seal-screenshot4.png` deleted. Screenshots 1 and 3-7 retaken the same day (see the session log).
+
+### - [x] Step 13: Screenshots, banner, icon
+Done 2026-11-19. Plugin screenshots 1-7 taken with `scripts/demo-portal.sh` (invented data, no portal calls); screenshot 8 is the portal dashboard from training video 2. Banner 772x250 and 1544x500, icon 128 and 256 in navy and website orange. Captions updated. Procedure in `docs/RELEASING.md` > Retaking the WordPress.org screenshots.
 
 ### - [ ] Step 14: Copy
 Rewrite the WordPress.org description and the Settings page copy from Elyse's text; no dollar amounts in the opening lines; product names matching the pricing page.
+Status 2026-11-19: Settings copy aligned with the PCI pricing cards (in the plugin). Readme short description and description drafted in `docs/PHASE3-COPY-DRAFT.md`, **waiting for Elyse**; not in `readme.txt`.
 
 ### - [ ] Step 15: Discount code and backlinks
 Marketing gave the new code `WORDPRESSNEW8` on 2026-11-12 (already in `readme.txt`); confirm it works in the cart. Add a page or section on clone-systems.com linking to the plugin; set that URL as `Plugin URI`, or keep GitHub, as Elyse prefers.
+Status 2026-11-19: owner confirmed again that `WORDPRESSNEW8` is active; it is in `readme.txt` and now also on the Settings page. Cart check not done (needs a checkout on the live store). Backlink page and Plugin URI wait for Elyse.
 
 ---
 

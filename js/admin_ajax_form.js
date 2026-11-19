@@ -62,6 +62,12 @@ jQuery(document).ready(function($) {
 		$button.removeClass('button-disabled');
 		$button.removeClass('button-primary-disabled');
 
+        if(data.fields) {
+            $.each(data.fields, function(name, value) {
+                $form.find('[name="' + name + '"]').val(value);
+            });
+        }
+
         if(data.status && data.status == 'success' && data.redirect) {
             window.location.href = $('.button_cancel').attr('href');
         } else if(data.status && data.status == 'success' && data.messages) {
@@ -110,6 +116,49 @@ jQuery(document).ready(function($) {
 				scrollTop: 0
 			}, 300);
 		}
+	}
+
+	// Settings page: checks the values in the form against the portal, without saving them.
+	function testConnection() {
+		var $button = $(this);
+		var $form = $button.closest('form');
+		var $spinner = $form.find('.spinner');
+		var $result = $('#cgss-test-result');
+
+		function show(ok, messages) {
+			var $p = $('<p>');
+			$.each(messages, function(i, message) {
+				if(i > 0) {
+					$p.append('<br>');
+				}
+				$p.append(document.createTextNode(message));
+			});
+			$result.attr('class', 'cgss-test-result notice inline ' + (ok ? 'notice-success' : 'notice-error')).empty().append($p);
+		}
+
+		$button.prop('disabled', true);
+		$spinner.addClass('is-active');
+		$result.attr('class', 'cgss-test-result').empty();
+
+		$.ajax({
+			url: $form.attr('action'),
+			method: 'post',
+			dataType: 'json',
+			data: {
+				action: $button.data('action'),
+				_wpnonce: $form.find('[name="_wpnonce"]').val(),
+				portal_url: $form.find('[name="portal_url"]').val(),
+				user_token: $form.find('[name="user_token"]').val(),
+				api_key: $form.find('[name="api_key"]').val()
+			}
+		}).done(function(data) {
+			show(data && data.status === 'success', data && data.messages ? data.messages : ['The test could not run. Please reload the page and try again.']);
+		}).fail(function() {
+			show(false, ['The test could not run. Please reload the page and try again.']);
+		}).always(function() {
+			$button.prop('disabled', false);
+			$spinner.removeClass('is-active');
+		});
 	}
 
 	// Listener for Settings Page password type inputs.
@@ -243,6 +292,7 @@ jQuery(document).ready(function($) {
     // Initialize listeners. 
 	function init() {
 		$(document).on('submit', '.ajax_form', submit);
+		$(document).on('click', '#cgss-test-connection', testConnection);
 
 		toggleInputPassword();
 

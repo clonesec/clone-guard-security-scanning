@@ -4,11 +4,12 @@
 
     <div class="cgss-head">
         <div class="cgss-head-inside">
-            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
+            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/cloneguard-icon.svg', __FILE__ ) ); ?>" width="40" height="40" alt="" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title">CloneGuard Security Scanning</h1>
                 <span class="cgss-head-subtitle">By <a href="https://www.clone-systems.com/" target="_blank">Clone Systems, Inc.</a></span>
             </span>
+            <?php $this->portalButton(); ?>
         </div>
     </div>
 

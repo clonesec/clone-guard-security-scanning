@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="CloneGuard">
+  <rect width="64" height="64" rx="14" fill="#0d1e3b"/>
+  <path d="M32 11 15 17.5v12.2c0 10.6 7.1 19.6 17 23.3 9.9-3.7 17-12.7 17-23.3V17.5L32 11Z" fill="#e1791b"/>
+  <path d="m23.5 32.5 6 6 11.5-12" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
