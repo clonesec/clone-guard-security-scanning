@@ -1,0 +1,137 @@
+/* CloneGuard Security Dashboard widget, in the Clone Systems colours. */
+
+#cgss_dashboard .inside {
+    margin: 0;
+    padding: 4px 12px 12px;
+}
+
+#cgss_dashboard p {
+    margin: 0 0 8px;
+}
+
+#cgss_dashboard .cgss-dw-loading {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    color: #50575e;
+}
+
+#cgss_dashboard .cgss-dw-loading .spinner {
+    float: none;
+    margin: 0 8px 0 0;
+}
+
+#cgss_dashboard .cgss-dw-logo {
+    display: block;
+    margin: 8px 0 10px;
+}
+
+#cgss_dashboard .cgss-dw-message {
+    padding: 4px 0;
+}
+
+#cgss_dashboard .cgss-dw-product {
+    margin: 8px 0 10px;
+    color: #50575e;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+#cgss_dashboard .cgss-dw-status {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px;
+    border: 1px solid #e1e6ed;
+    border-left: 4px solid #15803d;
+    border-radius: 8px;
+    background: #f6f8fb;
+}
+
+#cgss_dashboard .cgss-dw-status.is-fail {
+    border-left-color: #b91c1c;
+}
+
+#cgss_dashboard .cgss-dw-status img {
+    flex: 0 0 auto;
+}
+
+#cgss_dashboard .cgss-dw-headline {
+    margin: 2px 0 4px;
+    color: #0d1e3b;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#cgss_dashboard .cgss-dw-sub,
+#cgss_dashboard .cgss-dw-muted {
+    color: #50575e;
+}
+
+#cgss_dashboard .cgss-dw-status p:last-child {
+    margin-bottom: 0;
+}
+
+#cgss_dashboard .cgss-dw-list {
+    margin: 12px 0 0;
+}
+
+#cgss_dashboard .cgss-dw-list li {
+    display: flex;
+    gap: 12px;
+    margin: 0;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+#cgss_dashboard .cgss-dw-label {
+    flex: 0 0 96px;
+    color: #50575e;
+}
+
+#cgss_dashboard .cgss-dw-value {
+    flex: 1;
+    min-width: 0;
+}
+
+#cgss_dashboard .cgss-dw-muted {
+    display: block;
+    overflow-wrap: anywhere;
+}
+
+#cgss_dashboard .cgss-dw-pill {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+#cgss_dashboard .cgss-dw-pill.is-pass {
+    background: #e7f6ec;
+    color: #15803d;
+}
+
+#cgss_dashboard .cgss-dw-pill.is-fail {
+    background: #fdecec;
+    color: #b91c1c;
+}
+
+#cgss_dashboard .cgss-dw-footer {
+    margin: 12px 0 0;
+}
+
+#cgss_dashboard .button-primary {
+    border-color: #0d1e3b;
+    background: #0d1e3b;
+}
+
+#cgss_dashboard .button-primary:hover,
+#cgss_dashboard .button-primary:focus {
+    border-color: #1b3159;
+    background: #1b3159;
+}

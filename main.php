@@ -111,6 +111,12 @@ class Clone_Guard_Security_Scanning {
             wp_enqueue_style($this->key_ . 'admin_settings', plugins_url('css/admin_settings.css', __FILE__), [], $this->version);
         }
 
+        // Dashboard widget (only registered for users who can manage options).
+        if($hook == 'index.php' && current_user_can('manage_options')) {
+            wp_enqueue_style($this->key_ . 'admin_dashboard', plugins_url('css/admin_dashboard.css', __FILE__), [], $this->version);
+            wp_enqueue_script($this->key_ . 'admin_dashboard', plugins_url('js/admin_dashboard.js', __FILE__), ['jquery'], $this->version, true);
+        }
+
         // Brand layer (Phase 3): loaded last on every plugin page so it can restyle the page styles above.
         if(in_array($hook, $this->pluginHooks(), true)) {
             wp_enqueue_style($this->key_ . 'admin_brand', plugins_url('css/admin_brand.css', __FILE__), [$this->key_ . 'admin_general'], $this->version);
@@ -250,17 +256,42 @@ class Clone_Guard_Security_Scanning {
 
         $reports = $cloneGuardSecurityAPI->getReports($page, 5);
 
+        $summary = $this->overviewSummary($app_type);
+
+        $compliance_status = $summary['compliance_status'];
+        $vulnerabilities_sum = $summary['vulnerabilities_sum'];
+        if($summary['incomplete'] && empty($cloneGuardSecurityAPI->last_error)) {
+            $cloneGuardSecurityAPI->last_error = 'Some report details could not be loaded in time, so the summary below may be incomplete.';
+        }
+
+        $this->apiErrorNotice();
+        include 'views/admin_overview.php';
+    }
+
+    // Compliance summary for the Overview page and the Dashboard widget: pass or fail from the last report of
+    // each scan on page 1, the high and medium vulnerability count, and the next scheduled scan.
+    private function overviewSummary($app_type) {
+        global $cloneGuardSecurityAPI;
+
         // The compliance card needs the last report of each scan on page 1. Some reports are very large
         // (one was 56 MB and took 35 s), so they are fetched in parallel with a 15 s limit and the result
         // is cached for 5 minutes per account and app type.
         $summary_key = $cloneGuardSecurityAPI->cacheKey('overview_summary_' . $app_type);
         $summary = get_transient($summary_key);
-        if(!is_array($summary)) {
-            $scans = $cloneGuardSecurityAPI->getScans($page);
+        // Summaries cached by 2.7 have no next_scan key; rebuild those.
+        if(!is_array($summary) || !array_key_exists('next_scan', $summary)) {
+            $scans = $cloneGuardSecurityAPI->getScans(1);
             $last_reports_ids = [];
-            foreach($scans['scans'] as $scan) {
+            $next_scan = null;
+            $scan_list = (is_array($scans) && isset($scans['scans']) && is_array($scans['scans'])) ? $scans['scans'] : [];
+            foreach($scan_list as $scan) {
                 if(!empty($scan['last_report']['id'])) {
                     array_push($last_reports_ids, $scan['last_report']['id']);
+                }
+                // Earliest upcoming scheduled run among these scans, for the Dashboard widget.
+                $next_time = !empty($scan['schedule']['next_time']) && $scan['schedule']['next_time'] != 'n/a' ? strtotime($scan['schedule']['next_time']) : false;
+                if($next_time && $next_time > time() && ($next_scan === null || $next_time < $next_scan['time'])) {
+                    $next_scan = ['name' => isset($scan['name']) ? (string) $scan['name'] : '', 'time' => $next_time];
                 }
             }
 
@@ -286,6 +317,7 @@ class Clone_Guard_Security_Scanning {
                 'compliance_status' => in_array("fail", $last_reports_statuses) ? 'fail' : 'pass',
                 'vulnerabilities_sum' => $vulnerabilities_sum,
                 'incomplete' => $incomplete,
+                'next_scan' => $next_scan,
             ];
             // Do not cache a summary built while the portal was unreachable or failing.
             if(empty($cloneGuardSecurityAPI->last_error)) {
@@ -293,14 +325,91 @@ class Clone_Guard_Security_Scanning {
             }
         }
 
-        $compliance_status = $summary['compliance_status'];
-        $vulnerabilities_sum = $summary['vulnerabilities_sum'];
-        if($summary['incomplete'] && empty($cloneGuardSecurityAPI->last_error)) {
-            $cloneGuardSecurityAPI->last_error = 'Some report details could not be loaded in time, so the summary below may be incomplete.';
+        return $summary;
+    }
+
+    // Registers the CloneGuard Security widget on the WordPress Dashboard.
+    public function dashboardSetup() {
+        if(current_user_can('manage_options')) {
+            wp_add_dashboard_widget($this->key_ . 'dashboard', 'CloneGuard Security', [$this, 'dashboardWidget']);
+        }
+    }
+
+    // Dashboard widget shell. The status is loaded with AJAX after the Dashboard has rendered, because the
+    // portal can be slow and must never hold up the Dashboard.
+    public function dashboardWidget() {
+        $configured = get_option($this->key_ . 'user_token') && get_option($this->key_ . 'api_key');
+        $settings_url = $this->adminLink('settings');
+        if(!$configured) {
+            $state = 'setup';
+        } else {
+            $state = 'loading';
+            $nonce = wp_create_nonce($this->key_ . 'dashboard_widget');
+        }
+        include 'views/dashboard_widget.php';
+    }
+
+    // AJAX: the Dashboard widget's status block (HTML).
+    public function ajaxDashboardWidget() {
+        global $cloneGuardSecurityAPI;
+        $output = ['status' => 'error'];
+        if(!current_user_can('manage_options') || !isset($_POST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'dashboard_widget')) {
+            $output['html'] = '<p>The status could not be loaded. Please reload the page.</p>';
+            echo json_encode($output);
+            exit;
         }
 
-        $this->apiErrorNotice();
-        include 'views/admin_overview.php';
+        $settings_url = $this->adminLink('settings');
+        $details = $cloneGuardSecurityAPI->getUserDetails();
+        if(!$cloneGuardSecurityAPI->hasAccess()) {
+            $state = 'access';
+        } elseif(!empty($cloneGuardSecurityAPI->last_error)) {
+            $state = 'error';
+            $error = $cloneGuardSecurityAPI->last_error;
+        } else {
+            $app_type = $details['app_type'];
+            $products = ['pci' => 'PCI ASV scanning', 'vrms' => 'Vulnerability management', 'penetration' => 'Penetration testing'];
+            $product = isset($products[$app_type]) ? $products[$app_type] : '';
+
+            $reports = $cloneGuardSecurityAPI->getReports(1, 1);
+            $latest = (is_array($reports) && !empty($reports['reports'])) ? $reports['reports'] : [];
+            $latest_id = $latest ? (string) array_key_first($latest) : '';
+            $latest = $latest ? reset($latest) : [];
+
+            $summary = $latest ? $this->overviewSummary($app_type) : null;
+
+            if(!empty($cloneGuardSecurityAPI->last_error)) {
+                $state = 'error';
+                $error = $cloneGuardSecurityAPI->last_error;
+            } else {
+                $state = $latest ? 'status' : 'empty';
+            }
+
+            if($state == 'status') {
+                $pass = $summary['compliance_status'] == 'pass';
+                $vulnerabilities_sum = (int) $summary['vulnerabilities_sum'];
+                // End time, then creation time, then the report name, which the portal sets to the scan's timestamp.
+                $report_date = '';
+                foreach(['end_time', 'creation_time', 'name'] as $field) {
+                    if($report_date === '' && !empty($latest[$field])) {
+                        $report_date = $this->siteDate($latest[$field]);
+                    }
+                }
+            }
+        }
+
+        ob_start();
+        include 'views/dashboard_widget.php';
+        $output['status'] = 'success';
+        $output['html'] = ob_get_clean();
+        echo json_encode($output);
+        exit;
+    }
+
+    // Date and time of a portal timestamp (string or Unix time) in the site's timezone and format.
+    public function siteDate($time) {
+        $time = is_numeric($time) ? (int) $time : strtotime((string) $time);
+        return $time ? wp_date(get_option('date_format') . ' ' . get_option('time_format'), $time) : '';
     }
 
     // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only $_GET values that pick which admin page or list page to show (key, subkey, paged); behind manage_options, and every action that changes data checks a nonce.
@@ -2367,6 +2476,8 @@ class Clone_Guard_Security_Scanning {
 
         add_action('wp_ajax_' . $this->key_ . 'settings', [$this, 'ajaxSettings']);
         add_action('wp_ajax_' . $this->key_ . 'settings_test', [$this, 'ajaxSettingsTest']);
+        add_action('wp_ajax_' . $this->key_ . 'dashboard_widget', [$this, 'ajaxDashboardWidget']);
+        add_action('wp_dashboard_setup', [$this, 'dashboardSetup']);
         add_action('wp_ajax_' . $this->key_ . 'scan_temp_save', [$this, 'ajaxScanTempSave']);
 
         add_action('wp_ajax_' . $this->key_ . 'report_delete', [$this, 'ajaxReportDelete']);

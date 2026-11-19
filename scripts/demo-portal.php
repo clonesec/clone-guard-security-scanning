@@ -17,7 +17,7 @@ add_action('init', function () {
     foreach (['pci', 'vrms', 'penetration'] as $type) {
         $key = 'cgss_' . md5($portal . '|' . $token . '|overview_summary_' . $type);
         add_filter('pre_transient_' . $key, function () {
-            return ['compliance_status' => 'pass', 'vulnerabilities_sum' => 0, 'incomplete' => false];
+            return ['compliance_status' => 'pass', 'vulnerabilities_sum' => 0, 'incomplete' => false, 'next_scan' => ['name' => 'Payment API', 'time' => strtotime('2026-11-23T02:00:00.000-05:00')]];
         });
     }
 });
