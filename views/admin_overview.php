@@ -276,8 +276,8 @@
         <div class="overview-row" style="margin-top:10px;">
 
             <div class="overview-row-box cgss-seal-box">
-                <h1>Add the Trust Seal</h1>
-                <p class="cgss-seal-intro">The Clone Systems Trust Seal shows visitors that your site is scanned regularly. Clicking it opens your public security report.</p>
+                <h1>Optional add-on: Trust Seal</h1>
+                <p class="cgss-seal-intro">Customers with an active Clone Systems account and current scans can display a Trust Seal on their site. This is optional. Clicking the Trust Seal opens your public security report.</p>
 
                 <form class="cgss-seal-picker" id="cgss-seal-picker"
                     data-action="<?php echo esc_attr($this->key_ . 'site_seal'); ?>"
@@ -331,7 +331,7 @@
                         <div class="cgss-seal-inline-actions" hidden>
                             <p>Paste this shortcode where the seal should appear:</p>
                             <p class="cgss-seal-code"><code class="cgss-seal-shortcode"></code> <button type="button" class="button cgss-seal-copy">Copy</button></p>
-                            <p>Or add the <a href="<?php echo esc_url($seal_editor_url); ?>">CloneGuard Seal block</a> in the editor.</p>
+                            <p>Or add the <a href="<?php echo esc_url($seal_editor_url); ?>">Trust Seal block</a> in the editor.</p>
                         </div>
                     </div>
                 </form>
