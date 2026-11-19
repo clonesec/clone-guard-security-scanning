@@ -234,14 +234,21 @@ Acceptance: a dry-run release of `2.6.1` (or a `-beta` branch test with `dry-run
 
 ## Phase 3: marketing refresh (needs Elyse)
 
-### - [ ] Step 13: Screenshots, banner, icon
-Retake every page against the refreshed portal; banner 772x250 and 1544x500, icon 128 and 256, in the website orange; place in `.wordpress-org/`; update the `== Screenshots ==` captions.
+Owner request 2026-11-19: overall look and feel consistent with www.clone-systems.com, "nothing overly complicated"; portal screenshots may come from the training videos (playlist "Clone Systems Portal Training", customer data already removed). Branch `feature/phase3-branding`. Ships as 2.8 (code changes, so not through the asset-only workflow on `main`).
+
+### - [x] Step 12b: Admin restyle to the website brand (added 2026-11-19, owner request)
+Done 2026-11-19. `css/admin_brand.css` (loaded last on the six plugin pages, scoped to a `cgss-admin` body class): Inter (bundled, `fonts/`), navy text, orange calls to action, white cards with hairline borders, segmented product tabs, uppercase table headers, Pass/Fail pills, severity pills, orange progress bars, numbered Settings steps. Markup: new header icon `img/cloneguard-icon.svg`, tab icon images removed, status icons `img/status-pass.svg`/`status-warning.svg`, icon tiles instead of old PNG icons, inline colour styles replaced by classes. Old images deleted. "Add Seal" opens the Site Editor on block themes (Widgets screen does not exist there). Portal URL field says to leave out `https://` (step 7 finding; the code still does not strip it).
+
+### - [x] Step 13: Screenshots, banner, icon
+Done 2026-11-19. Plugin screenshots 1-7 taken with `scripts/demo-portal.sh` (invented data, no portal calls); screenshot 8 is the portal dashboard from training video 2. Banner 772x250 and 1544x500, icon 128 and 256 in navy and website orange. Captions updated. Procedure in `docs/RELEASING.md` > Retaking the WordPress.org screenshots.
 
 ### - [ ] Step 14: Copy
 Rewrite the WordPress.org description and the Settings page copy from Elyse's text; no dollar amounts in the opening lines; product names matching the pricing page.
+Status 2026-11-19: Settings copy aligned with the PCI pricing cards (in the plugin). Readme short description and description drafted in `docs/PHASE3-COPY-DRAFT.md`, **waiting for Elyse**; not in `readme.txt`.
 
 ### - [ ] Step 15: Discount code and backlinks
 Marketing gave the new code `WORDPRESSNEW8` on 2026-11-12 (already in `readme.txt`); confirm it works in the cart. Add a page or section on clone-systems.com linking to the plugin; set that URL as `Plugin URI`, or keep GitHub, as Elyse prefers.
+Status 2026-11-19: owner confirmed again that `WORDPRESSNEW8` is active; it is in `readme.txt` and now also on the Settings page. Cart check not done (needs a checkout on the live store). Backlink page and Plugin URI wait for Elyse.
 
 ---
 
