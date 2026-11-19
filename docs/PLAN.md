@@ -259,9 +259,10 @@ Rewrite the WordPress.org description and the Settings page copy from Elyse's te
 Status 2026-11-19: Settings copy aligned with the PCI pricing cards (in the plugin). Readme short description and description drafted in `docs/PHASE3-COPY-DRAFT.md`, **waiting for Elyse**; not in `readme.txt`.
 Update 2026-11-19: marketing sent 10 wording changes (scanning first, Trust Seal as an optional add-on). Applied on branch `feature/listing-copy`: readme short description, tags, description order and sections, Get started steps, one "Optional add-on: Trust Seal" section, one seal name ("Trust Seal") in the readme and on plugin screens (block title, widget name, Overview), fixes, screenshots reordered (seal last, retaken with the new block title), FAQ. Overview seal section relabelled "Optional add-on: Trust Seal" (already below status, reports and the report section). `docs/PHASE3-COPY-DRAFT.md` is superseded. Round 2 (same day): marketing approved and asked 4 fixes, all applied; version bumped to 2.8.1 (readme, header, `$version`). Released as 2.8.1 on 2026-11-19 (SVN r3811906).
 
-### - [ ] Step 15: Discount code and backlinks
+### - [x] Step 15: Discount code and backlinks
 Marketing gave the new code `WORDPRESSNEW8` on 2026-11-12 (already in `readme.txt`); confirm it works in the cart. Add a page or section on clone-systems.com linking to the plugin; set that URL as `Plugin URI`, or keep GitHub, as Elyse prefers.
 Status 2026-11-19: owner confirmed again that `WORDPRESSNEW8` is active; it is in `readme.txt` and now also on the Settings page. Cart check not done (needs a checkout on the live store). Backlink page and Plugin URI wait for Elyse.
+Done 2026-11-19: marketing confirmed `WORDPRESSNEW8` works in the cart (checked by them on 2026-11-12); no backlink page wanted; `Plugin URI` now `https://www.clone-systems.com/pricing?mode=pci`, released as 2.8.2 (SVN r3812087).
 
 ---
 
