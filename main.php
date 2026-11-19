@@ -1,11 +1,11 @@
 <?php
 /*
  * Plugin Name: CloneGuard Security Scanning
- * Plugin URI: https://github.com/clonesec/clone-guard-security-scanning
+ * Plugin URI: https://www.clone-systems.com/pricing?mode=pci
  * Description: Secure your website with direct access to CloneGuard Security Compliance, Scanning and Verification servers.
  * Author: Clone Systems, Inc.
  * Author URI: https://www.clone-systems.com
- * Version: 2.8.1
+ * Version: 2.8.2
  * Requires at least: 5.9
  * Requires PHP: 7.4
  * License: GPLv2 or later
@@ -22,7 +22,7 @@ require_once(__DIR__ . '/classes/class-clone-guard-widget.php');
 class Clone_Guard_Security_Scanning {
     public $key = 'cgss';
     public $key_ = 'cgss_';
-    public $version = '2.8.1';
+    public $version = '2.8.2';
 
     public $feedback_url = 'https://pciscan.clone-systems.com/downloads/ASV-Feedback-Form.pdf';
 
