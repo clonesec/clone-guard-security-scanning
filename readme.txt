@@ -4,7 +4,7 @@ Contributors: clonesupport
 Tags: PCI compliance, vulnerability scanner, security scan, penetration testing, trust seal
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 2.8.1
+Stable tag: 2.8.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -116,6 +116,9 @@ Support is available 24x7. Use the contact link in the Support section.
 
 == Changelog ==
 
+= 2.8.2 =
+* The plugin's homepage link now points to the Clone Systems plans and pricing page.
+
 = 2.8.1 =
 * Listing text updated: the description now leads with scanning, and the Trust Seal is described as an optional add-on.
 * The seal block, the widget and the Overview section are now named "Trust Seal". Existing seals keep working.
@@ -212,6 +215,9 @@ Support is available 24x7. Use the contact link in the Support section.
 * Initial release
 
 == Upgrade Notice ==
+
+= 2.8.2 =
+The plugin's homepage link now points to the Clone Systems plans and pricing page.
 
 = 2.8.1 =
 Listing text updated. The seal block and widget are now named Trust Seal; existing seals keep working.
