@@ -61,7 +61,7 @@
                             <th scope="row"><label>Portal URL:</label></th>
                             <td>
                                 <input class="settings-form-input" type="text" name="portal_url" value="<?php echo esc_attr($portal_url); ?>" placeholder="">
-                                <p class="description">Host name only, without https:// (for example pciscan.clone-systems.com).</p>
+                                <p class="description">The address of your scanning portal, for example pciscan.clone-systems.com.</p>
                             </td>
                         </tr>
                         <tr class="form-field">
@@ -83,8 +83,10 @@
 
                 <p class="submit">
                     <input id="submit-btn" type="submit" class="button button-primary" value="Submit">
+                    <button id="cgss-test-connection" type="button" class="button" data-action="<?php echo esc_attr($this->key_ . 'settings_test'); ?>">Test connection</button>
                     <span class="spinner"></span>
                 </p>
+                <div id="cgss-test-result" class="cgss-test-result" role="status" aria-live="polite"></div>
 
             </form> 
 

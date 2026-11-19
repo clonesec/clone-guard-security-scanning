@@ -749,6 +749,17 @@ body.cgss-admin #wpbody-content p.submit #submit-btn {
     font-weight: 600;
 }
 
+body.cgss-admin #wpbody-content p.submit #cgss-test-connection {
+    min-height: 42px;
+    margin-left: 8px;
+    padding: 0 20px;
+    font-size: 15px;
+}
+body.cgss-admin #wpbody-content .cgss-test-result.notice {
+    max-width: 640px;
+    margin: 0 0 8px;
+}
+
 /* ---------- Vulnerability detail ---------- */
 
 body.cgss-admin .details-title .cgss-feature-icon {

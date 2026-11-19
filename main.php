@@ -1738,12 +1738,14 @@ class Clone_Guard_Security_Scanning {
                 $output['messages'] = ['Please enter your API Key.'];
             }
 
+            $portal_input = isset($_POST['portal_url']) ? sanitize_text_field(wp_unslash($_POST['portal_url'])) : '';
+            $portal_url = $this->portalHost($portal_input);
+            if($portal_url === false) {
+                $pass = false;
+                $output['messages'] = ['Please enter a valid Portal URL, for example pciscan.clone-systems.com.'];
+            }
+
             if($pass) {
-                if(!isset($_POST['portal_url']) || $_POST['portal_url'] == '') {
-                    $portal_url = 'pciscan.clone-systems.com';
-                } else {
-                    $portal_url = sanitize_text_field(wp_unslash($_POST['portal_url']));
-                }
                 $user_token = sanitize_text_field(wp_unslash($_POST['user_token']));
                 $api_key = sanitize_text_field(wp_unslash($_POST['api_key']));
 
@@ -1753,6 +1755,10 @@ class Clone_Guard_Security_Scanning {
 
                 $output['status'] = 'success';  
                 $output['messages'] = ['The items have been successfully updated.'];
+                if($portal_input !== '' && $portal_input !== $portal_url) {
+                    $output['messages'][] = 'The Portal URL was saved as ' . $portal_url . '.';
+                }
+                $output['fields'] = ['portal_url' => $portal_url];
             }  
         } else {
             $output['status'] = 'error';    
@@ -1760,6 +1766,79 @@ class Clone_Guard_Security_Scanning {
         }
         echo json_encode($output);
         exit;
+    }
+
+    // AJAX to test the portal connection with the values in the Settings form, without saving them.
+    public function ajaxSettingsTest() {
+        $output = [];
+        $output['status'] = 'error';
+        if(!current_user_can('manage_options') || !isset($_POST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'settings')) {
+            $output['messages'] = ['There was a problem processing the request. Please reload the page and try again.'];
+            echo json_encode($output);
+            exit;
+        }
+
+        $portal_url = $this->portalHost(isset($_POST['portal_url']) ? sanitize_text_field(wp_unslash($_POST['portal_url'])) : '');
+        $user_token = isset($_POST['user_token']) ? sanitize_text_field(wp_unslash($_POST['user_token'])) : '';
+        $api_key = isset($_POST['api_key']) ? sanitize_text_field(wp_unslash($_POST['api_key'])) : '';
+
+        if($portal_url === false) {
+            $output['messages'] = ['Please enter a valid Portal URL, for example pciscan.clone-systems.com.'];
+        } elseif($user_token === '' || $api_key === '') {
+            $output['messages'] = ['Please enter your User Token and Key first.'];
+        } else {
+            $api = new Clone_Guard_API();
+            $api->portal_url = $portal_url;
+            $api->base_url = 'https://' . $portal_url . '/API/v1';
+            $api->user_token = $user_token;
+            $api->api_key = $api_key;
+
+            $response = $api->api('GET', $api->base_url . '/my_details');
+            $data = is_array($response) ? $response : json_decode((string) $response, true);
+
+            if($response === false) {
+                $output['messages'] = [$portal_url . ' rejected the User Token or Key. Copy both again from the portal.'];
+            } elseif($api->isError($response)) {
+                $output['messages'] = [$response['status_text']];
+            } elseif(is_array($data) && isset($data['details']) && is_array($data['details'])) {
+                $output['status'] = 'success';
+                $output['messages'] = ['Connected to ' . $portal_url . '. Your User Token and Key work.'];
+                $names = ['pci' => 'PCI ASV scanning', 'vrms' => 'vulnerability management', 'penetration' => 'penetration testing'];
+                $products = isset($data['details']['organization']['available_products']) && is_array($data['details']['organization']['available_products']) ? $data['details']['organization']['available_products'] : [];
+                $active = array_values(array_intersect_key($names, array_filter($products)));
+                if($active) {
+                    $output['messages'][] = 'Active on this account: ' . implode(', ', $active) . '.';
+                }
+            } else {
+                $output['messages'] = [$portal_url . ' answered, but not like a CloneGuard scanning portal. Check the Portal URL.'];
+            }
+        }
+        echo json_encode($output);
+        exit;
+    }
+
+    // Reduces a Portal URL as typed (https://host/path, HOST., host:443) to the host name the API class expects.
+    // Returns the default portal for an empty value and false for a value that is not a host name.
+    private function portalHost($value) {
+        $value = trim($value);
+        if($value === '') {
+            return 'pciscan.clone-systems.com';
+        }
+        if(!preg_match('#^[a-z][a-z0-9+.-]*://#i', $value)) {
+            $value = 'https://' . ltrim($value, '/');
+        }
+        $parts = wp_parse_url($value);
+        if(!is_array($parts) || empty($parts['host'])) {
+            return false;
+        }
+        $host = strtolower(rtrim($parts['host'], '.'));
+        if(!preg_match('/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/', $host)) {
+            return false;
+        }
+        if(!empty($parts['port']) && (int) $parts['port'] !== 443) {
+            $host .= ':' . (int) $parts['port'];
+        }
+        return $host;
     }
 
     // AJAX to create a target.
@@ -2287,6 +2366,7 @@ class Clone_Guard_Security_Scanning {
         add_action('admin_menu', [$this, 'adminMenu']);
 
         add_action('wp_ajax_' . $this->key_ . 'settings', [$this, 'ajaxSettings']);
+        add_action('wp_ajax_' . $this->key_ . 'settings_test', [$this, 'ajaxSettingsTest']);
         add_action('wp_ajax_' . $this->key_ . 'scan_temp_save', [$this, 'ajaxScanTempSave']);
 
         add_action('wp_ajax_' . $this->key_ . 'report_delete', [$this, 'ajaxReportDelete']);
