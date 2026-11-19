@@ -220,7 +220,7 @@ Actions:
 
 Acceptance: all forms work on WordPress 7.1 with `SCRIPT_DEBUG` on and no console errors.
 
-### - [ ] Step 12: CI and automated deploy
+### - [x] Step 12: CI and automated deploy
 
 Actions:
 1. `.github/workflows/ci.yml`: on push and PR, matrix PHP 7.4, 8.2, 8.4 running `php -l` on all files; a job that boots wp-env and runs `wp plugin check` and fails on errors.
