@@ -275,15 +275,66 @@
 
         <div class="overview-row" style="margin-top:10px;">
 
-            <div class="section-product overview-row-box">
-                <img class="section-product-img img-generate" src="<?php echo esc_url( plugins_url( '../img/generate-seal-screenshot4.png', __FILE__ ) ); ?>" />
-                <div class="section-product-text" style="margin-left:30px;">
-                     <h1>Implement Seal</h2>
-                    <p>The CloneGuard security seal is a web site emblem which indicates the site has been scanned utilizing hundreds of thousands of security checks. Customers and users visiting your site will know their purchases, and personal data are securely stored and protected against internet based threats.</p>            
-                    <span class="general-btn-container">
-                        <a class="button btn-overview p-0-35" href="<?php echo esc_url(admin_url(function_exists('wp_is_block_theme') && wp_is_block_theme() ? 'site-editor.php' : 'widgets.php')); ?>">Add Seal</a>
-                    </span>
-                </div>
+            <div class="overview-row-box cgss-seal-box">
+                <h1>Add the Trust Seal</h1>
+                <p class="cgss-seal-intro">The Clone Systems Trust Seal shows visitors that your site is scanned regularly. Clicking it opens your public security report.</p>
+
+                <form class="cgss-seal-picker" id="cgss-seal-picker"
+                    data-action="<?php echo esc_attr($this->key_ . 'site_seal'); ?>"
+                    data-nonce="<?php echo esc_attr($nonce_site_seal); ?>"
+                    data-image="<?php echo esc_attr(Clone_Guard_Seal::PREVIEW_URL); ?>"
+                    data-pixels="<?php echo esc_attr(wp_json_encode(Clone_Guard_Seal::PIXELS)); ?>"
+                    data-enabled="<?php echo $site_seal['enabled'] ? '1' : '0'; ?>">
+
+                    <div class="cgss-seal-options">
+                        <fieldset class="cgss-seal-icons">
+                            <legend>Style</legend>
+                            <?php foreach(Clone_Guard_Seal::ICONS as $icon => $label): ?>
+                                <label class="cgss-seal-icon">
+                                    <input type="radio" name="icon" value="<?php echo esc_attr($icon); ?>" <?php checked($site_seal['icon'], $icon); ?> />
+                                    <img src="<?php echo esc_url(str_replace('{icon}', $icon, Clone_Guard_Seal::PREVIEW_URL)); ?>" width="125" height="45" alt="<?php echo esc_attr($label); ?>"/>
+                                </label>
+                            <?php endforeach; ?>
+                        </fieldset>
+
+                        <fieldset class="cgss-seal-choice">
+                            <legend>Size</legend>
+                            <?php foreach(Clone_Guard_Seal::SIZES as $size => $label): ?>
+                                <label><input type="radio" name="size" value="<?php echo esc_attr($size); ?>" <?php checked($site_seal['size'], $size); ?> /> <?php echo esc_html($label); ?></label>
+                            <?php endforeach; ?>
+                        </fieldset>
+
+                        <fieldset class="cgss-seal-choice">
+                            <legend>Placement</legend>
+                            <label><input type="radio" name="position" value="right" <?php checked($site_seal['position'], 'right'); ?> /> Bottom right corner of every page</label>
+                            <label><input type="radio" name="position" value="left" <?php checked($site_seal['position'], 'left'); ?> /> Bottom left corner of every page</label>
+                            <label><input type="radio" name="position" value="relative" /> Inline, where I place it</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="cgss-seal-side">
+                        <div class="cgss-seal-preview" aria-hidden="true">
+                            <span class="cgss-seal-preview-bar"></span>
+                            <span class="cgss-seal-preview-line"></span>
+                            <span class="cgss-seal-preview-line is-short"></span>
+                            <img class="cgss-seal-preview-img" src="" alt="" />
+                        </div>
+
+                        <p class="cgss-seal-status" role="status" aria-live="polite"><?php echo $site_seal['enabled'] ? esc_html('Showing in the bottom ' . $site_seal['position'] . ' corner of your site.') : ''; ?></p>
+
+                        <div class="cgss-seal-corner-actions">
+                            <button type="submit" class="button cgss-btn-cta cgss-seal-save"><?php echo $site_seal['enabled'] ? 'Update the seal' : 'Show on my site'; ?></button>
+                            <button type="button" class="button-link cgss-seal-remove" <?php echo $site_seal['enabled'] ? '' : 'hidden'; ?>>Remove from my site</button>
+                            <a class="cgss-seal-view" href="<?php echo esc_url(home_url('/')); ?>" target="_blank" rel="noopener" <?php echo $site_seal['enabled'] ? '' : 'hidden'; ?>>View your site<span class="screen-reader-text"> (opens in a new tab)</span></a>
+                        </div>
+
+                        <div class="cgss-seal-inline-actions" hidden>
+                            <p>Paste this shortcode where the seal should appear:</p>
+                            <p class="cgss-seal-code"><code class="cgss-seal-shortcode"></code> <button type="button" class="button cgss-seal-copy">Copy</button></p>
+                            <p>Or add the <a href="<?php echo esc_url($seal_editor_url); ?>">CloneGuard Seal block</a> in the editor.</p>
+                        </div>
+                    </div>
+                </form>
             </div>
 
         </div>

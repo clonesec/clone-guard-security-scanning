@@ -35,7 +35,7 @@ Proposed (121 characters):
 > * Open every report and finding, with the impact, solution and affected asset.
 > * Download your attestation, executive and detailed PDF reports.
 > * Manage scan schedules, targets and email notifications.
-> * Add the Clone Systems Trust Seal with the CloneGuard Seal block, the Security Seal widget, or the `[cloneguard_seal]` shortcode. The seal links to your public security report.
+> * Add the Clone Systems Trust Seal to every page in one click from the Overview page, or place it yourself with the CloneGuard Seal block, the Security Seal widget, or the `[cloneguard_seal]` shortcode. The seal links to your public security report.
 >
 > **Works with these Clone Systems services**
 >

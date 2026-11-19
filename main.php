@@ -61,6 +61,10 @@ class Clone_Guard_Security_Scanning {
             wp_enqueue_script($this->key_ . 'admin_scan', plugins_url('js/admin_scan.js', __FILE__), ['jquery'], $this->version, false);
         }
         
+        if($this->hook_overview == $hook) {
+            wp_enqueue_script($this->key_ . 'admin_seal', plugins_url('js/admin_seal.js', __FILE__), ['jquery'], $this->version, true);
+        }
+
         if($this->hook_scans == $hook) {
             wp_enqueue_script($this->key_ . 'select2', plugins_url('js/select2.4.1.0.min.js', __FILE__), ['jquery'], $this->version, false);
             wp_enqueue_style($this->key_ . 'select2', plugins_url('css/select2.4.1.0.min.css', __FILE__), [], $this->version);
@@ -333,6 +337,10 @@ class Clone_Guard_Security_Scanning {
         if($summary['incomplete'] && empty($cloneGuardSecurityAPI->last_error)) {
             $cloneGuardSecurityAPI->last_error = 'Some report details could not be loaded in time, so the summary below may be incomplete.';
         }
+
+        $site_seal = Clone_Guard_Seal::site_settings();
+        $nonce_site_seal = wp_create_nonce($this->key_ . 'site_seal');
+        $seal_editor_url = admin_url(function_exists('wp_is_block_theme') && wp_is_block_theme() ? 'site-editor.php' : 'widgets.php');
 
         $this->apiErrorNotice();
         include 'views/admin_overview.php';
@@ -1947,6 +1955,44 @@ class Clone_Guard_Security_Scanning {
         exit;
     }
 
+    // AJAX from the Overview seal picker: shows the seal in a corner of every page, or removes it.
+    public function ajaxSiteSeal() {
+        $output = ['status' => 'error'];
+        if(!current_user_can('manage_options') || !isset($_POST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), $this->key_ . 'site_seal')) {
+            $output['message'] = 'There was a problem processing the request. Please reload the page and try again.';
+            echo json_encode($output);
+            exit;
+        }
+
+        $op = isset($_POST['op']) ? sanitize_key(wp_unslash($_POST['op'])) : '';
+        if($op === 'remove') {
+            $atts = Clone_Guard_Seal::site_settings();
+            $atts['enabled'] = false;
+            update_option(Clone_Guard_Seal::SITE_OPTION, $atts);
+            $output['status'] = 'success';
+            $output['enabled'] = false;
+            $output['message'] = 'The seal was removed from your site.';
+        } else {
+            $atts = Clone_Guard_Seal::sanitize([
+                'icon' => isset($_POST['icon']) ? sanitize_text_field(wp_unslash($_POST['icon'])) : '',
+                'size' => isset($_POST['size']) ? sanitize_text_field(wp_unslash($_POST['size'])) : '',
+                'position' => isset($_POST['position']) ? sanitize_text_field(wp_unslash($_POST['position'])) : '',
+            ]);
+            if(!in_array($atts['position'], ['left', 'right'], true)) {
+                $output['message'] = 'Choose a corner for the seal.';
+                echo json_encode($output);
+                exit;
+            }
+            $atts['enabled'] = true;
+            update_option(Clone_Guard_Seal::SITE_OPTION, $atts);
+            $output['status'] = 'success';
+            $output['enabled'] = true;
+            $output['message'] = 'The seal now shows in the bottom ' . $atts['position'] . ' corner of every page of your site.';
+        }
+        echo json_encode($output);
+        exit;
+    }
+
     // AJAX to test the portal connection with the values in the Settings form, without saving them.
     public function ajaxSettingsTest() {
         $output = [];
@@ -2547,6 +2593,7 @@ class Clone_Guard_Security_Scanning {
 
         add_action('wp_ajax_' . $this->key_ . 'settings', [$this, 'ajaxSettings']);
         add_action('wp_ajax_' . $this->key_ . 'settings_test', [$this, 'ajaxSettingsTest']);
+        add_action('wp_ajax_' . $this->key_ . 'site_seal', [$this, 'ajaxSiteSeal']);
         add_action('wp_ajax_' . $this->key_ . 'dashboard_widget', [$this, 'ajaxDashboardWidget']);
         add_action('wp_dashboard_setup', [$this, 'dashboardSetup']);
         add_action('wp_ajax_' . $this->key_ . 'scan_temp_save', [$this, 'ajaxScanTempSave']);

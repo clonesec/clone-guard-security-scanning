@@ -49,12 +49,16 @@ class Clone_Guard_Seal {
         'position' => 'relative',
     ];
 
+    // Seal added to every front-end page from the Overview page's seal picker (fixed to a corner).
+    const SITE_OPTION = 'cgss_site_seal';
+
     public static function init() {
         // No version (no ?ver=) and no defer/async: the inline call needs the script loaded
         // synchronously before it, and uses document.currentScript to find where to insert the seal.
         wp_register_script(self::SCRIPT_HANDLE, self::SCRIPT_URL, [], null, false); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- served and versioned by clone-systems.com.
 
         add_shortcode('cloneguard_seal', [__CLASS__, 'shortcode']);
+        add_action('wp_footer', [__CLASS__, 'site_seal']);
 
         self::register_block();
     }
@@ -83,6 +87,26 @@ class Clone_Guard_Seal {
     // Front-end output of the block: the seal inside the block wrapper (alignment classes).
     public static function render_block($attributes) {
         return '<div ' . get_block_wrapper_attributes() . '>' . self::render((array) $attributes) . '</div>';
+    }
+
+    // The saved site-wide seal: ['enabled' => bool, 'icon', 'size', 'position'], position 'left' or 'right'.
+    public static function site_settings() {
+        $saved = get_option(self::SITE_OPTION);
+        $saved = is_array($saved) ? $saved : [];
+        $atts = self::sanitize($saved);
+        if($atts['position'] === 'relative') {
+            $atts['position'] = 'right';
+        }
+        $atts['enabled'] = !empty($saved['enabled']);
+        return $atts;
+    }
+
+    // Prints the site-wide seal in the footer of every front-end page when it is turned on.
+    public static function site_seal() {
+        $atts = self::site_settings();
+        if($atts['enabled']) {
+            echo self::render($atts); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render() escapes the values and builds the tags with WordPress functions.
+        }
     }
 
     // [cloneguard_seal icon="cs-secure-dark" size="md" position="relative"]
