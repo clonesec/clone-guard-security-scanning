@@ -5,7 +5,7 @@
     <div class="cgss-head">
 
         <div class="cgss-head-inside">
-            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
+            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/cloneguard-icon.svg', __FILE__ ) ); ?>" width="40" height="40" alt="" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title"><?php echo esc_html($title); ?></h1>
                 <span class="cgss-head-subtitle">By <a href="https://www.clone-systems.com/" target="_blank">Clone Systems, Inc.</a></span>
@@ -27,17 +27,14 @@
                     data-apptype="<?php echo esc_attr('pci'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>
                 </a>
             <?php elseif (($this->userDetails['pciAvailable']) && ($app_type) == 'pci'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
                     <span>PCI ASV Scanning</span>    
                 </a>
             <?php endif; ?>
@@ -48,17 +45,14 @@
                     data-apptype="<?php echo esc_attr('vrms'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php elseif (($this->userDetails['vrmsAvailable']) && ($app_type) == 'vrms'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
                     <span>Vulnerability Management</span>
                 </a>
             <?php endif; ?>
@@ -69,17 +63,14 @@
                     data-apptype="<?php echo esc_attr('penetration'); ?>"
                     data-action="<?php echo esc_attr($this->key_ . 'update_user_app_type'); ?>"
                     data-nonce="<?php echo esc_attr($nonce_update_app_type); ?>">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span>
                 </a>
             <?php elseif (($this->userDetails['penetrationAvailable']) && ($app_type) == 'penetration'): ?>
                 <a href="#" class="nav-tab nav-tab-active">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span>    
                 </a>
             <?php else: ?>
                 <a class="nav-tab disabled-state">
-                    <img src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
                     <span>Penetration Testing</span> 
                 </a>
             <?php endif; ?>
@@ -93,16 +84,16 @@
                     <?php if ($compliance_status == 'pass') : ?>
                         <span class="general-icon-container">
                             <?php if ($app_type == 'pci' || $app_type == 'penetration'): ?>
-                                <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/vuln-success.png', __FILE__ ) ); ?>" alt="Success" />
+                                <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/status-pass.svg', __FILE__ ) ); ?>" width="96" height="96" alt="" />
                             <?php elseif ($app_type == 'vrms') : ?>
-                                <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/vrms-success.png', __FILE__ ) ); ?>" alt="Success" style="width: 135px;"/>
+                                <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/status-pass.svg', __FILE__ ) ); ?>" width="96" height="96" alt="" />
                             <?php endif; ?>
                         </span>
 
                         <span class="general-text">
                             <?php if ($app_type == 'pci'): ?>
                                 <h1 class="general-h1 success-pci-color ">Your Website is PCI Compliant</h1>
-                                <p>You are in adherence with the external PCI. DSS ASV Scanning requirement 11.2.2</p>
+                                <p>You are in adherence with the external PCI DSS ASV scanning requirement 11.2.2</p>
                             <?php elseif ($app_type == 'vrms') : ?>
                                 <p>None of the assets scanned pose a risk to your environment.</p>
                             <?php elseif ($app_type == 'penetration') : ?>
@@ -117,7 +108,7 @@
 
                     <?php else: ?>
                         <span class="general-icon-container">
-                            <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/vuln-warning.png', __FILE__ ) ); ?>" alt="Warning" />
+                            <img class="general-icon" src="<?php echo esc_url( plugins_url( '../img/status-warning.svg', __FILE__ ) ); ?>" width="96" height="96" alt="" />
                         </span>
 
                         <span class="general-text">
@@ -135,9 +126,9 @@
 
                         <span class="reports-btn-container" style="margin-top:10px;">
                             <?php if ($app_type == 'pci' || $app_type == 'vrms'): ?>
-                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Vulnerabilities</a>
+                                <a class="button cgss-btn-cta" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Vulnerabilities</a>
                             <?php else: ?>
-                                <a class="button button-primary" style="background:#FECF1B; border:none;" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Findings</a>
+                                <a class="button cgss-btn-cta" href="<?php echo esc_url($this->adminLink('vulnerabilities')); ?>">View Findings</a>
                             <?php endif; ?>
                         </span>
                     <?php endif; ?>
@@ -166,9 +157,9 @@
                             <span class="report-compliance">
                                 <?php 
                                     if(isset($report['compliance']) && $report['compliance']) {
-                                        echo '<span style="color:#64b450;"><span class="dashicons dashicons-yes"></span>Pass</span>';
+                                        echo '<span class="cgss-pill cgss-pill-pass"><span class="dashicons dashicons-yes"></span>Pass</span>';
                                     } else {
-                                        echo '<span style="color:#dc3232;"><span class="dashicons dashicons-no"></span>Fail</span>';
+                                        echo '<span class="cgss-pill cgss-pill-fail"><span class="dashicons dashicons-no"></span>Fail</span>';
                                     }
                                 ?>
                             </span>
@@ -181,9 +172,9 @@
             <div class="overview-row">
                 <div class="overview-row-box" style="display:flex; flex-direction:column; align-items:center; flex:1; padding:50px;">                
                     <h1>Let's get started</h1>
-                    <img style="width:300px;" src="<?php echo esc_url( plugins_url( '../img/security-engineers.png', __FILE__ ) ); ?>" />
+                    <img style="width:96px; margin:8px 0 20px;" src="<?php echo esc_url( plugins_url( '../img/cloneguard-icon.svg', __FILE__ ) ); ?>" width="96" height="96" alt="" />
                     <span class="reports-btn-container">
-                        <a style="font-size:1.2em!important; padding: 0 60px !important;" class="button button-primary" href="<?php echo esc_url($this->adminLink('scans', 'scan-create')); ?>">
+                        <a class="button cgss-btn-cta" href="<?php echo esc_url($this->adminLink('scans', 'scan-create')); ?>">
                             Add Scan
                         </a>
                     </span>
@@ -194,7 +185,7 @@
                         <h1 class="features-heading">Features</h1>
                         <div class="features-list">
                             <div class="feature">
-                                <img class="feature-img" src="<?php echo esc_url( plugins_url( '../img/pci.png', __FILE__ ) ); ?>" />
+                                <span class="cgss-feature-icon" aria-hidden="true"><span class="dashicons dashicons-shield"></span></span>
                                 <span class="feature-text">
                                     <h2 class="feature-heading">PCI ASV Scanning</h2>
                                     <p class="feature-description">Comply with the PCI DSS and safeguard your customer’s data</p>
@@ -214,7 +205,7 @@
                                 </div>
                             </div>
                             <div class="feature">
-                                <img class="feature-img" src="<?php echo esc_url( plugins_url( '../img/vrms.png', __FILE__ ) ); ?>" />
+                                <span class="cgss-feature-icon" aria-hidden="true"><span class="dashicons dashicons-search"></span></span>
                                 <span class="feature-text">
                                     <h2 class="feature-heading">Vulnerability Management</h2>
                                     <p class="feature-description">Assess the security and integrity of your infrastructure to identify vulnerabilities</p>
@@ -234,7 +225,7 @@
                                 </div>
                             </div>
                             <div class="feature">
-                                <img class="feature-img" src="<?php echo esc_url( plugins_url( '../img/penetration.png', __FILE__ ) ); ?>" />
+                                <span class="cgss-feature-icon" aria-hidden="true"><span class="dashicons dashicons-admin-network"></span></span>
                                 <span class="feature-text">
                                     <h2 class="feature-heading">Penetration Testing</h2>
                                     <p class="feature-description">Perform real world attack simulations on your infrastructure to identify existing exploits</p>
@@ -289,7 +280,7 @@
                      <h1>Implement Seal</h2>
                     <p>The CloneGuard security seal is a web site emblem which indicates the site has been scanned utilizing hundreds of thousands of security checks. Customers and users visiting your site will know their purchases, and personal data are securely stored and protected against internet based threats.</p>            
                     <span class="general-btn-container">
-                        <a class="button btn-overview p-0-35" href="<?php echo esc_url(admin_url('widgets.php')); ?>">Add Seal</a>
+                        <a class="button btn-overview p-0-35" href="<?php echo esc_url(admin_url(function_exists('wp_is_block_theme') && wp_is_block_theme() ? 'site-editor.php' : 'widgets.php')); ?>">Add Seal</a>
                     </span>
                 </div>
             </div>

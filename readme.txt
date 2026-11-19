@@ -56,12 +56,14 @@ Clone Systems [Subscription Agreement](https://www.clone-systems.com/legal/subsc
 
 == Screenshots ==
 
-1. Review the overall security posture of your website 
-2. When your site is secure add a website seal so your client's have access to your security report
-3. Create Scans to identify your websites' weaknesses
-4. Review the Reports that contain all the information on the identified vulnerabilities
-5. Manage all your scan components from this page
-6. Use the Settings page to setup access between the plugin and the security scanning portal
+1. Overview: your compliance status and latest reports at a glance.
+2. Add the CloneGuard Seal block anywhere in the block editor or Site Editor, so visitors can open your security report.
+3. Scans: start, stop and schedule scans, and follow their progress.
+4. Reports: compliance result and findings for every scan, with downloadable PDF reports.
+5. Vulnerability details: summary, impact, solution and affected asset for each finding.
+6. Options: manage scan schedules, targets and email notifications.
+7. Settings: connect the plugin to your Clone Systems portal account in three steps.
+8. The Clone Systems portal, home of the full dashboard, the SAQ wizard and the AI Security Assistant add-on.
 
 == Changelog ==
 

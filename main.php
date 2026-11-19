@@ -110,6 +110,25 @@ class Clone_Guard_Security_Scanning {
             wp_enqueue_style($this->key_ . 'admin_general', plugins_url('css/admin_general.css', __FILE__), [], $this->version);
             wp_enqueue_style($this->key_ . 'admin_settings', plugins_url('css/admin_settings.css', __FILE__), [], $this->version);
         }
+
+        // Brand layer (Phase 3): loaded last on every plugin page so it can restyle the page styles above.
+        if(in_array($hook, $this->pluginHooks(), true)) {
+            wp_enqueue_style($this->key_ . 'admin_brand', plugins_url('css/admin_brand.css', __FILE__), [$this->key_ . 'admin_general'], $this->version);
+        }
+    }
+
+    // Page hooks of the plugin's own admin pages.
+    private function pluginHooks() {
+        return array_filter([$this->hook_overview, $this->hook_scans, $this->hook_reports, $this->hook_vulnerabilities, $this->hook_options, $this->hook_settings]);
+    }
+
+    // Adds a body class on the plugin's own admin pages; the brand stylesheet is scoped to it.
+    public function adminBodyClass($classes) {
+        $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+        if($screen && in_array($screen->id, $this->pluginHooks(), true)) {
+            $classes .= ' cgss-admin ';
+        }
+        return $classes;
     }
 
     // Create a link to one of the plugin admin pages.
@@ -583,9 +602,9 @@ class Clone_Guard_Security_Scanning {
                     $reports['reports'][$key]['display_vulnerabilities'] = '';
                 }
                 if(isset($report['compliance']) && $report['compliance']) {
-                    $reports['reports'][$key]['display_compliance'] = '<div style="color:#64b450;"><span class="dashicons dashicons-yes"></span>Pass</div>';
+                    $reports['reports'][$key]['display_compliance'] = '<span class="cgss-pill cgss-pill-pass"><span class="dashicons dashicons-yes"></span>Pass</span>';
                 } else {
-                    $reports['reports'][$key]['display_compliance'] = '<div style="color:#dc3232;"><span class="dashicons dashicons-no"></span>Fail</div>';
+                    $reports['reports'][$key]['display_compliance'] = '<span class="cgss-pill cgss-pill-fail"><span class="dashicons dashicons-no"></span>Fail</span>';
                 }
             }
 
@@ -2264,6 +2283,7 @@ class Clone_Guard_Security_Scanning {
     // Initialize all the hooks and filters.
     public function init() {
         add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
+        add_filter('admin_body_class', [$this, 'adminBodyClass']);
         add_action('admin_menu', [$this, 'adminMenu']);
 
         add_action('wp_ajax_' . $this->key_ . 'settings', [$this, 'ajaxSettings']);

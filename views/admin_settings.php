@@ -5,7 +5,7 @@
     <div class="cgss-head">
 
         <div class="cgss-head-inside">
-            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/clone-guard-icon.png', __FILE__ ) ); ?>" alt="Logo" />
+            <img class="cgss-head-logo" src="<?php echo esc_url( plugins_url( '../img/cloneguard-icon.svg', __FILE__ ) ); ?>" width="40" height="40" alt="" />
             <span class="cgss-head-text">
                 <h1 class="cgss-head-title"><?php echo esc_html($title); ?></h1>
                 <span class="cgss-head-subtitle">By <a href="https://www.clone-systems.com/" target="_blank">Clone Systems, Inc.</a></span>
@@ -28,20 +28,21 @@
 
         <div class="main-inside">
             <div class="cgss-purchase">
-                <h2 class="cgss-purchase-title">Step 1: Purchase a License to Secure Your Site</h2>
+                <h2 class="cgss-purchase-title"><span class="cgss-step" aria-hidden="true">1</span>Purchase a license to secure your site</h2>
                 <ul class="cgss-purchase-list">
-                    <li class="cgss-purchase-list-item">PCI ASV Compliant Scanning</li>
-                    <li class="cgss-purchase-list-item">Certified ASV Reports</li>
-                    <li class="cgss-purchase-list-item">Online SAQ Wizard</li>
+                    <li class="cgss-purchase-list-item">PCI SSC Approved ASV scanning service</li>
+                    <li class="cgss-purchase-list-item">Quarterly compliance validation</li>
+                    <li class="cgss-purchase-list-item">Certified PCI compliance reports</li>
+                    <li class="cgss-purchase-list-item">SAQ support and free rescans</li>
                     <li class="cgss-purchase-list-item">Nothing to install</li>
                     <li class="cgss-purchase-list-item">24/7 email support</li>
-                    <li class="cgss-purchase-list-item">IPv4 and IPv6 targets</li>
                 </ul>
                 <a class="cgss-purchase-link" href="https://www.clone-systems.com/pricing?mode=pci" target="_blank" rel="noopener">Purchase a License</a>
+                <p class="cgss-discount">First order? WordPress users get a discount with the code <code>WORDPRESSNEW8</code> at checkout.</p>
             </div>
 
             <div class="cgss-settings-token">
-                <h2 class="cgss-settings-token-title">Step 2: Gather your Token & Key</h2>
+                <h2 class="cgss-settings-token-title"><span class="cgss-step" aria-hidden="true">2</span>Copy your token and key from the portal</h2>
                 <p class="cgss-settings-token-text">a) Copy your User Token from the scanning portal.</p>
                 <img class="cgss-settings-step2-img" src="<?php echo esc_url( plugins_url( '../img/settings-step-2-token.png', __FILE__ ) ); ?>" width="875" height="299" alt="The User token section in the scanning portal, with the Copy token button" />
                 <p class="cgss-settings-token-text">b) Copy the API Key.</p>
@@ -49,7 +50,7 @@
             </div>
 
             <form class="cgss-settings-form ajax_form" action="admin-ajax.php" method="post">
-                <h2 class="cgss-settings-form-title">Step 3: Input Token & Key below</h2>
+                <h2 class="cgss-settings-form-title"><span class="cgss-step" aria-hidden="true">3</span>Paste them below</h2>
 
                 <?php wp_nonce_field( $action ); ?>
                 <input name="action" type="hidden" value="<?php echo esc_attr($action); ?>" />
@@ -60,7 +61,7 @@
                             <th scope="row"><label>Portal URL:</label></th>
                             <td>
                                 <input class="settings-form-input" type="text" name="portal_url" value="<?php echo esc_attr($portal_url); ?>" placeholder="">
-                                <p class="description">You can set the URL of your portal.</p>
+                                <p class="description">Host name only, without https:// (for example pciscan.clone-systems.com).</p>
                             </td>
                         </tr>
                         <tr class="form-field">
