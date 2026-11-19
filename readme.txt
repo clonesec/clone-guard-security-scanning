@@ -1,7 +1,7 @@
 === CloneGuard Security Scanning ===
 
 Contributors: clonesupport
-Tags: PCI compliance, vulnerability scanner, security scan, penetration testing, trust seal
+Tags: PCI compliance, vulnerability scanner, security scan, security audit, trust seal
 Requires at least: 5.9
 Tested up to: 7.1
 Stable tag: 2.8.2
